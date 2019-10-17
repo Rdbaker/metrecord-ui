@@ -1,0 +1,25 @@
+.agora-chat-composer {
+  height: 40px;
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+}
+
+.agora-chat-composer > input:active,
+.agora-chat-composer > input:focus {
+  width: 100%;
+}
+
+.agora-chat-composer > input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 100%;
+  width: 40%;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  padding: 4px;
+  box-sizing: border-box;
+  margin-top: 12px;
+}

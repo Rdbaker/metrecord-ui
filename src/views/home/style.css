@@ -1,0 +1,25 @@
+.wsl-heading {
+  border-bottom: 1px solid #ddd;
+  padding-top: 40px;
+  margin-bottom: 30px;
+  padding-left: 5%;
+}
+
+.wsl-heading h4 {
+  padding-bottom: 15px;
+}
+
+.wsl-table-pagination-fixed {
+  position: fixed;
+  bottom: 0;
+}
+
+.weasl-onboarding-setup-steps {
+  width: 50%;
+  margin: 130px auto;
+}
+
+.weasl-onboarding-setup-steps > h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}

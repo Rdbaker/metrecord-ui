@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
+:root {
+  --color-blue-1: #8b9ea1;
+  --color-blue-2: #5c777c;
+  --color-blue-3: #2e5057;
+  --color-blue-4: #002a32;
+  --color-blue-5: #002329;
+  --color-blue-6: #001b20;
+  --color-blue-7: #001417;
+  --color-blue-8: #000c0e;
+
+  --color-orange-1: #fee9db;
+  --color-orange-2: #fddbc4;
+  --color-orange-3: #fdccac;
+  --color-orange-4: #fcbe95;
+  --color-orange-5: #fcb07e;
+  --color-orange-6: #cf9168;
+  --color-orange-7: #a17151;
+  --color-orange-8: #73503a;
+
+  --color-yellow-1: #fff2d9;
+  --color-yellow-2: #ffeac0;
+  --color-yellow-3: #ffe2a7;
+  --color-yellow-4: #ffda8e;
+  --color-yellow-5: #ffd275;
+  --color-yellow-6: #d1ac60;
+  --color-yellow-7: #a3864b;
+  --color-yellow-8: #746036;
+
+  --color-green-1: #dbf1eb;
+  --color-green-2: #c3e9dd;
+  --color-green-3: #ace0d0;
+  --color-green-4: #94d7c3;
+  --color-green-5: #7dcfb6;
+  --color-green-6: #67aa95;
+  --color-green-7: #508474;
+  --color-green-8: #395f53;
+
+  --color-pink-1: #f7d4e3;
+  --color-pink-2: #f3b8d0;
+  --color-pink-3: #ee9bbe;
+  --color-pink-4: #e97fab;
+  --color-pink-5: #e56399;
+  --color-pink-6: #bc527e;
+  --color-pink-7: #924062;
+  --color-pink-8: #692d46;
+}

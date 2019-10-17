@@ -1,0 +1,22 @@
+.route-tabs--container {
+  display: flex;
+  margin: 16px;
+}
+
+.route-tabs--tab:hover {
+  background: var(--color-green-1);
+}
+
+.route-tabs--tab {
+  padding: 2px 8px;
+  margin: 0 8px;
+  border-bottom: 2px solid transparent;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.route-tabs--tab.active {
+  border-color: var(--color-green-3);
+}

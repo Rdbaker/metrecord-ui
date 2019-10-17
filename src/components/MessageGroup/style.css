@@ -1,0 +1,23 @@
+.message-group-header--time {
+  font-size: 12px;
+  margin-left: 12px;
+  color: #444;
+}
+
+.message-group-header--author:hover {
+  text-decoration: underline;
+  color: steelblue;
+}
+
+.message-group-header--author {
+  font-size: 12px;
+  color: blue;
+  cursor: pointer;
+  transition: color 0.5s ease;
+}
+
+.message-group-header--container {
+  display: flex;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}

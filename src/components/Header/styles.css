@@ -1,0 +1,17 @@
+.grow {
+    flex-grow: 1;
+}
+
+.wsl-main-nav a {
+    color: inherit;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+.wsl-main-nav a:last-child {
+    margin-right: 0;
+}
+
+.wsl-main-nav a.active {
+    font-weight: bold;
+}

@@ -1,0 +1,56 @@
+.agora-auth-form--background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  background-repeat: repeat;
+  background-size: 340px auto;
+}
+
+.agora-auth-form {
+  width: 40%;
+  min-width: 400px;
+  margin: 0 auto;
+  padding: 24px 56px;
+  border-radius: 8px;
+  background: var(--color-orange-4);
+  box-shadow: 1px 1px 2px 0px var(--color-blue-2);
+}
+
+.agora-auth-form input:focus {
+  border-bottom-color: var(--color-green-4);
+}
+
+.agora-auth-form input {
+  background: transparent;
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  display: block;
+  font-size: 14px;
+}
+
+.agora-auth-form button:hover {
+  background: var(--color-green-3);
+}
+
+.agora-auth-form button {
+  margin-top: 32px;
+  padding: 7px 5px;
+  width: 70px;
+  background: var(--color-green-4);
+  border-radius: 3px;
+  border: 1px solid var(--color-green-5);
+  color: var(--color-blue-8);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.agora-auth-form label {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  display: block;
+}

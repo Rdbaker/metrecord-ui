@@ -1,0 +1,20 @@
+.agora-snippet:active {
+  border: 1px solid blue;
+  border-radius: 8px;
+}
+
+.agora-snippet {
+  max-width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.agora-snippet-textarea {
+  height: 0;
+  width: 0;
+  position: relative;
+  left: -5px;
+  z-index: -1;
+  display: block;
+}
