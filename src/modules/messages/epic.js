@@ -1,19 +1,14 @@
 import { ofType, combineEpics } from 'redux-observable';
-import { flatMap, startWith, catchError, pluck, mergeMap, map } from 'rxjs/operators';
+import { flatMap, startWith, catchError, pluck, map } from 'rxjs/operators';
 import { of, from } from 'rxjs';
 import { path } from 'ramda';
 
-import { ActionTypes as OrgActionTypes } from 'modules/org/constants';
 import { MessagesAPI } from 'api/messages';
 import * as MessageActions from './actions';
 import { ActionTypes } from './constants';
 import { createBeforeServerMessage } from 'utils/messages';
 
-
-const fetchOrgToFetchMessages = action$ => action$.pipe(
-  ofType(OrgActionTypes.FETCH_ORG_SUCCESS),
-  mergeMap(({ payload: { org: { conversations } } }) => conversations.map(conv => MessageActions.fetchMessages({ conversationId: conv.id }))),
-)
+// DEAD CODE
 
 const fetchMessagesEpic = action$ => action$.pipe(
   ofType(ActionTypes.FETCH_MESSAGES),
@@ -48,6 +43,5 @@ const sendMessage = (action$, store$) => action$.pipe(
 
 export default combineEpics(
   sendMessage,
-  fetchOrgToFetchMessages,
   fetchMessagesEpic,
 )

@@ -9,7 +9,7 @@ import authBackgroundSrc from 'images/auth background.png';
 
 import './style.css';
 
-const goToChat = () => global.location = '/chat';
+const goToHome = () => global.location = '/home';
 
 
 class EmailLogin extends Component {
@@ -36,7 +36,7 @@ class EmailLogin extends Component {
     const { token } = await res.json();
     this.props.dispatcher.setToken(token);
     setToken(token);
-    setTimeout(goToChat, 200);
+    setTimeout(goToHome, 200);
   }
 
   setEmailLoginFailed = () => {

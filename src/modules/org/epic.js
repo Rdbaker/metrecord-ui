@@ -5,14 +5,14 @@ import { of, from } from 'rxjs';
 import { OrgsAPI } from 'api/org';
 import * as OrgActions from 'modules/org/actions';
 import { ActionTypes } from './constants';
+import { checkStatus } from 'utils/http';
 
 
 const fetchOrg = action$ => action$.pipe(
   ofType(ActionTypes.FETCH_ORG),
   flatMap(() =>
-    from(OrgsAPI.getMyOrg())
+    from(OrgsAPI.getMyOrg().then(checkStatus))
       .pipe(
-        flatMap((response) => from(response.json())),
         flatMap(({ data }) => of(OrgActions.fetchOrgSuccess(data))),
         catchError(err => of(OrgActions.fetchOrgFailed(err))),
         startWith(OrgActions.fetchOrgPending()),

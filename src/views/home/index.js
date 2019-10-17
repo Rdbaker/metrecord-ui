@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import { EndUsersAPI } from 'api/endUsers';
+import { EventsAPI } from 'api/events';
 
 import Header from 'components/Header';
 import './style.css';
@@ -12,32 +11,25 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      page: 1,
-      perPage: 25,
       fetching: false,
       fetchingSuccess: false,
       fetchingFailed: false,
       fetchingError: null,
-      pageData: [],
-      paginationData: {},
+      data: [],
     };
   }
 
   componentDidMount() {
-    this.doFetchUsers();
+    this.doFetchPageMetrics();
   }
 
-   doFetchUsers = async () => {
-    const {
-      page,
-      perPage,
-    } = this.state;
-
+   doFetchPageMetrics = async () => {
     this.fetchStarted();
     try {
-      const response = await EndUsersAPI.getEndUsers(page, perPage);
-      const { data, meta: { pagination }} = await response.json();
-      this.fetchSuccess(data, pagination);
+      const end = new Date();
+      const start = new Date(end - (1000 * 60 * 60 * 24 * 7));
+      const { data } = await EventsAPI.browserMinute(start, end);
+      this.fetchSuccess(data);
     } catch (err) {
       this.fetchFailed(err);
     }
@@ -48,7 +40,6 @@ class Home extends Component {
       fetching: true,
       fetchingError: null,
       fetchingSuccess: false,
-      fetchingError: false,
     });
   }
 
@@ -57,7 +48,6 @@ class Home extends Component {
       fetching: false,
       fetchingError: err,
       fetchingSuccess: false,
-      fetchingError: true,
     });
   }
 
@@ -66,7 +56,6 @@ class Home extends Component {
       fetching: false,
       fetchingError: null,
       fetchingSuccess: true,
-      fetchingError: false,
       pageData: data,
       paginationData: pagination,
     });

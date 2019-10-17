@@ -8,7 +8,7 @@ import { AuthAPI } from 'api/auth';
 import { CurrentUser } from 'utils/contexts';
 import { EmailLogin, EmailSignup } from 'views/login';
 import Sidebar from 'components/Sidebar';
-import { SHIM_URL, SNAPPER_ON_SNAPPER_CLIENT_ID } from 'constants/resources';
+import { SHIM_URL, SNAPPER_ON_SNAPPER_CLIENT_ID, DEBUG } from 'constants/resources';
 import { setMe } from 'modules/auth/actions';
 import { fetchOrg } from 'modules/org/actions';
 
@@ -32,6 +32,7 @@ class App extends Component {
 
   componentDidMount() {
     this.mountSnapper();
+    this.mountDrift();
     this.fetchMe();
   }
 
@@ -59,6 +60,41 @@ class App extends Component {
     });
   }
 
+  mountDrift = () => {
+    if (!DEBUG) {
+      (function() {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+          if (t.invoked) {
+            return void(window.console && console.error && console.error("Drift snippet included twice."));
+          }
+          t.invoked = !0;
+          t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ];
+          t.factory = (e) => {
+            return () => {
+              var n = Array.prototype.slice.call(arguments);
+              return n.unshift(e), t.push(n), t;
+            };
+          };
+          t.methods.forEach((e) => {
+            t[e] = t.factory(e);
+          })
+          t.load = function(t) {
+            var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+            o.type = "text/javascript";
+            o.async = !0;
+            o.crossorigin = "anonymous";
+            o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+            var i = document.getElementsByTagName("script")[0];
+            i.parentNode.insertBefore(o, i);
+          };
+        }
+      }());
+      window.drift.SNIPPET_VERSION = '0.3.1';
+      window.drift.load('2b7p8yk2aw3x');
+    }
+  }
+
   mountSnapper = () => {
     (function(window, document) {
       if (window.snapper) console.error('Snapper embed already included');
@@ -71,7 +107,7 @@ class App extends Component {
       var before = document.getElementsByTagName('script')[0];
       before.parentNode.insertBefore(elt, before);
     })(global, document, undefined);
-    snapper.init(SNAPPER_ON_SNAPPER_CLIENT_ID);
+    global.snapper.init(SNAPPER_ON_SNAPPER_CLIENT_ID);
   }
 
   makeLoginRequiredComponent(AuthedComponent) {
@@ -87,7 +123,7 @@ class App extends Component {
 
       if (!!currentUser) {
         global.drift && global.drift.on('ready', () => {
-          drift.identify(currentUser.id, { ...currentUser });
+          global.drift.identify(currentUser.id, { ...currentUser });
         });
 
         Sentry.configureScope((scope) => {
@@ -113,7 +149,6 @@ class App extends Component {
         <div className={cx("agora-app-content--container", { 'no-sidebar': !currentUser })}>
           <CurrentUser.Provider value={currentUser}>
             <Route exact={true} path="/" render={this.makeLoginRequiredComponent(Onboard)} />
-            <Route path="/chat" render={this.makeLoginRequiredComponent(ChatView)} />
             <Route path="/home" render={this.makeLoginRequiredComponent(Home)} />
             <Route path="/login" component={EmailLogin}/>
             <Route path="/signup" component={EmailSignup}/>

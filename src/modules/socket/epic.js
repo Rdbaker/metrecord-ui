@@ -5,7 +5,7 @@ import * as SocketActions from './actions';
 import { ActionTypes as MessageActionTypes } from 'modules/messages/constants';
 import { ActionTypes } from './constants';
 import { WS_URL } from 'constants/resources';
-import { pluck, filter, mergeMap } from 'rxjs/operators';
+import { pluck, filter, mergeMap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { combineEpics, ofType } from 'redux-observable';
 
@@ -15,7 +15,7 @@ socket.connect();
 
 const fetchOrgToJoinChannel = action$ => action$.pipe(
   ofType(OrgActionTypes.FETCH_ORG_SUCCESS),
-  mergeMap(({ payload: { org: { conversations } } }) => conversations.map(conv => SocketActions.joinChannel({ channelName: `conversation:${conv.id}` })))
+  map(({ payload: { org: { id } } }) => SocketActions.joinChannel({ channelName: `events:${id}` }))
 )
 
 
@@ -43,9 +43,9 @@ const joinChannel = action$ => action$.pipe(
       pushToChannel$.subscribe(({ data }) => channel.push(channelName, data));
 
       channel.onMessage = (event, payload) => {
-        const [agora, eventName] = event.split(':');
-        const isAgoraEvent = agora === 'agora';
-        if (isAgoraEvent) {
+        const [quicksnap, eventName] = event.split(':');
+        const isSnapperEvent = quicksnap === 'quicksnap';
+        if (isSnapperEvent) {
           observer.next({
             type: ActionTypes.RECEIVE_CHANNEL_MESSAGE,
             payload: {
