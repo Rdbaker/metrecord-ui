@@ -12,7 +12,6 @@ import { SHIM_URL, SNAPPER_ON_SNAPPER_CLIENT_ID, DEBUG } from 'constants/resourc
 import { setMe } from 'modules/auth/actions';
 import { fetchOrg } from 'modules/org/actions';
 
-import ChatView from './views/chat';
 import Onboard from './views/onboard';
 import Home from './views/home';
 import Account from './views/account';

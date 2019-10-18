@@ -2,6 +2,9 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
+import LoadingDots from 'components/LoadingDots';
+import ChartDateSelect from 'components/ChartDateSelect';
+
 import './style.css';
 
 
@@ -22,14 +25,13 @@ const createPlotOptions = series => ({
       lineColor: '#666666',
       lineWidth: 1,
       marker: {
-          lineWidth: 1,
-          lineColor: '#666666'
+        enabled: false,
       }
     }
   },
   xAxis: {
     title: {
-      text: null
+      text: 'Time'
     },
     type: 'datetime',
     dateTimeLabelFormats: {
@@ -52,12 +54,16 @@ const createPlotOptions = series => ({
     enabled: true,
   },
   title: {
-    text: '',
+    text: 'Browser Load Speed',
   },
   chart: {
     style: {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     },
+    backgroundColor: 'transparent',
+  },
+  credits: {
+    enabled: false,
   },
   series,
 });
@@ -78,7 +84,7 @@ const createSeriesFromCategory = (categoryName, categoryData, earliestDate, late
   // fill in all days that have no data with 0 values
   while (earliestDate + offset <= latestDate) {
     if (!dateToCountMap.hasOwnProperty(earliestDate + offset)) {
-      dateToCountMap[earliestDate + offset] = 0
+      dateToCountMap[earliestDate + offset] = null
     }
     offset += ONE_MINUTE;
   }
@@ -86,9 +92,12 @@ const createSeriesFromCategory = (categoryName, categoryData, earliestDate, late
   return {
     name: categoryNameToLabel[categoryName],
     type: 'area',
-    data: Object.entries(dateToCountMap).map(([date, count]) => ({
+    marker: {
+      symbol: 'circle',
+    },
+    data: Object.entries(dateToCountMap).map(([date, time]) => ({
       x: Number(date),
-      y: count
+      y: time !== null ? Math.round(time) : null,
     })).sort((a, b) => a.x - b.x)
   };
 }
@@ -118,11 +127,11 @@ const createSeriesFromRawData = rawData => {
 }
 
 const EmptyChart = () => (
-  <div>You have no data to display here!</div>
+  <div className="browser-metrics-empty-chart--container">You have no data to display here!</div>
 )
 
 const LoadingChart = () => (
-  <div>Loading your chart!</div>
+  <div className="browser-metrics-loading-chart--container">Loading your chart<LoadingDots /></div>
 )
 
 const BrowserMetricsChart = ({
@@ -136,21 +145,22 @@ const BrowserMetricsChart = ({
   if (neverFetched) {
     fetchBrowserMinuteSummary();
   }
+  let chart = () => <div></div>;
 
   if (!loading && data && data.length === 0) {
-    return <EmptyChart />
+    chart = <EmptyChart />
+  } else if (loading || neverFetched) {
+    chart = <LoadingChart />
+  } else {
+    const options = createPlotOptions(createSeriesFromRawData(data));
+    chart = <HighchartsReact highcharts={Highcharts} options={options} />
   }
 
-  if (loading || neverFetched) {
-    return <LoadingChart />
-  }
 
-  const options = createPlotOptions(createSeriesFromRawData(data));
-
-  console.log(options)
   return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <div className="browser-metrics-chart--container">
+      <ChartDateSelect onChange={({ start, end }) => fetchBrowserMinuteSummary(start, end)}/>
+      {chart}
     </div>
   )
 }

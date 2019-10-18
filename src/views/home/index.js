@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { EventsAPI } from 'api/events';
-
 import Header from 'components/Header';
 import BrowserMetricsChart from 'containers/BrowserMetricsChart';
 

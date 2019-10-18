@@ -1,0 +1,21 @@
+.browser-metrics-loading-chart--container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.browser-metrics-loading-chart--container,
+.browser-metrics-empty-chart--container {
+  max-width: 1200px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 16px;
+}
+
+.browser-metrics-chart--container {
+  max-width: 1200px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}

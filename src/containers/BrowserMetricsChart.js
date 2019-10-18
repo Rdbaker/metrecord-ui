@@ -12,11 +12,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
-    fetchBrowserMinuteSummary: () => {
+    fetchBrowserMinuteSummary: (start, end) => {
       const oneHour = 1000 * 60 * 60;
-      const end = new Date();
-      const start = new Date(end - oneHour);
-      return dispatch(fetchBrowserMinuteSummary(start, end));
+      const defaultEnd = new Date();
+      const defaultStart = new Date(defaultEnd - oneHour);
+      return dispatch(fetchBrowserMinuteSummary(start || defaultStart, end || defaultEnd));
     },
   }
 });
