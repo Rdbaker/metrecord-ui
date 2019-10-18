@@ -15,7 +15,7 @@ import boto3
 from .constants import Constants
 
 logging.basicConfig(format='%(name)-12s: %(levelname)-8s:%(message)s', level=logging.INFO)
-deploy_logger = logging.getLogger('raveback.uploader')
+deploy_logger = logging.getLogger('snapper.uploader')
 
 S3 = boto3.resource('s3')
 
@@ -57,7 +57,7 @@ def upload_files(bucket):
         reldir = os.path.relpath('.', Constants.DIST_DIR)
         relfile = os.path.join(reldir, fname)
         # boto3 doesn't like relative files
-        uploadfile = 'widget/{}'.format(os.path.relpath(fname, os.getcwd()))
+        uploadfile = '{}'.format(os.path.relpath(fname, os.getcwd()))
         # get the file extension
         _, file_extension = os.path.splitext(relfile)
         extra_args = { 'ACL':'public-read', 'ContentType': get_content_type_from_ext(file_extension) }

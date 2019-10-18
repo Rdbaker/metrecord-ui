@@ -101,6 +101,7 @@ class App extends Component {
       window.snapper = {};
       const m = ['init', 'snap', 'debug']; window.snapper._c = [];
       m.forEach(me => window.snapper[me] = function() {window.snapper._c.push([me, arguments])});
+      window.addEventListener('load', () => snapper.snap());
       var elt = document.createElement('script');
       elt.type = "text/javascript"; elt.async = true;
       elt.src = SHIM_URL;

@@ -10,8 +10,8 @@ import os
 
 class Constants(object):
     BUCKETS = {
-        'development': 'app-getquicksnap-com',
-        'production': 'dev-getquicksnap-com',
+        'development': 'dev-getquicksnap-com',
+        'production': 'app-getquicksnap-com',
     }
     AUTHOR = getpass.getuser()
     REPO_SSH = 'git@github.com:Rdbaker/snapper-ui.git'

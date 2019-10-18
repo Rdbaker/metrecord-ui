@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { path } from 'ramda';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { getSnippet } from '../account/snippet';
 
 import './style.css';
+import { EventsAPI } from 'api/events';
 
 
 class Onboarding extends Component {
@@ -21,8 +22,18 @@ class Onboarding extends Component {
     this.checkIfNeedsOnboarding();
   }
 
-  checkIfNeedsOnboarding = () => {
-    this.setState({ loading: false });
+  checkIfNeedsOnboarding = async () => {
+    try {
+      const { has_any_events: doesntNeedOnboarding } = await EventsAPI.hasAny();
+      if (doesntNeedOnboarding) {
+        this.props.history.push('/home');
+      } else {
+        this.setState({ loading: false });
+      }
+    } catch (e) {
+      console.warn(e)
+      this.setState({ loading: false });
+    }
   }
 
   copySnippet = () => {
@@ -67,4 +78,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps)(Onboarding);
+export default connect(mapStateToProps)(withRouter(Onboarding));

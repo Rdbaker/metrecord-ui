@@ -13,5 +13,16 @@ export const EventsAPI = {
       },
     })
     .then(checkStatus)
-  }
+  },
+
+  hasAny() {
+    return fetch(`${API_URL}/api/events/has_any`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 }
