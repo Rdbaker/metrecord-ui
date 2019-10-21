@@ -15,6 +15,7 @@ import { fetchOrg } from 'modules/org/actions';
 import Onboard from './views/onboard';
 import Home from './views/home';
 import Account from './views/account';
+import NewChart from './views/newchart';
 import './App.css';
 import { checkStatus } from 'utils/http';
 
@@ -153,6 +154,7 @@ class App extends Component {
             <Route path="/login" component={EmailLogin}/>
             <Route path="/signup" component={EmailSignup}/>
             <Route path="/settings" render={this.makeLoginRequiredComponent(Account)} />
+            <Route path="/new-chart" render={this.makeLoginRequiredComponent(NewChart)} />
           </CurrentUser.Provider>
         </div>
       </BrowserRouter>

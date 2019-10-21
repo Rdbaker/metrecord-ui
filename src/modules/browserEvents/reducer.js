@@ -4,7 +4,7 @@ import { ActionTypes } from './constants';
 
 
 const defaultState = {
-  minuteSummary: {
+  summary: {
     data: null,
     meta: {
       lastFetched: null,
@@ -15,30 +15,30 @@ const defaultState = {
 };
 
 
-const fetchBrowserMinuteSummarySuccess = (state, payload) => {
-  state.minuteSummary.data = payload.data;
-  state.minuteSummary.meta.status = ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_SUCCESS;
-  state.minuteSummary.meta.lastFetched = new Date();
+const fetchBrowserSummarySuccess = (state, payload) => {
+  state.summary.data = payload.data;
+  state.summary.meta.status = ActionTypes.FETCH_BROWSER_SUMMARY_SUCCESS;
+  state.summary.meta.lastFetched = new Date();
 };
 
-const fetchBrowserMinuteSummaryPending = state => {
-  state.status = ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_PENDING;
+const fetchBrowserSummaryPending = state => {
+  state.status = ActionTypes.FETCH_BROWSER_SUMMARY_PENDING;
 };
 
-const fetchBrowserMinuteSummaryFailed = (state, payload) => {
-  state.status = ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_FAILED;
+const fetchBrowserSummaryFailed = (state, payload) => {
+  state.status = ActionTypes.FETCH_BROWSER_SUMMARY_FAILED;
   state.error = payload.err;
 };
 
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
-    case ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_SUCCESS:
-      return produce(state, draft => fetchBrowserMinuteSummarySuccess(draft, action.payload));
-    case ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_PENDING:
-      return produce(state, draft => fetchBrowserMinuteSummaryPending(draft));
-    case ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_FAILED:
-      return produce(state, draft => fetchBrowserMinuteSummaryFailed(draft, action.payload));
+    case ActionTypes.FETCH_BROWSER_SUMMARY_SUCCESS:
+      return produce(state, draft => fetchBrowserSummarySuccess(draft, action.payload));
+    case ActionTypes.FETCH_BROWSER_SUMMARY_PENDING:
+      return produce(state, draft => fetchBrowserSummaryPending(draft));
+    case ActionTypes.FETCH_BROWSER_SUMMARY_FAILED:
+      return produce(state, draft => fetchBrowserSummaryFailed(draft, action.payload));
     default:
       return state;
   }

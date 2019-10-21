@@ -15,6 +15,17 @@ export const EventsAPI = {
     .then(checkStatus)
   },
 
+  browserHour(start, end) {
+    return fetch(`${API_URL}/api/browser/performance/hour?start_date=${start.toISOString()}&end_date=${end.toISOString()}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
+
   hasAny() {
     return fetch(`${API_URL}/api/events/has_any`,{
       method: 'GET',
@@ -25,4 +36,15 @@ export const EventsAPI = {
     })
     .then(checkStatus)
   },
+
+  nameTypeahead(name) {
+    return fetch(`${API_URL}/api/events/typeahead?name=${name}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  }
 }

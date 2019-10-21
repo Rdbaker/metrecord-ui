@@ -1,17 +1,22 @@
-.grow {
-    flex-grow: 1;
+.new-chart-button:hover {
+  background: #35b735;
 }
 
-.wsl-main-nav a {
-    color: inherit;
-    margin-right: 20px;
-    text-decoration: none;
+.new-chart-button {
+  text-decoration: none;
+  color: white;
+  background: #3cca3c;
+  border-radius: 3px;
+  padding: 5px 7px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  transition: background 0.3s ease;
 }
 
-.wsl-main-nav a:last-child {
-    margin-right: 0;
-}
-
-.wsl-main-nav a.active {
-    font-weight: bold;
+.header-row {
+  position: relative;
 }

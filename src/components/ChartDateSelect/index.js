@@ -1,8 +1,8 @@
 import React from 'react';
 
 
-const threeDays = 1000 * 60 * 60 * 24 * 3;
-const oneHour = 1000 * 60 * 60;
+const sevenDays = 1000 * 60 * 60 * 24 * 7;
+const threeHours = 1000 * 60 * 60 * 3;
 
 
 const ChartDateSelect = ({
@@ -11,8 +11,8 @@ const ChartDateSelect = ({
   const now = new Date();
   return (
     <div>
-      <div onClick={() => onChange({ start: new Date(now - oneHour), end: now })}>last hour</div>
-      <div onClick={() => onChange({ start: new Date(now - threeDays), end: now })}>last three days</div>
+      <div onClick={() => onChange({ start: new Date(now - threeHours), end: now })}>last three hours</div>
+      <div onClick={() => onChange({ start: new Date(now - sevenDays), end: now })}>last seven days</div>
     </div>
   )
 }

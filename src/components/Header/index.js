@@ -6,9 +6,8 @@ import './styles.css';
 class Header extends Component {
   render() {
     return (
-      <div>
-        <NavLink to="/" exact={true} activeClassName="active">Home</NavLink>
-        <NavLink to="/account" activeClassName="active">Account</NavLink>
+      <div className="header-row">
+        <NavLink to="/new-chart" exact={true} className="new-chart-button">New Chart</NavLink>
       </div>
     );
   }

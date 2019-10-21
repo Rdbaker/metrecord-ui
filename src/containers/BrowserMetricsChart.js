@@ -1,22 +1,22 @@
 import { connect } from 'react-redux';
 
 import BrowserMetricsChart from 'components/BrowserMetricsChart';
-import { minuteSummaryLoading, minuteSummaryNeverFetched, minuteSummaryData } from 'modules/browserEvents/selectors';
-import { fetchBrowserMinuteSummary } from 'modules/browserEvents/actions';
+import { summaryLoading, summaryNeverFetched, summaryData } from 'modules/browserEvents/selectors';
+import { fetchBrowserSummary } from 'modules/browserEvents/actions';
 
 const mapStateToProps = state => ({
-  loading: minuteSummaryLoading(state),
-  neverFetched: minuteSummaryNeverFetched(state),
-  data: minuteSummaryData(state),
+  loading: summaryLoading(state),
+  neverFetched: summaryNeverFetched(state),
+  data: summaryData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
-    fetchBrowserMinuteSummary: (start, end) => {
+    fetchBrowserSummary: (start, end) => {
       const oneHour = 1000 * 60 * 60;
       const defaultEnd = new Date();
       const defaultStart = new Date(defaultEnd - oneHour);
-      return dispatch(fetchBrowserMinuteSummary(start || defaultStart, end || defaultEnd));
+      return dispatch(fetchBrowserSummary(start || defaultStart, end || defaultEnd));
     },
   }
 });

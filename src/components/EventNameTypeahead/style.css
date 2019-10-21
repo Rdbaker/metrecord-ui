@@ -1,0 +1,22 @@
+.event-typeahead-input {
+  width: 100%;
+  border-radius: 3px;
+  box-shadow: none;
+  border: 1px solid #dfdfdf;
+  height: 28px;
+  font-size: 16px;
+  padding: 2px 8px;
+  box-sizing: border-box;
+}
+
+.event-typeahead--container {
+  width: 330px;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.typeahead-results--container {
+  padding: 4px;
+  background: white;
+  box-shadow: 0px 1px 3px #cfcfcf;
+}

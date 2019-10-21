@@ -10,9 +10,11 @@ import authReducer from 'modules/auth/reducer';
 import orgReducer from 'modules/org/reducer';
 import userReducer from 'modules/user/reducer';
 import browserEventsReducer from 'modules/browserEvents/reducer';
+import eventsReducer from 'modules/events/reducer';
 import orgEpic from 'modules/org/epic';
 import userEpic from 'modules/user/epic';
 import socketEpic from 'modules/socket/epic';
+import eventEpic from 'modules/events/epic';
 import browserEventsEpic from 'modules/browserEvents/epic';
 import { DEBUG } from 'constants/resources';
 
@@ -42,10 +44,11 @@ const store = createStore(
     org: orgReducer,
     user: userReducer,
     browserEvents: browserEventsReducer,
+    events: eventsReducer,
   }),
   compose(
-    applyMiddleware(loggingMiddleware),
     applyMiddleware(epicMiddleware),
+    applyMiddleware(loggingMiddleware),
   ),
 );
 
@@ -55,6 +58,7 @@ epicMiddleware.run(
     socketEpic,
     userEpic,
     browserEventsEpic,
+    eventEpic,
   )
 )
 

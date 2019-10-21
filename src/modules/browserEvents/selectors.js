@@ -1,8 +1,8 @@
 import { ActionTypes } from "./constants"
 
 const root = state => state.browserEvents
-const minuteSummaryRoot = state => root(state).minuteSummary
-const minuteSummaryMeta = state => minuteSummaryRoot(state).meta
-export const minuteSummaryNeverFetched = state => minuteSummaryMeta(state).status === null;
-export const minuteSummaryLoading = state => minuteSummaryMeta(state).status === ActionTypes.FETCH_BROWSER_MINUTE_SUMMARY_PENDING;
-export const minuteSummaryData = state => minuteSummaryRoot(state).data;
+const summaryRoot = state => root(state).summary
+const summaryMeta = state => summaryRoot(state).meta
+export const summaryNeverFetched = state => summaryMeta(state).status === null;
+export const summaryLoading = state => summaryMeta(state).status === ActionTypes.FETCH_BROWSER_SUMMARY_PENDING;
+export const summaryData = state => summaryRoot(state).data;

@@ -8,16 +8,6 @@ import ChartDateSelect from 'components/ChartDateSelect';
 import './style.css';
 
 
-const categoryNameToLabel = {
-  dnsTime: 'DNS resolution',
-  tcpTime: 'Connection time',
-  ttfb: 'Time to first byte (ttfb)',
-  tti: 'Time to interactive (tti)',
-  domLoadCallbacks: 'DOM loaded callbacks',
-  domComplete: 'DOM render complete',
-  serverTime: 'Server time',
-}
-
 const createPlotOptions = series => ({
   plotOptions: {
     area: {

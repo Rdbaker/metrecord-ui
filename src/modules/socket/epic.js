@@ -15,7 +15,7 @@ socket.connect();
 
 const fetchOrgToJoinChannel = action$ => action$.pipe(
   ofType(OrgActionTypes.FETCH_ORG_SUCCESS),
-  map(({ payload: { org: { id } } }) => SocketActions.joinChannel({ channelName: `events:${id}` }))
+  map(({ payload: { org: { client_secret } } }) => SocketActions.joinChannel({ channelName: `events:${client_secret}` }))
 )
 
 
