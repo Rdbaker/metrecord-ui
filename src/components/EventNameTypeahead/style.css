@@ -98,7 +98,7 @@
 
 .event-typeahead-loading {
   position: absolute;
-  top: 31px;
+  top: 50px;
   right: 24px;
   font-size: 10px;
   display: flex;
