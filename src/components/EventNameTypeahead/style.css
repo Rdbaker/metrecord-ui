@@ -34,7 +34,7 @@
 
 .typeahead-result-field--label {
   display: inline-block;
-  color: #414252;
+  color: #7b808e;
   font-weight: 600;
   font-size: 10px;
   text-transform: uppercase;
@@ -94,4 +94,29 @@
   padding: 4px;
   transition: background 0.2s ease;
   cursor: pointer;
+}
+
+.event-typeahead-loading {
+  position: absolute;
+  top: 31px;
+  right: 24px;
+  font-size: 10px;
+  display: flex;
+  align-items: baseline;
+  color: rgb(57, 79, 90);
+}
+
+.typeahead-no-results {
+  padding: 8px;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+  color: #7b808e;
+}
+
+.event-typeahead--label {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #7b808e;
+  font-weight: 600;
 }

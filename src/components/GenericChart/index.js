@@ -63,7 +63,7 @@ const ONE_MINUTE = 1000 * 60;
 const ONE_HOUR = ONE_MINUTE * 60;
 const ONE_THOUSAND_MINUTE = ONE_MINUTE * 1000;
 
-const createSeriesFromCategory = (categoryName, categoryData, earliestDate, latestDate) => {
+const createSeriesFromCategory = (categoryData, earliestDate, latestDate) => {
   const dateToCountMap = {}
 
   categoryData.forEach(({ x, y }) => {
@@ -83,40 +83,24 @@ const createSeriesFromCategory = (categoryName, categoryData, earliestDate, late
   }
 
   return {
-    name: categoryNameToLabel[categoryName],
     type: 'area',
     marker: {
       symbol: 'circle',
     },
-    data: Object.entries(dateToCountMap).map(([date, time]) => ({
+    data: Object.entries(dateToCountMap).map(([date, number]) => ({
       x: Number(date),
-      y: time !== null ? Math.round(time) : null,
+      y: number !== null ? Math.round(number) : null,
     })).sort((a, b) => a.x - b.x)
   };
 }
 
 const createSeriesFromRawData = rawData => {
-  const grouped = {
-    domComplete: [],
-    domLoadCallbacks: [],
-    tti: [],
-    ttfb: [],
-    serverTime: [],
-    tcpTime: [],
-    dnsTime: [],
-  };
-  rawData.forEach(datum => {
-    Object.entries(datum).forEach(([category, time]) => {
-      if (grouped[category]) {
-        grouped[category].push({y: Number(time), x: new Date(datum.minute)});
-      }
-    });
-  });
+  const data = rawData.map(datum => ({y: Number(datum.value), x: new Date(datum.minute)}));
 
   const dates = rawData.map(datum => new Date(datum.minute));
   const earliestDate = Math.min(...dates.map(x => Number(x)));
   const latestDate = Math.max(...dates.map(x => Number(x)));
-  return Object.entries(grouped).map(([categoryName, categoryData]) => createSeriesFromCategory(categoryName, categoryData, earliestDate, latestDate))
+  return createSeriesFromCategory(data, earliestDate, latestDate);
 }
 
 const EmptyChart = () => (
@@ -127,16 +111,18 @@ const LoadingChart = () => (
   <div className="browser-metrics-loading-chart--container">Loading your chart<LoadingDots /></div>
 )
 
-const BrowserMetricsChart = ({
+const GenericChart = ({
   dispatcher: {
-    fetchBrowserSummary,
+    fetchChartData,
   },
+  chartId,
   neverFetched,
   loading,
   data,
+  config,
 }) => {
   if (neverFetched) {
-    fetchBrowserSummary();
+    fetchChartData(chartId);
   }
   let chart = () => <div></div>;
 
@@ -152,10 +138,10 @@ const BrowserMetricsChart = ({
 
   return (
     <div className="browser-metrics-chart--container">
-      <ChartDateSelect onChange={({ start, end }) => fetchBrowserSummary(start, end)}/>
+      <ChartDateSelect onChange={({ start, end }) => fetchChartData(start, end)}/>
       {chart}
     </div>
   )
 }
 
-export default BrowserMetricsChart;
+export default GenericChart;

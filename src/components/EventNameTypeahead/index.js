@@ -1,7 +1,8 @@
-import React, { useState, Fragment } from 'react';
-
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowRight } from '@fortawesome/pro-regular-svg-icons';
+
+import LoadingDots from 'components/LoadingDots/index';
 
 import './style.css';
 
@@ -94,13 +95,14 @@ const EventNameTypeahead = ({
 
   return (
     <div className="event-typeahead--container">
-      <input placeholder="Event name..." className="event-typeahead-input" value={name} onChange={updateName} />
-      {loading && <div>Loading...</div>}
+      <label for="event-name" className="event-typeahead--label">Search events by name</label>
+      <input id="event-name" placeholder="Event name..." className="event-typeahead-input" value={name} onChange={updateName} />
+      {loading && <div className="event-typeahead-loading">Loading<LoadingDots /></div>}
       {!!name && !loading &&
-        <Fragment>
-          {!!data.length && <div className="typeahead-results--container">{data.map((res, i) => <TypeaheadResult key={i} {...res} searchString={name} onClick={() => chooseOption(res)} />)}</div>}
-          {!data.length && canShowNoResults && <div>no results</div>}
-        </Fragment>
+        <div className="typeahead-results--container">
+          {!!data.length && data.map((res, i) => <TypeaheadResult key={i} {...res} searchString={name} onClick={() => chooseOption(res)} />)}
+          {!data.length && canShowNoResults && <div className="typeahead-no-results">no results</div>}
+        </div>
       }
     </div>
   )
