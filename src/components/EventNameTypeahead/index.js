@@ -1,8 +1,13 @@
 import React, { useState, Fragment } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowRight } from '@fortawesome/pro-regular-svg-icons';
+
 import './style.css';
 
 let timeoutId = null;
+
+const numFmtr = new Intl.NumberFormat(navigator.languages, {notation: 'compact'});
 
 const highlightWords = (line, word) => {
   const regex = new RegExp( '(' + word + ')', 'gi' );
@@ -21,21 +26,27 @@ const TypeaheadResult = ({
   first_seen: firstSeen,
   count,
   searchString,
+  onClick,
 }) => (
-  <div>
-    <div>
-      <div>name</div>
-      <div dangerouslySetInnerHTML={{ __html: highlightWords(htmlDecode(name), searchString) }} />
-      <div>events {count}</div>
+  <div className="typeahead-result--container" onClick={onClick}>
+    <div className="typeahead-top-row--container">
+      <div className="typeahead-name--container">
+        <div className="typeahead-result-field--label">name</div>
+        <div dangerouslySetInnerHTML={{ __html: highlightWords(htmlDecode(name), searchString) }} />
+      </div>
+      <div className="typeahead-events-count-badge"><div className="typeahead-result-field--label">events</div><div className="typeahead-result-field--value">{numFmtr.format(count)}</div></div>
     </div>
-    <div>
+    <div className="typeahead-bottom-row--container">
       <div>
-        <div>first seen</div>
-        <div>{new Date(lastSeen).toLocaleDateString()}</div>
+        <div className="typeahead-result-field--label">first seen</div>
+        <div className="typeahead-result-field--value">{new Date(lastSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
       </div>
       <div>
-        <div>last seen</div>
-        <div>{new Date(firstSeen).toLocaleDateString()}</div>
+        <FontAwesomeIcon icon={faLongArrowRight} />
+      </div>
+      <div>
+        <div className="typeahead-result-field--label">last seen</div>
+        <div className="typeahead-result-field--value">{new Date(firstSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
       </div>
     </div>
   </div>
@@ -48,11 +59,17 @@ const EventNameTypeahead = ({
   typeaheadStale,
   typeaheadLoading,
   typeaheadData,
+  onClick,
 }) => {
   const [name, setName] = useState('');
   // need to timeout us being able to show no results to wait for the
   // fetch action to be dispatched
   const [canShowNoResults, setCanShowNoResults] = useState(true);
+  const chooseOption = (option) => {
+    setName(option.name);
+    onClick(option);
+    setCanShowNoResults(false);
+  };
   const loading = typeaheadLoading(name);
   const data = typeaheadData(name);
 
@@ -81,7 +98,7 @@ const EventNameTypeahead = ({
       {loading && <div>Loading...</div>}
       {!!name && !loading &&
         <Fragment>
-          {!!data.length && <div className="typeahead-results--container">{data.map((res, i) => <TypeaheadResult key={i} {...res} searchString={name} />)}</div>}
+          {!!data.length && <div className="typeahead-results--container">{data.map((res, i) => <TypeaheadResult key={i} {...res} searchString={name} onClick={() => chooseOption(res)} />)}</div>}
           {!data.length && canShowNoResults && <div>no results</div>}
         </Fragment>
       }
