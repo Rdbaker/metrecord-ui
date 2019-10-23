@@ -46,5 +46,16 @@ export const EventsAPI = {
       },
     })
     .then(checkStatus)
+  },
+
+  fetchCount(name, start, end) {
+    return fetch(`${API_URL}/api/events/${name}/count?start_date=${start.toISOString()}&end_date=${end.toISOString()}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
   }
 }

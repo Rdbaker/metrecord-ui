@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -94,13 +94,15 @@ const createSeriesFromCategory = (categoryData, earliestDate, latestDate) => {
   };
 }
 
-const createSeriesFromRawData = rawData => {
-  const data = rawData.map(datum => ({y: Number(datum.value), x: new Date(datum.minute)}));
+const createSeriesFromRawData = (rawData, type) => {
+  if (type === 'LINE' || type === 'AREA') {
+    const data = rawData.map(datum => ({y: Number(datum.value), x: new Date(datum.minute)}));
 
-  const dates = rawData.map(datum => new Date(datum.minute));
-  const earliestDate = Math.min(...dates.map(x => Number(x)));
-  const latestDate = Math.max(...dates.map(x => Number(x)));
-  return createSeriesFromCategory(data, earliestDate, latestDate);
+    const dates = rawData.map(datum => new Date(datum.minute));
+    const earliestDate = Math.min(...dates.map(x => Number(x)));
+    const latestDate = Math.max(...dates.map(x => Number(x)));
+    return createSeriesFromCategory(data, earliestDate, latestDate);
+  }
 }
 
 const EmptyChart = () => (
@@ -112,18 +114,18 @@ const LoadingChart = () => (
 )
 
 const GenericChart = ({
-  dispatcher: {
-    fetchChartData,
-  },
-  chartId,
+  fetchChartData,
   neverFetched,
   loading,
   data,
-  config,
+  type,
+  event,
 }) => {
-  if (neverFetched) {
-    fetchChartData(chartId);
-  }
+  useEffect(() => {
+    if (neverFetched) {
+      fetchChartData();
+    }
+  })
   let chart = () => <div></div>;
 
   if (!loading && data && data.length === 0) {
@@ -131,7 +133,7 @@ const GenericChart = ({
   } else if (loading || neverFetched) {
     chart = <LoadingChart />
   } else {
-    const options = createPlotOptions(createSeriesFromRawData(data));
+    const options = createPlotOptions(createSeriesFromRawData(data, type));
     chart = <HighchartsReact highcharts={Highcharts} options={options} />
   }
 

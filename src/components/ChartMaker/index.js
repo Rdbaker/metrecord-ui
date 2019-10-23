@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faChartLine, faChartArea, faTally } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
 
+import GenericChart from 'components/GenericChart/index';
 import EventNameTypeahead from 'containers/EventNameTypeahead';
 
 import './style.css';
+import { EventsAPI } from 'api/events';
 
 
 const ChartTypes = {
@@ -13,6 +15,13 @@ const ChartTypes = {
   LINE: 'LINE',
   AREA: 'AREA',
   COUNT: 'COUNT',
+};
+
+const ChartTypeToAPICall = {
+  HISTOGRAM: () => ([]),
+  LINE: () => ([]),
+  AREA: () => ([]),
+  COUNT: EventsAPI.fetchCount,
 };
 
 
@@ -23,7 +32,38 @@ class ChartMaker extends Component {
     this.state = {
       selectedEvent: null,
       selectedChartType: null,
+      chartDataNeverFetched: true,
+      chartDataLoading: false,
+      chartData: [],
+      chartDataFetchError: null,
     };
+  }
+
+  fetchChartData = async (start, end) => {
+    const {
+      selectedChartType,
+      selectedEvent,
+    } = this.state;
+
+    this.setState({
+      chartDataLoading: true,
+      chartDataNeverFetched: false,
+    });
+
+    const fetchEnd = end || new Date();
+    const fetchStart = start || new Date(+fetchEnd + 1000 * 60 * 60 * 3);
+    try {
+      const { data } = await ChartTypeToAPICall[selectedChartType](selectedEvent, fetchStart, fetchEnd);
+      this.setState({
+        chartData: data,
+        chartDataLoading: false,
+      });
+    } catch (e) {
+      this.setState({
+        chartDataFetchError: e,
+        chartDataLoading: false,
+      });
+    }
   }
 
   renderChartOptionsMaker() {
@@ -69,9 +109,28 @@ class ChartMaker extends Component {
   }
 
   renderChart() {
+    const {
+      selectedChartType,
+      selectedEvent,
+      chartData,
+      chartDataLoading,
+      chartDataNeverFetched,
+    } = this.state;
+
+    if (!selectedChartType || !selectedEvent) {
+      return null;
+    }
+
     return (
       <div>
-        this is the chart
+        <GenericChart
+          type={selectedChartType}
+          event={selectedEvent}
+          fetchChartData={this.fetchChartData}
+          neverFetched={chartDataNeverFetched}
+          data={chartData}
+          loading={chartDataLoading}
+        />
       </div>
     )
   }
