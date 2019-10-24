@@ -36,6 +36,7 @@ class ChartMaker extends Component {
       chartDataLoading: false,
       chartData: [],
       chartDataFetchError: null,
+      chartTitle: 'New Chart',
     };
   }
 
@@ -64,6 +65,10 @@ class ChartMaker extends Component {
         chartDataLoading: false,
       });
     }
+  }
+
+  changeTitle = (title) => {
+    this.setState({ chartTitle: title });
   }
 
   renderChartOptionsMaker() {
@@ -115,6 +120,7 @@ class ChartMaker extends Component {
       chartData,
       chartDataLoading,
       chartDataNeverFetched,
+      chartTitle,
     } = this.state;
 
     if (!selectedChartType || !selectedEvent) {
@@ -122,7 +128,7 @@ class ChartMaker extends Component {
     }
 
     return (
-      <div>
+      <div className="chart-maker-generic--container">
         <GenericChart
           type={selectedChartType}
           event={selectedEvent}
@@ -130,6 +136,9 @@ class ChartMaker extends Component {
           neverFetched={chartDataNeverFetched}
           data={chartData}
           loading={chartDataLoading}
+          title={chartTitle}
+          onTitleChange={this.changeTitle}
+          size="full"
         />
       </div>
     )

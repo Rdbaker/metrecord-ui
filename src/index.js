@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import * as Sentry from '@sentry/browser';
+import 'react-dates/initialize';
 
 import authReducer from 'modules/auth/reducer';
 import orgReducer from 'modules/org/reducer';

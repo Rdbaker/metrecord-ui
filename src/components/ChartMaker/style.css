@@ -44,3 +44,21 @@
   font-weight: 600;
   margin-left: 16px;
 }
+
+
+.chart-maker-generic--container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.count-chart--value {
+  padding: 8px;
+}
+
+.full .count-chart--value {
+  font-size: 72px;
+}
+
+.medium .count-chart--value {
+  font-size: 48px;
+}

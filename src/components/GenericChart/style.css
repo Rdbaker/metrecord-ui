@@ -1,0 +1,19 @@
+.count-chart--container {
+  text-align: center;
+}
+
+.generic-chart--container {
+  box-shadow: 0 1px 2px 0 rgba(70, 82, 89, 0.24), 0 1px 3px 0 rgba(70, 82, 89, 0.12);
+  border-radius: 3px;
+  background: white;
+  margin: 16px;
+  padding: 8px;
+}
+
+.generic-chart--container.full {
+  width: 100%;
+}
+
+.generic-chart--container.medium {
+  width: 500px;
+}

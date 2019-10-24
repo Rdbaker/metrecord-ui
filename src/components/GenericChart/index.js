@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import cx from 'classnames';
 
 import LoadingDots from 'components/LoadingDots';
 import ChartDateSelect from 'components/ChartDateSelect';
 
+import CountChart from './CountChart';
 import './style.css';
 
 
-const createPlotOptions = series => ({
+const createPlotOptions = (series, title) => ({
   plotOptions: {
     area: {
       stacking: 'normal',
@@ -44,7 +46,7 @@ const createPlotOptions = series => ({
     enabled: true,
   },
   title: {
-    text: 'Browser Load Speed',
+    text: title,
   },
   chart: {
     style: {
@@ -120,6 +122,9 @@ const GenericChart = ({
   data,
   type,
   event,
+  title,
+  onTitleChange,
+  size="medium",
 }) => {
   useEffect(() => {
     if (neverFetched) {
@@ -132,14 +137,16 @@ const GenericChart = ({
     chart = <EmptyChart />
   } else if (loading || neverFetched) {
     chart = <LoadingChart />
+  } else if (type === 'COUNT') {
+    chart = <CountChart count={data.count} title={title} size={size} onTitleChange={onTitleChange} />
   } else {
-    const options = createPlotOptions(createSeriesFromRawData(data, type));
+    const options = createPlotOptions(createSeriesFromRawData(data, type), title);
     chart = <HighchartsReact highcharts={Highcharts} options={options} />
   }
 
 
   return (
-    <div className="browser-metrics-chart--container">
+    <div className={cx("generic-chart--container", size)}>
       <ChartDateSelect onChange={({ start, end }) => fetchChartData(start, end)}/>
       {chart}
     </div>
