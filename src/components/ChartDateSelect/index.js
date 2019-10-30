@@ -10,18 +10,23 @@ const ChartDateSelect = ({
   onChange,
   start = moment(),
   end = moment(),
+  className=''
 }) => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [startDate, setStartDate] = useState(start);
   const [endDate, setEndDate] = useState(end);
   useEffect(() => {
     if (startDate && endDate) {
-      onChange({ start: startDate.toDate(), end: endDate.toDate() });
+      const start = startDate.toDate();
+      const end = endDate.toDate();
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+      onChange({ start, end });
     }
   }, [startDate, endDate]);
 
   return (
-    <div>
+    <div className={className}>
       <DateRangePicker
         startDate={startDate}
         startDateId={startDate ? String(startDate) : "temp_start_date_id"}

@@ -17,3 +17,19 @@
 .generic-chart--container.medium {
   width: 500px;
 }
+
+
+.generic-chart-loading-chart--text {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.generic-chart-loading-chart--container,
+.generic-chart-empty-chart--container {
+  max-width: 1200px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 16px;
+}

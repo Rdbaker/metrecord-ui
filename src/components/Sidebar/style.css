@@ -1,6 +1,6 @@
-.agora-sidebar--container {
+.quicksnap-sidebar--container {
   width: 60px;
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -9,16 +9,16 @@
   color: var(--color-green-1);
 }
 
-.agora-sidebar-link:hover {
+.quicksnap-sidebar-link:hover {
   background: var(--color-blue-3);
 }
 
-.agora-sidebar-link.active {
+.quicksnap-sidebar-link.active {
   background: var(--color-blue-3);
   color: var(--color-green-5);
 }
 
-.agora-sidebar-link {
+.quicksnap-sidebar-link {
   transition: background 0.3s ease;
   color: var(--color-green-1);
   padding: 12px;
@@ -32,17 +32,17 @@
   box-sizing: border-box;
 }
 
-.agora-sidebar-link svg.svg-inline--fa {
+.quicksnap-sidebar-link svg.svg-inline--fa {
   width: 30px;
   height: 24px;
 }
 
-.agora-sidebar-settings-button {
+.quicksnap-sidebar-settings-button {
   position: absolute;
   bottom: 50px;
 }
 
-.agora-sidebar-sign-out-button {
+.quicksnap-sidebar-sign-out-button {
   position: absolute;
   bottom: 0;
 }

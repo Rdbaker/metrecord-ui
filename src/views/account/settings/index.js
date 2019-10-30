@@ -119,7 +119,7 @@ class AccountSettings extends Component {
     return (
       <div className="account-settings-form-container">
         <p>
-            Welcome to your settings! Here you can update information related to your Agora chat.
+            Welcome to your settings! Here you can update information related to your Quicksnap chat.
         </p>
         {!!orgData &&
           <div>

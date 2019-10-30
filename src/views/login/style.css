@@ -1,4 +1,4 @@
-.agora-auth-form--background {
+.quicksnap-auth-form--background {
   position: absolute;
   top: 0;
   right: 0;
@@ -9,7 +9,7 @@
   background-size: 340px auto;
 }
 
-.agora-auth-form {
+.quicksnap-auth-form {
   width: 40%;
   min-width: 400px;
   margin: 0 auto;
@@ -19,11 +19,11 @@
   box-shadow: 1px 1px 2px 0px var(--color-blue-2);
 }
 
-.agora-auth-form input:focus {
+.quicksnap-auth-form input:focus {
   border-bottom-color: var(--color-green-4);
 }
 
-.agora-auth-form input {
+.quicksnap-auth-form input {
   background: transparent;
   outline: none;
   border-top: none;
@@ -33,11 +33,11 @@
   font-size: 14px;
 }
 
-.agora-auth-form button:hover {
+.quicksnap-auth-form button:hover {
   background: var(--color-green-3);
 }
 
-.agora-auth-form button {
+.quicksnap-auth-form button {
   margin-top: 32px;
   padding: 7px 5px;
   width: 70px;
@@ -49,7 +49,7 @@
   cursor: pointer;
 }
 
-.agora-auth-form label {
+.quicksnap-auth-form label {
   margin-top: 24px;
   margin-bottom: 8px;
   display: block;

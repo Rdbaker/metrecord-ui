@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 
 import ChartMaker from 'components/ChartMaker';
+import { receiveChart } from 'modules/charts/actions';
 
 const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
-    fetchBrowserSummary: () => {},
+    receiveChart: (chart) => dispatch(receiveChart(chart)),
   }
 });
 

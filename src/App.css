@@ -17,11 +17,11 @@ body {
   max-height: none !important; /* suck it */
 }
 
-.agora-app-content--container.no-sidebar {
+.quicksnap-app-content--container.no-sidebar {
   margin-left: 0px;
 }
 
-.agora-app-content--container {
+.quicksnap-app-content--container {
   margin-left: 60px;
   max-height: 100vh;
 }

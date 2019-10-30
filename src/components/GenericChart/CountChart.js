@@ -59,7 +59,7 @@ class CountChart extends PureComponent {
 
     return (
       <div className={cx("count-chart--container", size)}>
-        {!isEditingTitle && <div>{title} <FontAwesomeIcon onClick={() => this.setState({ isEditingTitle: true })} icon={faPencil} size="xs" /></div>}
+        {!isEditingTitle && <div>{title} {!!this.props.onTitleChange && <FontAwesomeIcon onClick={() => this.setState({ isEditingTitle: true })} icon={faPencil} size="xs" />}</div>}
         {isEditingTitle && <div><input value={titleInput} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /> <FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div>}
         <div className="count-chart--value">
           {count}

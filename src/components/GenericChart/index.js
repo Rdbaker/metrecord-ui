@@ -4,7 +4,6 @@ import HighchartsReact from 'highcharts-react-official';
 import cx from 'classnames';
 
 import LoadingDots from 'components/LoadingDots';
-import ChartDateSelect from 'components/ChartDateSelect';
 
 import CountChart from './CountChart';
 import './style.css';
@@ -107,16 +106,30 @@ const createSeriesFromRawData = (rawData, type) => {
   }
 }
 
-const EmptyChart = () => (
-  <div className="browser-metrics-empty-chart--container">You have no data to display here!</div>
+const EmptyChart = ({
+  title,
+}) => (
+  <div className="generic-chart-empty-chart--container">
+    <h4>{title}</h4>
+    <div className="generic-chart-empty-chart--text">
+      You have no data to display here!
+    </div>
+  </div>
 )
 
-const LoadingChart = () => (
-  <div className="browser-metrics-loading-chart--container">Loading your chart<LoadingDots /></div>
+export const LoadingChart = ({
+  title,
+}) => (
+  <div className="generic-chart-loading-chart--container">
+    <h4>{title}</h4>
+    <div className="generic-chart-loading-chart--text">
+      Loading your chart<LoadingDots />
+    </div>
+  </div>
 )
 
 const GenericChart = ({
-  fetchChartData,
+  fetchChartData=()=>({}),
   neverFetched,
   loading,
   data,
@@ -134,11 +147,11 @@ const GenericChart = ({
   let chart = () => <div></div>;
 
   if (!loading && data && data.length === 0) {
-    chart = <EmptyChart />
+    chart = <EmptyChart title={title} />
   } else if (loading || neverFetched) {
-    chart = <LoadingChart />
+    chart = <LoadingChart title={title} />
   } else if (type === 'COUNT') {
-    chart = <CountChart count={data.count} title={title} size={size} onTitleChange={onTitleChange} />
+    chart = <CountChart count={data[0].count} title={title} size={size} onTitleChange={onTitleChange} />
   } else {
     const options = createPlotOptions(createSeriesFromRawData(data, type), title);
     chart = <HighchartsReact highcharts={Highcharts} options={options} />
@@ -147,7 +160,6 @@ const GenericChart = ({
 
   return (
     <div className={cx("generic-chart--container", size)}>
-      <ChartDateSelect onChange={({ start, end }) => fetchChartData(start, end)}/>
       {chart}
     </div>
   )

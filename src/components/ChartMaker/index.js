@@ -3,26 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faChartLine, faChartArea, faTally } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
 
-import GenericChart from 'components/GenericChart/index';
+import { ChartsAPI } from 'api/charts';
+import ChartDateSelect from 'components/ChartDateSelect';
+import GenericChart from 'components/GenericChart';
 import EventNameTypeahead from 'containers/EventNameTypeahead';
+import Button from 'components/shared/Button';
+import { ChartTypeToAPICall, ChartTypes } from 'modules/charts/constants';
 
 import './style.css';
-import { EventsAPI } from 'api/events';
-
-
-const ChartTypes = {
-  HISTOGRAM: 'HISTOGRAM',
-  LINE: 'LINE',
-  AREA: 'AREA',
-  COUNT: 'COUNT',
-};
-
-const ChartTypeToAPICall = {
-  HISTOGRAM: () => ([]),
-  LINE: () => ([]),
-  AREA: () => ([]),
-  COUNT: EventsAPI.fetchCount,
-};
 
 
 class ChartMaker extends Component {
@@ -37,6 +25,9 @@ class ChartMaker extends Component {
       chartData: [],
       chartDataFetchError: null,
       chartTitle: 'New Chart',
+      saving: false,
+      saved: false,
+      saveError: null,
     };
   }
 
@@ -52,7 +43,7 @@ class ChartMaker extends Component {
     });
 
     const fetchEnd = end || new Date();
-    const fetchStart = start || new Date(+fetchEnd + 1000 * 60 * 60 * 3);
+    const fetchStart = start || new Date(+fetchEnd - 1000 * 60 * 60 * 3);
     try {
       const { data } = await ChartTypeToAPICall[selectedChartType](selectedEvent, fetchStart, fetchEnd);
       this.setState({
@@ -64,6 +55,49 @@ class ChartMaker extends Component {
         chartDataFetchError: e,
         chartDataLoading: false,
       });
+    }
+  }
+
+  saveChart = async () => {
+    const {
+      selectedEvent,
+      selectedChartType,
+      chartTitle,
+    } = this.state;
+
+    const {
+      currentUser,
+      dispatcher: {
+        receiveChart,
+      },
+    } = this.props;
+
+    this.setState({
+      saving: true,
+    });
+
+    try {
+      const data = await ChartsAPI.createChart({
+        name: chartTitle,
+        config: {
+          event: selectedEvent,
+          chartType: selectedChartType,
+        },
+        meta: {
+          createdBy: currentUser.id,
+          updatedBy: currentUser.id,
+        },
+      });
+      this.setState({
+        saving: false,
+        saved: true,
+      });
+      receiveChart(data);
+    } catch (e) {
+      this.setState({
+        saving: false,
+        saveError: e,
+      })
     }
   }
 
@@ -121,6 +155,7 @@ class ChartMaker extends Component {
       chartDataLoading,
       chartDataNeverFetched,
       chartTitle,
+      saving,
     } = this.state;
 
     if (!selectedChartType || !selectedEvent) {
@@ -128,18 +163,23 @@ class ChartMaker extends Component {
     }
 
     return (
-      <div className="chart-maker-generic--container">
-        <GenericChart
-          type={selectedChartType}
-          event={selectedEvent}
-          fetchChartData={this.fetchChartData}
-          neverFetched={chartDataNeverFetched}
-          data={chartData}
-          loading={chartDataLoading}
-          title={chartTitle}
-          onTitleChange={this.changeTitle}
-          size="full"
-        />
+      <div>
+        <label className="chart-type-container-label">Pick chart dates</label>
+        <ChartDateSelect onChange={({ start, end }) => this.fetchChartData(start, end)} className="chart-maker--date-select"/>
+        <div className="chart-maker-generic--container">
+          <GenericChart
+            type={selectedChartType}
+            event={selectedEvent}
+            fetchChartData={this.fetchChartData}
+            neverFetched={chartDataNeverFetched}
+            data={chartData}
+            loading={chartDataLoading}
+            title={chartTitle}
+            onTitleChange={this.changeTitle}
+            size="full"
+          />
+        </div>
+        <Button className="chart-maker-save--buton" size="large" disabled={chartTitle === "New Chart"} onClick={this.saveChart} loading={saving}>Save</Button>
       </div>
     )
   }
@@ -147,13 +187,14 @@ class ChartMaker extends Component {
   render() {
     const {
       selectedEvent,
+      selectedChartType,
     } = this.state;
 
     return (
       <div>
-        <EventNameTypeahead onClick={(event) => this.setState({ selectedEvent: event.name })}/>
+        <EventNameTypeahead onClick={(event) => this.setState({ selectedEvent: event.name, selectedChartType: null })}/>
         {selectedEvent && this.renderChartOptionsMaker()}
-        {selectedEvent && this.renderChart()}
+        {selectedChartType && this.renderChart()}
       </div>
     );
   }

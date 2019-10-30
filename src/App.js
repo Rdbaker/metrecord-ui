@@ -147,7 +147,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Sidebar />
-        <div className={cx("agora-app-content--container", { 'no-sidebar': !currentUser })}>
+        <div className={cx("quicksnap-app-content--container", { 'no-sidebar': !currentUser })}>
           <CurrentUser.Provider value={currentUser}>
             <Route exact={true} path="/" render={this.makeLoginRequiredComponent(Onboard)} />
             <Route path="/home" render={this.makeLoginRequiredComponent(Home)} />

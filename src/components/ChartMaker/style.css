@@ -27,6 +27,7 @@
   align-items: center;
   justify-content: space-between;
   margin-left: 16px;
+  margin-bottom: 24px;
 }
 
 .chart-maker-chart-type--label {
@@ -48,7 +49,7 @@
 
 .chart-maker-generic--container {
   width: 500px;
-  margin: 0 auto;
+  margin: 24px auto 0;
 }
 
 .count-chart--value {
@@ -61,4 +62,16 @@
 
 .medium .count-chart--value {
   font-size: 48px;
+}
+
+.chart-maker--date-select {
+  margin-left: 16px;
+}
+
+.chart-maker--date-select .DateInput_input {
+  box-sizing: border-box;
+}
+
+.chart-maker-save--buton {
+  margin-left: 16px;
 }

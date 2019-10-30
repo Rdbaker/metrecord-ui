@@ -19,15 +19,15 @@ const Sidebar = ({
   if (!isLoggedIn) return null;
 
   return (
-    <div className="agora-sidebar--container">
-      <NavLink to="/home" activeClassName="active" className="agora-sidebar-link">
-        <FontAwesomeIcon icon={faHomeAlt} className="agora-sidebar-button--icon" />
+    <div className="quicksnap-sidebar--container">
+      <NavLink to="/home" activeClassName="active" className="quicksnap-sidebar-link">
+        <FontAwesomeIcon icon={faHomeAlt} className="quicksnap-sidebar-button--icon" />
       </NavLink>
-      <NavLink to="/settings" activeClassName="active" className="agora-sidebar-link agora-sidebar-settings-button">
-        <FontAwesomeIcon icon={faUsersCog} className="agora-sidebar-button--icon" />
+      <NavLink to="/settings" activeClassName="active" className="quicksnap-sidebar-link quicksnap-sidebar-settings-button">
+        <FontAwesomeIcon icon={faUsersCog} className="quicksnap-sidebar-button--icon" />
       </NavLink>
-      <div className="agora-sidebar-link agora-sidebar-sign-out-button" onClick={signOut}>
-        <FontAwesomeIcon icon={faSignOut} className="agora-sidebar-button--icon" />
+      <div className="quicksnap-sidebar-link quicksnap-sidebar-sign-out-button" onClick={signOut}>
+        <FontAwesomeIcon icon={faSignOut} className="quicksnap-sidebar-button--icon" />
       </div>
     </div>
   );

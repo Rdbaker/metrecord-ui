@@ -1,0 +1,28 @@
+.snapper-btn {
+  padding: 5px 7px;
+  background: #3cca3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.snapper-btn.large {
+  padding: 7px 9px;
+  font-size: 16px;
+}
+
+.snapper-btn:hover {
+  background: #35b735;
+}
+
+
+.snapper-btn.disabled:hover,
+.snapper-btn.disabled {
+  background: #d9d9e1;
+  cursor: not-allowed;
+}

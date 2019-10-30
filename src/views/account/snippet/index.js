@@ -54,17 +54,17 @@ class AccountSnippet extends Component {
     return (
       <div>
         <p>
-            To add Agora to your app, copy the snippet of code below and paste it where you would like to have community chat.
+            To add Quicksnap to your app, copy the snippet of code below and paste it where you would like to have community chat.
         </p>
         {!clientId &&
           <div>Loading your snippet</div>
         }
         {clientId &&
-          <pre className="agora-snippet" type="multi" onClick={this.copySnippet}>
+          <pre className="quicksnap-snippet" type="multi" onClick={this.copySnippet}>
             {getSnippet(clientId)}
           </pre>
         }
-        <textarea className="agora-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
+        <textarea className="quicksnap-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
       </div>
     );
   }

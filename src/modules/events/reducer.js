@@ -5,6 +5,7 @@ import { ActionTypes } from './constants';
 
 const defaultState = {
   nameTypeahead: {},
+  series: {},
 };
 
 
@@ -29,6 +30,31 @@ const fetchEventNameTypeaheadFailed = (state, payload) => {
   };
 };
 
+const fetchEventSeriesPending = (state, payload) => {
+  state.series[payload.name] = {
+    data: null,
+    meta: {
+      start: payload.start,
+      end: payload.end,
+      interval: payload.interval,
+      lastFetched: null,
+      err: null,
+    },
+    status: ActionTypes.FETCH_EVENT_SERIES_PENDING,
+  };
+};
+
+const fetchEventSeriesSuccess = (state, payload) => {
+  state.series[payload.name].data = payload.data;
+  state.series[payload.name].meta.lastFetched = new Date();
+  state.series[payload.name].status = ActionTypes.FETCH_EVENT_SERIES_SUCCESS;
+};
+
+const fetchEventSeriesFailed = (state, payload) => {
+  state.series[payload.name].meta.err = payload.err;
+  state.series[payload.name].status = ActionTypes.FETCH_EVENT_SERIES_FAILED;
+};
+
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
@@ -38,6 +64,12 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchEventNameTypeaheadPending(draft, action.payload));
     case ActionTypes.FETCH_NAME_TYPEAHEAD_FAILED:
       return produce(state, draft => fetchEventNameTypeaheadFailed(draft, action.payload));
+    case ActionTypes.FETCH_EVENT_SERIES_PENDING:
+      return produce(state, draft => fetchEventSeriesPending(draft, action.payload));
+    case ActionTypes.FETCH_EVENT_SERIES_SUCCESS:
+      return produce(state, draft => fetchEventSeriesSuccess(draft, action.payload));
+    case ActionTypes.FETCH_EVENT_SERIES_FAILED:
+      return produce(state, draft => fetchEventSeriesFailed(draft, action.payload));
     default:
       return state;
   }

@@ -83,8 +83,8 @@ class EmailSignup extends Component {
     return (
       <div>
         <main id="main-content" className="with-header">
-          <div className="agora-auth-form--background" style={{ backgroundImage: `url(${authBackgroundSrc})` }}></div>
-          <div className="agora-auth-form">
+          <div className="quicksnap-auth-form--background" style={{ backgroundImage: `url(${authBackgroundSrc})` }}></div>
+          <div className="quicksnap-auth-form">
             <h2>Signup</h2>
             <form onSubmit={this.onSubmitEmail}>
               <div>

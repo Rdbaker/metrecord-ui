@@ -56,13 +56,13 @@ class Onboarding extends Component {
     } = this.props;
 
     return (
-      <div className="agora-onboarding-container">
+      <div className="quicksnap-onboarding-container">
         <h1>Get started</h1>
         <p>follow these simple steps to get started with Quicksnap</p>
         <h3>1. Install the embed</h3>
         <p>Click the snippet to copy it to your clipboard</p>
-        <pre className="agora-snippet" onClick={this.copySnippet}>{getSnippet(clientId)}</pre>
-        <textarea className="agora-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
+        <pre className="quicksnap-snippet" onClick={this.copySnippet}>{getSnippet(clientId)}</pre>
+        <textarea className="quicksnap-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
         <h3>2. Configure your settings</h3>
         <p>Head to <Link to="/settings">your settings</Link> to customize your widget</p>
         <h3>3. View metrics</h3>

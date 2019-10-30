@@ -15,3 +15,11 @@ export const nameTypeaheadStale = (state, name) => {
   return lastFetched.valueOf() + TEN_SECONDS < now.valueOf();
 }
 export const nameTypeaheadData = (state, name) => nameTypeaheadForName(state, name).data || [];
+
+const seriesRoot = state => root(state).series
+const byName = (state, name) => seriesRoot(state)[name] || {};
+export const series = (state, name) => byName(state, name).data || [];
+export const seriesStatus = (state, name) => byName(state, name).status;
+export const seriesNeverFetched = (state, name) => [null, undefined].includes(seriesStatus(state, name));
+export const seriesLoading = (state, name) => seriesStatus(state, name) === ActionTypes.FETCH_EVENT_SERIES_PENDING;
+export const seriesFetchFailed = (state, name) => seriesStatus(state, name) === ActionTypes.FETCH_EVENT_SERIES_FAILED;

@@ -12,11 +12,13 @@ import orgReducer from 'modules/org/reducer';
 import userReducer from 'modules/user/reducer';
 import browserEventsReducer from 'modules/browserEvents/reducer';
 import eventsReducer from 'modules/events/reducer';
+import chartsReducer from 'modules/charts/reducer';
 import orgEpic from 'modules/org/epic';
 import userEpic from 'modules/user/epic';
 import socketEpic from 'modules/socket/epic';
 import eventEpic from 'modules/events/epic';
 import browserEventsEpic from 'modules/browserEvents/epic';
+import chartsEpic from 'modules/charts/epic';
 import { DEBUG } from 'constants/resources';
 
 import './index.css';
@@ -46,6 +48,7 @@ const store = createStore(
     user: userReducer,
     browserEvents: browserEventsReducer,
     events: eventsReducer,
+    charts: chartsReducer,
   }),
   compose(
     applyMiddleware(epicMiddleware),
@@ -60,6 +63,7 @@ epicMiddleware.run(
     userEpic,
     browserEventsEpic,
     eventEpic,
+    chartsEpic,
   )
 )
 

@@ -57,5 +57,16 @@ export const EventsAPI = {
       },
     })
     .then(checkStatus)
-  }
+  },
+
+  fetchSeries(name, start, end, interval) {
+    return fetch(`${API_URL}/api/events/${name}/series?start_date=${start.toISOString()}&end_date=${end.toISOString()}&interval=${interval}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 }
