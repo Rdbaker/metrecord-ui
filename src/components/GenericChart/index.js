@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { PureComponent } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faCheck, faTimes } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
 
 import LoadingDots from 'components/LoadingDots';
@@ -128,41 +130,99 @@ export const LoadingChart = ({
   </div>
 )
 
-const GenericChart = ({
-  fetchChartData=()=>({}),
-  neverFetched,
-  loading,
-  data,
-  type,
-  event,
-  title,
-  onTitleChange,
-  size="medium",
-}) => {
-  useEffect(() => {
-    if (neverFetched) {
-      fetchChartData();
-    }
-  })
-  let chart = () => <div></div>;
+class GenericChart extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  if (!loading && data && data.length === 0) {
-    chart = <EmptyChart title={title} />
-  } else if (loading || neverFetched) {
-    chart = <LoadingChart title={title} />
-  } else if (type === 'COUNT') {
-    chart = <CountChart count={data[0].count} title={title} size={size} onTitleChange={onTitleChange} />
-  } else {
-    const options = createPlotOptions(createSeriesFromRawData(data, type), title);
-    chart = <HighchartsReact highcharts={Highcharts} options={options} />
+    this.state = {
+      isEditingTitle: false,
+      titleInput: this.props.title,
+    };
   }
 
+  componentDidMount() {
+    if (this.props.neverFetched && this.props.fetchChartData) {
+      this.props.fetchChartData();
+    }
+  }
 
-  return (
-    <div className={cx("generic-chart--container", size)}>
-      {chart}
-    </div>
-  )
+  componentDidUpdate(prevProps) {
+    if (this.props.neverFetched && !prevProps.neverFetched && this.props.fetchChartData) {
+      this.props.fetchChartData();
+    }
+  }
+
+  onChangeInput = (e) => {
+    this.setState({
+      messageInput: e.target.value,
+    });
+  }
+
+  maybeSubmit = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.submitTitle();
+    } else if (e.keyCode === 27) {
+      e.preventDefault();
+      this.titleCancel();
+    }
+  }
+
+  submitTitle = () => {
+    this.props.onTitleChange(this.state.titleInput);
+    this.setState({
+      isEditingTitle: false
+    });
+  }
+
+  titleCancel = () => {
+    this.setState({
+      isEditingTitle: false,
+      titleInput: this.props.title,
+    })
+  }
+
+  renderChart() {
+    const {
+      loading,
+      data,
+      neverFetched,
+      size='medium',
+      type,
+      title,
+    } = this.props;
+
+    if (!loading && data && data.length === 0) {
+      return <EmptyChart title={title} />
+    } else if (loading || neverFetched) {
+      return <LoadingChart title={title} />
+    } else if (type === 'COUNT') {
+      return <CountChart count={data[0].count} title={title} size={size} />
+    } else {
+      const options = createPlotOptions(createSeriesFromRawData(data, type), title);
+      return <HighchartsReact highcharts={Highcharts} options={options} />
+    }
+  }
+
+  render() {
+    const {
+      title,
+      size,
+    } = this.props;
+    const {
+      isEditingTitle,
+      titleInput,
+    } = this.state;
+
+    return (
+      <div className={cx("generic-chart--container", size)}>
+        {!isEditingTitle && <div>{title} {!!this.props.onTitleChange && <FontAwesomeIcon onClick={() => this.setState({ isEditingTitle: true })} icon={faPencil} size="xs" />}</div>}
+        {isEditingTitle && <div><input value={titleInput} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /> <FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div>}
+        {this.renderChart()}
+      </div>
+    )
+  }
 }
+
 
 export default GenericChart;
