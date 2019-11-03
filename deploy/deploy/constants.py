@@ -11,7 +11,7 @@ import os
 class Constants(object):
     BUCKETS = {
         'development': 'dev-metrecord-com',
-        'production': 'app-metrecord-com',
+        'production': 'app-metrecord-prod',
     }
     AUTHOR = getpass.getuser()
     REPO_SSH = 'git@github.com:Rdbaker/metrecord-ui.git'
