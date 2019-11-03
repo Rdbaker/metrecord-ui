@@ -19,15 +19,15 @@ const Sidebar = ({
   if (!isLoggedIn) return null;
 
   return (
-    <div className="quicksnap-sidebar--container">
-      <NavLink to="/home" activeClassName="active" className="quicksnap-sidebar-link">
-        <FontAwesomeIcon icon={faHomeAlt} className="quicksnap-sidebar-button--icon" />
+    <div className="metrecord-sidebar--container">
+      <NavLink to="/home" activeClassName="active" className="metrecord-sidebar-link">
+        <FontAwesomeIcon icon={faHomeAlt} className="metrecord-sidebar-button--icon" />
       </NavLink>
-      <NavLink to="/settings" activeClassName="active" className="quicksnap-sidebar-link quicksnap-sidebar-settings-button">
-        <FontAwesomeIcon icon={faUsersCog} className="quicksnap-sidebar-button--icon" />
+      <NavLink to="/settings" activeClassName="active" className="metrecord-sidebar-link metrecord-sidebar-settings-button">
+        <FontAwesomeIcon icon={faUsersCog} className="metrecord-sidebar-button--icon" />
       </NavLink>
-      <div className="quicksnap-sidebar-link quicksnap-sidebar-sign-out-button" onClick={signOut}>
-        <FontAwesomeIcon icon={faSignOut} className="quicksnap-sidebar-button--icon" />
+      <div className="metrecord-sidebar-link metrecord-sidebar-sign-out-button" onClick={signOut}>
+        <FontAwesomeIcon icon={faSignOut} className="metrecord-sidebar-button--icon" />
       </div>
     </div>
   );

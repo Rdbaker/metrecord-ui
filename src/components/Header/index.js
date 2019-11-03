@@ -8,6 +8,7 @@ class Header extends Component {
     return (
       <div className="header-row">
         <NavLink to="/new-chart" exact={true} className="new-chart-button">New Chart</NavLink>
+        <NavLink to="/new-dashboard" exact={true} className="new-chart-button">New Dashboard</NavLink>
       </div>
     );
   }

@@ -15,7 +15,7 @@ const Button = ({
   ...rest,
 }) => {
   return (
-    <div className={cx('snapper-btn', size, className, { disabled })} {...rest}>
+    <div className={cx('metrecord-btn', size, className, { disabled })} {...rest}>
       {loading ? <LoadingDots /> : children}
     </div>
   )

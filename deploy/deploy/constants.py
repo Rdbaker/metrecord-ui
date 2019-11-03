@@ -10,13 +10,13 @@ import os
 
 class Constants(object):
     BUCKETS = {
-        'development': 'dev-getquicksnap-com',
-        'production': 'app-getquicksnap-com',
+        'development': 'dev-metrecord-com',
+        'production': 'app-metrecord-com',
     }
     AUTHOR = getpass.getuser()
-    REPO_SSH = 'git@github.com:Rdbaker/snapper-ui.git'
+    REPO_SSH = 'git@github.com:Rdbaker/metrecord-ui.git'
     TMP_DIR = os.path.join(os.getcwd(), 'tmp')
-    REPO_DIR = os.path.join(TMP_DIR, 'snapper-ui')
+    REPO_DIR = os.path.join(TMP_DIR, 'metrecord-ui')
     DIST_DIR = os.path.join(REPO_DIR, 'dist')
     COMMANDS = {
         'install': 'npm install'.split(),

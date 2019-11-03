@@ -22,9 +22,9 @@ def read_from_req(f_name="requirements.txt"):
 
 requires = read_from_req()
 
-setup(name='snapper_app_upload',
+setup(name='metrecord_app_upload',
     version='1.0.0',
-    description='Upload snapper ui app assets to the S3 bucket for the site.',
+    description='Upload metrecord ui app assets to the S3 bucket for the site.',
     packages=find_packages(),
     install_requires=requires,
     entry_points={

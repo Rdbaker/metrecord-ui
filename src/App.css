@@ -17,11 +17,11 @@ body {
   max-height: none !important; /* suck it */
 }
 
-.quicksnap-app-content--container.no-sidebar {
+.metrecord-app-content--container.no-sidebar {
   margin-left: 0px;
 }
 
-.quicksnap-app-content--container {
+.metrecord-app-content--container {
   margin-left: 60px;
   max-height: 100vh;
 }

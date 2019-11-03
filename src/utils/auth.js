@@ -1,4 +1,4 @@
-const COOKIE_NAME = 'SNAPPER_ADMIN_AUTH';
+const COOKIE_NAME = 'METRECORD_ADMIN_AUTH';
 
 export const expireToken = () => {
   document.cookie = `${COOKIE_NAME}=;expires=${(new Date()).toUTCString()};path=/;domain=${document.domain}`;
@@ -40,6 +40,6 @@ export const setToken = (token) => {
   try {
     localStorage.setItem(COOKIE_NAME, token);
   } catch (err) {
-    console.info('snapper could not store token to localStorage');
+    console.info('metrecord could not store token to localStorage');
   }
 };

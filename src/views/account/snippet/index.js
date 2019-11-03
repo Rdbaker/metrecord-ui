@@ -6,16 +6,16 @@ import './style.css';
 
 export const getSnippet = (clientId) => (`
 (function(window, document) {
-  if (window.snapper) console.error('Snapper embed already included');
-  window.snapper = {}, m = ['init', 'snap', 'debug']; window.snapper._c = [];
-  m.forEach(me => window.snapper[me] = function() {window.snapper._c.push([me, arguments])});
+  if (window.metrecord) console.error('Metrecord embed already included');
+  window.metrecord = {}, m = ['init', 'snap', 'debug']; window.metrecord._c = [];
+  m.forEach(me => window.metrecord[me] = function() {window.metrecord._c.push([me, arguments])});
   var elt = document.createElement('script');
   elt.type = "text/javascript"; elt.async = true;
-  elt.src = "https://js.getquicksnap.com/widget/shim.js";
+  elt.src = "https://js.metrecord.com/widget/shim.js";
   var before = document.getElementsByTagName('script')[0];
   before.parentNode.insertBefore(elt, before);
 })(window, document, undefined);
-snapper.init('${clientId}');`)
+metrecord.init('${clientId}');`)
 
 class AccountSnippet extends Component {
   constructor(props) {
@@ -54,17 +54,17 @@ class AccountSnippet extends Component {
     return (
       <div>
         <p>
-            To add Quicksnap to your app, copy the snippet of code below and paste it where you would like to have community chat.
+            To add Metrecord to your app, copy the snippet of code below and paste it where you would like to have community chat.
         </p>
         {!clientId &&
           <div>Loading your snippet</div>
         }
         {clientId &&
-          <pre className="quicksnap-snippet" type="multi" onClick={this.copySnippet}>
+          <pre className="metrecord-snippet" type="multi" onClick={this.copySnippet}>
             {getSnippet(clientId)}
           </pre>
         }
-        <textarea className="quicksnap-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
+        <textarea className="metrecord-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
       </div>
     );
   }

@@ -39,3 +39,8 @@ export const fetchEventSeriesSuccess = (name, data, start, end) => ({
   type: ActionTypes.FETCH_EVENT_SERIES_SUCCESS,
   payload: { name, data, start, end }
 });
+
+export const setHasAnyEvents = (hasAny) => ({
+  type: ActionTypes.SET_HAS_ANY_EVENTS,
+  payload: { hasAny }
+})

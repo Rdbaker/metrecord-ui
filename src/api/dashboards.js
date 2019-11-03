@@ -26,4 +26,16 @@ export const DashboardsAPI = {
     })
     .then(checkStatus)
   },
+
+  // TODO: actual pagination
+  paginateDashboards() {
+    return fetch(`${API_URL}/api/dashboards?page_size=200`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 };

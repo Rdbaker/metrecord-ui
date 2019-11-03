@@ -6,6 +6,7 @@ import { ActionTypes } from './constants';
 const defaultState = {
   nameTypeahead: {},
   series: {},
+  hasAnyEvents: null,
 };
 
 
@@ -55,6 +56,9 @@ const fetchEventSeriesFailed = (state, payload) => {
   state.series[payload.name].status = ActionTypes.FETCH_EVENT_SERIES_FAILED;
 };
 
+const handleSetHasAnyEvents = (state, payload) => {
+  state.hasAnyEvents = payload.hasAny;
+}
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
@@ -70,6 +74,8 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchEventSeriesSuccess(draft, action.payload));
     case ActionTypes.FETCH_EVENT_SERIES_FAILED:
       return produce(state, draft => fetchEventSeriesFailed(draft, action.payload));
+    case ActionTypes.SET_HAS_ANY_EVENTS:
+      return produce(state, draft => handleSetHasAnyEvents(draft, action.payload));
     default:
       return state;
   }

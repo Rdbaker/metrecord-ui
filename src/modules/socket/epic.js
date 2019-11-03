@@ -43,9 +43,9 @@ const joinChannel = action$ => action$.pipe(
       pushToChannel$.subscribe(({ data }) => channel.push(channelName, data));
 
       channel.onMessage = (event, payload) => {
-        const [quicksnap, eventName] = event.split(':');
-        const isSnapperEvent = quicksnap === 'quicksnap';
-        if (isSnapperEvent) {
+        const [metrecord, eventName] = event.split(':');
+        const isMetrecordEvent = metrecord === 'metrecord';
+        if (isMetrecordEvent) {
           observer.next({
             type: ActionTypes.RECEIVE_CHANNEL_MESSAGE,
             payload: {

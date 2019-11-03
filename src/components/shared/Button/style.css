@@ -1,4 +1,4 @@
-.snapper-btn {
+.metrecord-btn {
   padding: 5px 7px;
   background: #3cca3c;
   color: white;
@@ -11,18 +11,18 @@
   cursor: pointer;
 }
 
-.snapper-btn.large {
+.metrecord-btn.large {
   padding: 7px 9px;
   font-size: 16px;
 }
 
-.snapper-btn:hover {
+.metrecord-btn:hover {
   background: #35b735;
 }
 
 
-.snapper-btn.disabled:hover,
-.snapper-btn.disabled {
+.metrecord-btn.disabled:hover,
+.metrecord-btn.disabled {
   background: #d9d9e1;
   cursor: not-allowed;
 }

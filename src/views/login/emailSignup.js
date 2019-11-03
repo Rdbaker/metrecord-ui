@@ -83,8 +83,8 @@ class EmailSignup extends Component {
     return (
       <div>
         <main id="main-content" className="with-header">
-          <div className="quicksnap-auth-form--background" style={{ backgroundImage: `url(${authBackgroundSrc})` }}></div>
-          <div className="quicksnap-auth-form">
+          <div className="metrecord-auth-form--background" style={{ backgroundImage: `url(${authBackgroundSrc})` }}></div>
+          <div className="metrecord-auth-form">
             <h2>Signup</h2>
             <form onSubmit={this.onSubmitEmail}>
               <div>

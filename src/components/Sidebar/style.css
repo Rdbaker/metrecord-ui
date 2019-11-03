@@ -1,4 +1,4 @@
-.quicksnap-sidebar--container {
+.metrecord-sidebar--container {
   width: 60px;
   position: fixed;
   top: 0;
@@ -9,16 +9,16 @@
   color: var(--color-green-1);
 }
 
-.quicksnap-sidebar-link:hover {
+.metrecord-sidebar-link:hover {
   background: var(--color-blue-3);
 }
 
-.quicksnap-sidebar-link.active {
+.metrecord-sidebar-link.active {
   background: var(--color-blue-3);
   color: var(--color-green-5);
 }
 
-.quicksnap-sidebar-link {
+.metrecord-sidebar-link {
   transition: background 0.3s ease;
   color: var(--color-green-1);
   padding: 12px;
@@ -32,17 +32,17 @@
   box-sizing: border-box;
 }
 
-.quicksnap-sidebar-link svg.svg-inline--fa {
+.metrecord-sidebar-link svg.svg-inline--fa {
   width: 30px;
   height: 24px;
 }
 
-.quicksnap-sidebar-settings-button {
+.metrecord-sidebar-settings-button {
   position: absolute;
   bottom: 50px;
 }
 
-.quicksnap-sidebar-sign-out-button {
+.metrecord-sidebar-sign-out-button {
   position: absolute;
   bottom: 0;
 }

@@ -1,16 +1,16 @@
-.quicksnap-snippet:active {
+.metrecord-snippet:active {
   border: 1px solid blue;
   border-radius: 8px;
 }
 
-.quicksnap-snippet {
+.metrecord-snippet {
   max-width: 100%;
   margin-top: 20px;
   cursor: pointer;
   display: inline-block;
 }
 
-.quicksnap-snippet-textarea {
+.metrecord-snippet-textarea {
   height: 0;
   width: 0;
   position: relative;

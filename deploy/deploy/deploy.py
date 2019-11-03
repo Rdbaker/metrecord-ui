@@ -15,7 +15,7 @@ import boto3
 from .constants import Constants
 
 logging.basicConfig(format='%(name)-12s: %(levelname)-8s:%(message)s', level=logging.INFO)
-deploy_logger = logging.getLogger('snapper.uploader')
+deploy_logger = logging.getLogger('metrecord.uploader')
 
 S3 = boto3.resource('s3')
 

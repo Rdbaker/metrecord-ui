@@ -5,19 +5,24 @@ import cx from 'classnames';
 import * as Sentry from '@sentry/browser';
 
 import { AuthAPI } from 'api/auth';
-import { CurrentUser } from 'utils/contexts';
-import { EmailLogin, EmailSignup } from 'views/login';
+import { DashboardsAPI } from 'api/dashboards';
+import { EventsAPI } from 'api/events';
+import { OrgsAPI } from 'api/org';
 import Sidebar from 'components/Sidebar';
-import { SHIM_URL, SNAPPER_ON_SNAPPER_CLIENT_ID, DEBUG } from 'constants/resources';
+import { SHIM_URL, METRECORD_ON_METRECORD_CLIENT_ID, DEBUG } from 'constants/resources';
 import { setMe } from 'modules/auth/actions';
-import { fetchOrg } from 'modules/org/actions';
+import { receiveDashboards } from 'modules/dashboards/actions';
+import { setHasAnyEvents } from 'modules/events/actions';
+import { fetchOrgSuccess } from 'modules/org/actions';
+import { CurrentUser } from 'utils/contexts';
+import { checkStatus } from 'utils/http';
+import { EmailLogin, EmailSignup } from 'views/login';
 
 import Onboard from './views/onboard';
 import Home from './views/home';
 import Account from './views/account';
 import NewChart from './views/newchart';
 import './App.css';
-import { checkStatus } from 'utils/http';
 
 
 class App extends Component {
@@ -27,37 +32,88 @@ class App extends Component {
     this.state = {
       currentUser: null,
       fetchMePending: true,
+      bootstrapDone: false,
     };
   }
 
   componentDidMount() {
-    this.mountSnapper();
+    this.mountMetrecord();
     this.mountDrift();
-    this.fetchMe();
+    this.bootstrap();
+  }
+
+  bootstrap = async () => {
+    const bootstrapStart = global.performance.now();
+    await Promise.all([
+      this.fetchMe(),
+      this.fetchOrg(),
+      this.fetchHasAnyEvents(),
+      this.fetchAllDashboards(),
+    ])
+    .then(([
+      fetchUserResponse,
+      fetchOrgResponse,
+      hasAnyEventsResponse,
+      dashboardsResponse,
+    ]) => {
+      this.getMeSuccess(fetchUserResponse);
+      this.getOrgSuccess(fetchOrgResponse);
+      this.getHasAnyEventsSuccess(hasAnyEventsResponse);
+      this.getAllDashboardsSuccess(dashboardsResponse);
+      this.setState({
+        bootstrapDone: true,
+      });
+    })
+    .catch(errs => {
+      global.metrecord.track('bootstrap.errors.count', 1)
+      console.warn(errs);
+      this.setState({
+        bootstrapDone: true,
+      });
+    });
+    const bootstrapEnd = global.performance.now();
+    global.metrecord.track('bootstrap.time_ms', bootstrapEnd - bootstrapStart);
+
   }
 
   fetchMe = async () => {
-    AuthAPI.getMe()
-      .then(checkStatus)
-      .then(this.getMeSuccess)
-      .catch(this.getMeFailed);
+    return AuthAPI.getMe()
+      .then(checkStatus);
+  }
+
+  fetchOrg = async () => {
+    return OrgsAPI.getMyOrg()
+      .then(checkStatus);
+  }
+
+  fetchHasAnyEvents = async () => {
+    return EventsAPI.hasAny();
+  }
+
+  fetchAllDashboards = async () => {
+    return DashboardsAPI.paginateDashboards();
   }
 
   getMeSuccess = (res) => {
     const { data } = res;
-
     this.setState({
       currentUser: data,
-      fetchMePending: false,
     });
     this.props.dispatcher.setMe({ user: data });
-    this.props.dispatcher.fetchOrg();
   }
 
-  getMeFailed = async () => {
-    this.setState({
-      fetchMePending: false,
-    });
+  getOrgSuccess = (res) => {
+    const { data } = res;
+    this.props.dispatcher.setOrg(data);
+  }
+
+  getHasAnyEventsSuccess = (res) => {
+    this.props.dispatcher.setHasAnyEvents(res);
+  }
+
+  getAllDashboardsSuccess = (res) => {
+    const { page } = res;
+    this.props.dispatcher.setDashboards(page);
   }
 
   mountDrift = () => {
@@ -95,30 +151,30 @@ class App extends Component {
     }
   }
 
-  mountSnapper = () => {
+  mountMetrecord = () => {
     (function(window, document) {
-      if (window.snapper) console.error('Snapper embed already included');
-      window.snapper = {};
-      const m = ['init', 'snap', 'debug']; window.snapper._c = [];
-      m.forEach(me => window.snapper[me] = function() {window.snapper._c.push([me, arguments])});
-      window.addEventListener('load', () => snapper.snap());
+      if (window.metrecord) console.error('Metrecord embed already included');
+      window.metrecord = {};
+      const m = ['init', 'snap', 'debug', 'track']; window.metrecord._c = [];
+      m.forEach(me => window.metrecord[me] = function() {window.metrecord._c.push([me, arguments])});
+      window.addEventListener('load', () => metrecord.snap());
       var elt = document.createElement('script');
       elt.type = "text/javascript"; elt.async = true;
       elt.src = SHIM_URL;
       var before = document.getElementsByTagName('script')[0];
       before.parentNode.insertBefore(elt, before);
     })(global, document, undefined);
-    global.snapper.init(SNAPPER_ON_SNAPPER_CLIENT_ID);
+    global.metrecord.init(METRECORD_ON_METRECORD_CLIENT_ID);
   }
 
   makeLoginRequiredComponent(AuthedComponent) {
     const {
       currentUser,
-      fetchMePending,
+      bootstrapDone,
     } = this.state;
 
     return () => {
-      if (fetchMePending) {
+      if (!bootstrapDone) {
         return <div>Loading...</div>;
       }
 
@@ -147,7 +203,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Sidebar />
-        <div className={cx("quicksnap-app-content--container", { 'no-sidebar': !currentUser })}>
+        <div className={cx("metrecord-app-content--container", { 'no-sidebar': !currentUser })}>
           <CurrentUser.Provider value={currentUser}>
             <Route exact={true} path="/" render={this.makeLoginRequiredComponent(Onboard)} />
             <Route path="/home" render={this.makeLoginRequiredComponent(Home)} />
@@ -167,7 +223,9 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
     setMe: (payload) => dispatch(setMe(payload)),
-    fetchOrg: () => dispatch(fetchOrg()),
+    setOrg: (org) => dispatch(fetchOrgSuccess(org)),
+    setHasAnyEvents: (hasAny) => dispatch(setHasAnyEvents(hasAny)),
+    setDashboards: (dashboards) => dispatch(receiveDashboards(dashboards)),
   }
 });
 

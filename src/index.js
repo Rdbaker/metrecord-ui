@@ -10,6 +10,7 @@ import 'react-dates/initialize';
 import authReducer from 'modules/auth/reducer';
 import orgReducer from 'modules/org/reducer';
 import userReducer from 'modules/user/reducer';
+import dashboardReducer from 'modules/dashboards/reducer';
 import browserEventsReducer from 'modules/browserEvents/reducer';
 import eventsReducer from 'modules/events/reducer';
 import chartsReducer from 'modules/charts/reducer';
@@ -36,7 +37,7 @@ const compose = composeWithDevTools({ trace: true, traceLimit: 25 });
 
 const loggingMiddleware = () => next => action => {
   if (DEBUG) {
-    console.info('[Snapper] applying action', action);
+    console.info('[Metrecord] applying action', action);
   }
   next(action);
 }
@@ -49,6 +50,7 @@ const store = createStore(
     browserEvents: browserEventsReducer,
     events: eventsReducer,
     charts: chartsReducer,
+    dashboards: dashboardReducer,
   }),
   compose(
     applyMiddleware(epicMiddleware),
