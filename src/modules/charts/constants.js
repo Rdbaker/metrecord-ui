@@ -20,7 +20,7 @@ export const ChartTypes = {
 export const ChartTypeToAPICall = {
   HISTOGRAM: () => ([]),
   LINE: () => ([]),
-  AREA: () => ([]),
+  AREA: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'minute'),
   COUNT: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'year'),
 };
 
@@ -31,3 +31,27 @@ export const ChartTypeToSeriesInterval = {
   LINE: () => 'hour',
   HISTOGRAM: () => 'hour',
 };
+
+export const Aggregates = {
+  Sum: 'sum',
+  Average: 'avg',
+  Count: 'count',
+  Maximum: 'max',
+  Minimum: 'min',
+  '99th percentile': 'p99',
+  '95th percentile': 'p95',
+  '90th percentile': 'p90',
+};
+
+export const AggregateValuesToLabels = {
+  sum: 'Sum',
+  avg: 'Average',
+  count: 'Count',
+  max: 'Maximum',
+  min: 'Minimum',
+  p99: '99th percentile',
+  p95: '95th percentile',
+  p90: '90th percentile',
+};
+
+export const AggregateSelectOptions = Object.entries(Aggregates).map(([label, value]) => ({ value, label }));

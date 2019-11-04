@@ -53,6 +53,16 @@ const TypeaheadResult = ({
   </div>
 )
 
+const NoResults = ({
+  name
+}) => {
+  if (!name || name.length > 1) {
+    return <div className="typeahead-no-results">no results</div>
+  } else {
+    return <div className="typeahead-no-results">no results - try 2 or more letters</div>
+  }
+}
+
 const EventNameTypeahead = ({
   dispatcher: {
     fetchNameTypeahead,
@@ -101,7 +111,7 @@ const EventNameTypeahead = ({
       {!!name && !loading &&
         <div className="typeahead-results--container">
           {!!data.length && data.map((res, i) => <TypeaheadResult key={i} {...res} searchString={name} onClick={() => chooseOption(res)} />)}
-          {!data.length && canShowNoResults && <div className="typeahead-no-results">no results</div>}
+          {!data.length && canShowNoResults && <NoResults name={name} />}
         </div>
       }
     </div>

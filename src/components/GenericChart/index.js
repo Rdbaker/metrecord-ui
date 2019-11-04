@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,58 +8,9 @@ import cx from 'classnames';
 import LoadingDots from 'components/LoadingDots';
 
 import CountChart from './CountChart';
+import AreaChart from './AreaChart';
 import './style.css';
 
-
-const createPlotOptions = (series, title) => ({
-  plotOptions: {
-    area: {
-      stacking: 'normal',
-      lineColor: '#666666',
-      lineWidth: 1,
-      marker: {
-        enabled: false,
-      }
-    }
-  },
-  xAxis: {
-    title: {
-      text: 'Time'
-    },
-    type: 'datetime',
-    dateTimeLabelFormats: {
-      day: '%b %d',
-    },
-    minPadding: 0.05,
-    maxPadding: 0.05,
-    minorTickLength: 0,
-    tickLength: 0,
-    labels: {
-      y: 25,
-    },
-  },
-  yAxis: {
-    title: {
-      text: 'Time (ms)',
-    },
-  },
-  legend: {
-    enabled: true,
-  },
-  title: {
-    text: title,
-  },
-  chart: {
-    style: {
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
-    },
-    backgroundColor: 'transparent',
-  },
-  credits: {
-    enabled: false,
-  },
-  series,
-});
 
 
 const ONE_MINUTE = 1000 * 60;
@@ -158,6 +109,8 @@ class GenericChart extends PureComponent {
     });
   }
 
+  setEditingTitle = () => this.setState({ isEditingTitle: true })
+
   maybeSubmit = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
@@ -190,6 +143,10 @@ class GenericChart extends PureComponent {
       size='medium',
       type,
       title,
+      agg,
+      event,
+      yAxisLabel,
+      interpolateMissing,
     } = this.props;
 
     if (!loading && data && data.length === 0) {
@@ -197,7 +154,9 @@ class GenericChart extends PureComponent {
     } else if (loading || neverFetched) {
       return <LoadingChart title={title} />
     } else if (type === 'COUNT') {
-      return <CountChart count={data[0].count} title={title} size={size} />
+      return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} title={title} size={size} event={event} />
+    } else if (type === 'AREA') {
+      return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={title} size={size} event={event} yAxisLabel={yAxisLabel} />
     } else {
       const options = createPlotOptions(createSeriesFromRawData(data, type), title);
       return <HighchartsReact highcharts={Highcharts} options={options} />
@@ -216,8 +175,8 @@ class GenericChart extends PureComponent {
 
     return (
       <div className={cx("generic-chart--container", size)}>
-        {!isEditingTitle && <div>{title} {!!this.props.onTitleChange && <FontAwesomeIcon onClick={() => this.setState({ isEditingTitle: true })} icon={faPencil} size="xs" />}</div>}
-        {isEditingTitle && <div><input value={titleInput} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /> <FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div>}
+        {!isEditingTitle && <div className="generic-chart--title">{title} {!!this.props.onTitleChange && <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div>}</div>}
+        {isEditingTitle && <div><input ref={(title) => { this.$title = title }} value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
         {this.renderChart()}
       </div>
     )

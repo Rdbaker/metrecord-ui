@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: space-between;
   margin-left: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .chart-maker-chart-type--label {
@@ -49,7 +49,7 @@
 
 .chart-maker-generic--container {
   width: 500px;
-  margin: 24px auto 0;
+  margin: 24px 0;
 }
 
 .count-chart--value {
@@ -74,4 +74,17 @@
 
 .chart-maker-save--buton {
   margin-left: 16px;
+  margin-bottom: 32px;
+}
+
+.chart-maker-agg-options--container {
+  width: 400px;
+  margin: 0 0 8px 16px;
+}
+
+.chart-maker-agg-options--container label {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #7c7d8e;
+  font-weight: 600;
 }

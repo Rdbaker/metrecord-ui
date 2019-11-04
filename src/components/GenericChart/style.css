@@ -18,7 +18,6 @@
   width: 500px;
 }
 
-
 .generic-chart-loading-chart--text {
   display: flex;
   align-items: baseline;
@@ -32,4 +31,13 @@
   margin: 0 auto;
   text-align: center;
   font-size: 16px;
+}
+
+.font-awesome-icon--container {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.generic-chart--title {
+  margin: 4px 12px 8px;
 }

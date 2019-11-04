@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faChartLine, faChartArea, faTally } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
@@ -8,7 +10,7 @@ import ChartDateSelect from 'components/ChartDateSelect';
 import GenericChart from 'components/GenericChart';
 import EventNameTypeahead from 'containers/EventNameTypeahead';
 import Button from 'components/shared/Button';
-import { ChartTypeToAPICall, ChartTypes } from 'modules/charts/constants';
+import { ChartTypeToAPICall, ChartTypes, AggregateSelectOptions } from 'modules/charts/constants';
 
 import './style.css';
 
@@ -25,11 +27,20 @@ class ChartMaker extends Component {
       chartData: [],
       chartDataFetchError: null,
       chartTitle: 'New Chart',
+      yAxisLabel: 'Value',
+      rollup: AggregateSelectOptions[0],
+      interpolateMissing: false,
       saving: false,
       saved: false,
       saveError: null,
     };
   }
+
+  handleRollupChange = option => {
+    if (option) {
+      this.setState({ rollup: option });
+    }
+  };
 
   fetchChartData = async (start, end) => {
     const {
@@ -63,6 +74,9 @@ class ChartMaker extends Component {
       selectedEvent,
       selectedChartType,
       chartTitle,
+      rollup,
+      yAxisLabel,
+      interpolateMissing,
     } = this.state;
 
     const {
@@ -70,6 +84,7 @@ class ChartMaker extends Component {
       dispatcher: {
         receiveChart,
       },
+      history,
     } = this.props;
 
     this.setState({
@@ -82,6 +97,9 @@ class ChartMaker extends Component {
         config: {
           event: selectedEvent,
           chartType: selectedChartType,
+          agg: rollup.value,
+          yAxisLabel: yAxisLabel,
+          interpolateMissing,
         },
         meta: {
           createdBy: currentUser.id,
@@ -93,6 +111,7 @@ class ChartMaker extends Component {
         saved: true,
       });
       receiveChart(data);
+      history.push('/');
     } catch (e) {
       this.setState({
         saving: false,
@@ -155,7 +174,9 @@ class ChartMaker extends Component {
       chartDataLoading,
       chartDataNeverFetched,
       chartTitle,
-      saving,
+      rollup,
+      yAxisLabel,
+      interpolateMissing,
     } = this.state;
 
     if (!selectedChartType || !selectedEvent) {
@@ -177,9 +198,64 @@ class ChartMaker extends Component {
             title={chartTitle}
             onTitleChange={this.changeTitle}
             size="full"
+            agg={rollup.value}
+            yAxisLabel={yAxisLabel}
+            interpolateMissing={interpolateMissing}
           />
         </div>
-        <Button className="chart-maker-save--buton" size="large" disabled={chartTitle === "New Chart"} onClick={this.saveChart} loading={saving}>Save</Button>
+      </div>
+    )
+  }
+
+  renderAggOptions() {
+    const {
+      selectedChartType,
+      rollup,
+      interpolateMissing,
+    } = this.state;
+
+    if (selectedChartType === 'COUNT') {
+      return (
+        <div className="chart-maker-agg-options--container">
+          <label>Aggregate type</label>
+          <Select
+            value={rollup}
+            onChange={this.handleRollupChange}
+            options={AggregateSelectOptions.filter(option => option.value === 'count' || option.value === 'sum')}
+          />
+        </div>
+      );
+    } else if (selectedChartType === 'AREA') {
+      return (
+        <div>
+          <div className="chart-maker-agg-options--container">
+            <label>Aggregate type</label>
+            <Select
+              value={rollup}
+              onChange={this.handleRollupChange}
+              options={AggregateSelectOptions}
+            />
+          </div>
+          <div>
+            <label className="chart-type-container-label">Interpolate missing data points</label>
+            <input type="checkbox" value={interpolateMissing} onChange={(e) => this.setState({ interpolateMissing: e.target.checked })}/>
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderYAxisOptions() {
+    const {
+      yAxisLabel,
+    } = this.state;
+
+    return (
+      <div>
+        <label className="chart-type-container-label">Y Axis label</label>
+        <input value={yAxisLabel} onChange={(e) => this.setState({ yAxisLabel: e.target.value })}/>
       </div>
     )
   }
@@ -188,16 +264,21 @@ class ChartMaker extends Component {
     const {
       selectedEvent,
       selectedChartType,
+      saving,
+      chartTitle,
     } = this.state;
 
     return (
       <div>
         <EventNameTypeahead onClick={(event) => this.setState({ selectedEvent: event.name, selectedChartType: null })}/>
         {selectedEvent && this.renderChartOptionsMaker()}
+        {selectedChartType && this.renderAggOptions()}
+        {selectedChartType && this.renderYAxisOptions()}
         {selectedChartType && this.renderChart()}
+        {selectedChartType && <Button className="chart-maker-save--buton" size="large" disabled={chartTitle === "New Chart"} onClick={this.saveChart} loading={saving}>Save</Button>}
       </div>
     );
   }
 }
 
-export default ChartMaker;
+export default withRouter(ChartMaker);

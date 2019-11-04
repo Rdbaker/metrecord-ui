@@ -11,6 +11,8 @@ const mapStateToProps = (state, { id }) => {
   const eventName = seriesChart.config.event;
   const chartType = seriesChart.config.chartType;
   const chartSize = seriesChart.config.size;
+  const chartAgg = seriesChart.config.agg;
+  const yAxisLabel = seriesChart.config.yAxisLabel;
   return {
     eventName,
     chartType,
@@ -19,6 +21,8 @@ const mapStateToProps = (state, { id }) => {
     seriesNeverFetched: seriesNeverFetched(state, eventName),
     seriesLoading: seriesLoading(state, eventName),
     series: series(state, eventName),
+    agg: chartAgg,
+    yAxisLabel,
   }
 };
 
@@ -36,6 +40,8 @@ const FetchedChart = ({
   chartSize,
   title,
   series,
+  agg,
+  yAxisLabel,
   dispatcher: {
     fetchEventSeries,
   },
@@ -60,6 +66,8 @@ const FetchedChart = ({
       loading={seriesLoading}
       title={title}
       size={chartSize}
+      agg={agg}
+      yAxisLabel={yAxisLabel}
     />
   )
 
