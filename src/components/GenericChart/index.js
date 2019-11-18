@@ -147,19 +147,23 @@ class GenericChart extends PureComponent {
       event,
       yAxisLabel,
       interpolateMissing,
+      interval,
     } = this.props;
 
     if (!loading && data && data.length === 0) {
       return <EmptyChart title={title} />
     } else if (loading || neverFetched) {
       return <LoadingChart title={title} />
-    } else if (type === 'COUNT') {
-      return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} title={title} size={size} event={event} />
-    } else if (type === 'AREA') {
-      return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={title} size={size} event={event} yAxisLabel={yAxisLabel} />
     } else {
-      const options = createPlotOptions(createSeriesFromRawData(data, type), title);
-      return <HighchartsReact highcharts={Highcharts} options={options} />
+      switch(type) {
+        case 'COUNT':
+          return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} title={title} size={size} event={event} />
+        case 'AREA':
+          return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={title} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+        default:
+          const options = createPlotOptions(createSeriesFromRawData(data, type), title);
+          return <HighchartsReact highcharts={Highcharts} options={options} />
+      }
     }
   }
 
@@ -167,14 +171,16 @@ class GenericChart extends PureComponent {
     const {
       title,
       size,
+      type,
     } = this.props;
+
     const {
       isEditingTitle,
       titleInput,
     } = this.state;
 
     return (
-      <div className={cx("generic-chart--container", size)}>
+      <div className={cx("generic-chart--container", size, type)}>
         {!isEditingTitle && <div className="generic-chart--title">{title} {!!this.props.onTitleChange && <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div>}</div>}
         {isEditingTitle && <div><input ref={(title) => { this.$title = title }} value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
         {this.renderChart()}

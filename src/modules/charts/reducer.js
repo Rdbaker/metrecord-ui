@@ -18,6 +18,18 @@ const receiveChart = (state, payload) => {
   };
 };
 
+const receiveCharts = (state, payload) => {
+  payload.charts.forEach(chart => {
+    state.byId[chart.id] = {
+      data: chart,
+      meta: {
+        lastFetched: new Date(),
+      },
+      status: ActionTypes.RECEIVE_CHARTS,
+    };
+  })
+};
+
 const fetchChartPending = (state, payload) => {
   state.byId[payload.id] = {
     data: null,
@@ -51,6 +63,8 @@ const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case ActionTypes.RECEIVE_CHART:
       return produce(state, draft => receiveChart(draft, action.payload));
+    case ActionTypes.RECEIVE_CHARTS:
+      return produce(state, draft => receiveCharts(draft, action.payload));
     case ActionTypes.FETCH_CHART_PENDING:
       return produce(state, draft => fetchChartPending(draft, action.payload));
     case ActionTypes.FETCH_CHART_SUCCESS:

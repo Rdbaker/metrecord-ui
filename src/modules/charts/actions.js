@@ -6,6 +6,11 @@ export const receiveChart = chart => ({
   payload: { chart }
 });
 
+export const receiveCharts = charts => ({
+  type: ActionTypes.RECEIVE_CHARTS,
+  payload: { charts }
+});
+
 export const fetchChart = id => ({
   type: ActionTypes.FETCH_CHART,
   payload: { id },

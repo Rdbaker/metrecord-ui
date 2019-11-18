@@ -3,6 +3,7 @@ import { EventsAPI } from 'api/events';
 
 export const ActionTypes = {
   RECEIVE_CHART: 'RECEIVE_CHART',
+  RECEIVE_CHARTS: 'RECEIVE_CHARTS',
 
   FETCH_CHART: 'FETCH_CHART',
   FETCH_CHART_PENDING: 'FETCH_CHART_PENDING',

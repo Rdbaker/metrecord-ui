@@ -186,7 +186,7 @@ class ChartMaker extends Component {
     return (
       <div>
         <label className="chart-type-container-label">Pick chart dates</label>
-        <ChartDateSelect onChange={({ start, end }) => this.fetchChartData(start, end)} className="chart-maker--date-select"/>
+        <ChartDateSelect onChange={({ start, end }) => this.fetchChartData(start, end)} />
         <div className="chart-maker-generic--container">
           <GenericChart
             type={selectedChartType}

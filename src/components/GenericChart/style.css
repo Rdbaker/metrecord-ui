@@ -10,12 +10,27 @@
   padding: 8px;
 }
 
+.removable-chart--container.full,
 .generic-chart--container.full {
-  width: 100%;
+  box-sizing: border-box;
 }
 
+.removable-chart--container.large,
+.generic-chart--container.large {
+  width: 75%;
+  max-width: 750px;
+}
+
+.removable-chart--container.medium,
 .generic-chart--container.medium {
-  width: 500px;
+  width: 50%;
+  max-width: 500px;
+}
+
+.removable-chart--container.small,
+.generic-chart--container.small {
+  width: 25%;
+  max-width: 250px;
 }
 
 .generic-chart-loading-chart--text {
@@ -40,4 +55,8 @@
 
 .generic-chart--title {
   margin: 4px 12px 8px;
+}
+
+.generic-chart--container.COUNT {
+  max-height: 98px;
 }

@@ -50,6 +50,7 @@
 .chart-maker-generic--container {
   width: 500px;
   margin: 24px 0;
+  box-sizing: border-box;
 }
 
 .count-chart--value {
@@ -60,16 +61,16 @@
   font-size: 72px;
 }
 
+.large .count-chart--value {
+  font-size: 60px;
+}
+
 .medium .count-chart--value {
   font-size: 48px;
 }
 
-.chart-maker--date-select {
-  margin-left: 16px;
-}
-
-.chart-maker--date-select .DateInput_input {
-  box-sizing: border-box;
+.small .count-chart--value {
+  font-size: 32px;
 }
 
 .chart-maker-save--buton {

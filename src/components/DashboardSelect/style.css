@@ -1,0 +1,11 @@
+.dashboard-select--container {
+  width: 400px;
+  margin-left: 16px;
+}
+
+.dashboard-select-label {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #7c7d8e;
+  font-weight: 600;
+}

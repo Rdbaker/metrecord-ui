@@ -25,5 +25,17 @@ export const ChartsAPI = {
       },
     })
     .then(checkStatus)
-  }
+  },
+
+  // TODO: actual pagination
+  paginateCharts() {
+    return fetch(`${API_URL}/api/charts?page_size=200`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 };

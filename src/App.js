@@ -5,12 +5,14 @@ import cx from 'classnames';
 import * as Sentry from '@sentry/browser';
 
 import { AuthAPI } from 'api/auth';
+import { ChartsAPI } from 'api/charts';
 import { DashboardsAPI } from 'api/dashboards';
 import { EventsAPI } from 'api/events';
 import { OrgsAPI } from 'api/org';
 import Sidebar from 'components/Sidebar';
 import { SHIM_URL, METRECORD_ON_METRECORD_CLIENT_ID, DEBUG } from 'constants/resources';
 import { setMe } from 'modules/auth/actions';
+import { receiveCharts } from 'modules/charts/actions';
 import { receiveDashboards } from 'modules/dashboards/actions';
 import { setHasAnyEvents } from 'modules/events/actions';
 import { fetchOrgSuccess } from 'modules/org/actions';
@@ -22,6 +24,7 @@ import Onboard from './views/onboard';
 import Home from './views/home';
 import Account from './views/account';
 import NewChart from './views/newchart';
+import NewDashboard from './views/newdashboard';
 import './App.css';
 
 
@@ -49,17 +52,20 @@ class App extends Component {
       this.fetchOrg(),
       this.fetchHasAnyEvents(),
       this.fetchAllDashboards(),
+      this.fetchAllCharts(),
     ])
     .then(([
       fetchUserResponse,
       fetchOrgResponse,
       hasAnyEventsResponse,
       dashboardsResponse,
+      chartsResponse,
     ]) => {
       this.getMeSuccess(fetchUserResponse);
       this.getOrgSuccess(fetchOrgResponse);
       this.getHasAnyEventsSuccess(hasAnyEventsResponse);
       this.getAllDashboardsSuccess(dashboardsResponse);
+      this.getAllChartsSuccess(chartsResponse);
       this.setState({
         bootstrapDone: true,
       });
@@ -94,6 +100,10 @@ class App extends Component {
     return DashboardsAPI.paginateDashboards();
   }
 
+  fetchAllCharts = async () => {
+    return ChartsAPI.paginateCharts();
+  }
+
   getMeSuccess = (res) => {
     const { data } = res;
     this.setState({
@@ -114,6 +124,11 @@ class App extends Component {
   getAllDashboardsSuccess = (res) => {
     const { page } = res;
     this.props.dispatcher.setDashboards(page);
+  }
+
+  getAllChartsSuccess = (res) => {
+    const { page } = res;
+    this.props.dispatcher.setCharts(page);
   }
 
   mountDrift = () => {
@@ -211,6 +226,7 @@ class App extends Component {
             <Route path="/signup" component={EmailSignup}/>
             <Route path="/settings" render={this.makeLoginRequiredComponent(Account)} />
             <Route path="/new-chart" render={this.makeLoginRequiredComponent(NewChart)} />
+            <Route path="/new-dashboard" render={this.makeLoginRequiredComponent(NewDashboard)} />
           </CurrentUser.Provider>
         </div>
       </BrowserRouter>
@@ -226,6 +242,7 @@ const mapDispatchToProps = dispatch => ({
     setOrg: (org) => dispatch(fetchOrgSuccess(org)),
     setHasAnyEvents: (hasAny) => dispatch(setHasAnyEvents(hasAny)),
     setDashboards: (dashboards) => dispatch(receiveDashboards(dashboards)),
+    setCharts: (charts) => dispatch(receiveCharts(charts)),
   }
 });
 

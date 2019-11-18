@@ -1,0 +1,13 @@
+.chart-date-select--container {
+  max-width: 400px;
+  margin: 16px;
+}
+
+.chart-date-select--options {
+  margin: 8px 0;
+}
+
+.chart-date-select-custom--container .DateInput_input {
+  box-sizing: border-box;
+}
+

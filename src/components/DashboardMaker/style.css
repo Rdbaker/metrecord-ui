@@ -1,0 +1,29 @@
+.generic-dashboard--container {
+  margin: 16px;
+  padding: 8px;
+}
+
+.dashboard-maker-charts--container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.removable-chart--container {
+  width: 100%;
+}
+
+.removable-chart--remove:hover {
+  color: #383842;
+}
+
+.removable-chart--remove {
+  color: #7c7d8e;
+  text-transform: uppercase;
+  font-size: 10px;
+  position: relative;
+  left: 16px;
+  top: 14px;
+  cursor: pointer;
+  display: inline-block;
+}

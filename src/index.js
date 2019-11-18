@@ -20,6 +20,7 @@ import socketEpic from 'modules/socket/epic';
 import eventEpic from 'modules/events/epic';
 import browserEventsEpic from 'modules/browserEvents/epic';
 import chartsEpic from 'modules/charts/epic';
+import dashboardEpic from 'modules/dashboards/epic';
 import { DEBUG } from 'constants/resources';
 
 import './index.css';
@@ -66,6 +67,7 @@ epicMiddleware.run(
     browserEventsEpic,
     eventEpic,
     chartsEpic,
+    dashboardEpic,
   )
 )
 

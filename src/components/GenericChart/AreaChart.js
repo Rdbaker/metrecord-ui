@@ -54,12 +54,20 @@ const createPlotOptions = (series, title, yAxisLabel) => ({
   series,
 });
 
+const IntervalLabelToTime = {
+  second: 1000,
+  minute: 1000 * 60,
+  hour: 1000 * 60 * 60,
+  day: 1000 * 60 * 60 * 24,
+  week: 1000 * 60 * 60 * 24 * 7,
+};
 
-const createSeriesFromRawData = (rawData, agg, event, interpolateMissing) => {
+
+const createSeriesFromRawData = (rawData, agg, event, interpolateMissing, intervalLabel) => {
   const dates = rawData.map(datum => new Date(datum.time).valueOf());
   let earliestDate = Math.min(...dates.map(x => Number(x)));
   const latestDate = Math.max(...dates.map(x => Number(x)));
-  const gap = 1000 * 60;
+  const gap = IntervalLabelToTime[intervalLabel]
   const fullData = [...rawData];
   while (earliestDate < latestDate) {
     if (!dates.includes(earliestDate)) {
@@ -68,7 +76,7 @@ const createSeriesFromRawData = (rawData, agg, event, interpolateMissing) => {
         [agg]: null,
       });
     }
-    earliestDate = new Date(+earliestDate + gap);
+    earliestDate = new Date(earliestDate + gap);
   }
 
   return [{
@@ -91,8 +99,9 @@ const AreaChart = ({
   event,
   yAxisLabel,
   interpolateMissing,
+  interval,
 }) => {
-  const options = createPlotOptions(createSeriesFromRawData(data, agg, event, interpolateMissing), undefined, yAxisLabel);
+  const options = createPlotOptions(createSeriesFromRawData(data, agg, event, interpolateMissing, interval), undefined, yAxisLabel);
 
   return (
     <div className="browser-metrics-chart--container">
