@@ -1,13 +1,16 @@
 .metrecord-snippet:active {
-  border: 1px solid blue;
-  border-radius: 8px;
+  border-color: var(--color-blue-1);
 }
 
 .metrecord-snippet {
+  border: 1px solid transparent;
   max-width: 100%;
   margin-top: 20px;
   cursor: pointer;
   display: inline-block;
+  padding: 4px;
+  border-radius: 4px;
+  transition: border-color ease 0.3s;
 }
 
 .metrecord-snippet-textarea {

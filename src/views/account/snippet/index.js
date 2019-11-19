@@ -7,7 +7,7 @@ import './style.css';
 export const getSnippet = (clientId) => (`
 (function(window, document) {
   if (window.metrecord) console.error('Metrecord embed already included');
-  window.metrecord = {}, m = ['init', 'snap', 'debug']; window.metrecord._c = [];
+  window.metrecord = {}, m = ['init', 'track', 'debug']; window.metrecord._c = [];
   m.forEach(me => window.metrecord[me] = function() {window.metrecord._c.push([me, arguments])});
   var elt = document.createElement('script');
   elt.type = "text/javascript"; elt.async = true;

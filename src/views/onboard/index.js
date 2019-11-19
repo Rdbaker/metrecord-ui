@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { path } from 'ramda';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import cx from 'classnames';
 
 import { getSnippet } from '../account/snippet';
 
@@ -40,11 +41,19 @@ class Onboarding extends Component {
     this.textArea.focus();
     this.textArea.select();
     document.execCommand('copy');
+    this.setState({
+      copied: true,
+    }, this.unsetCopied)
+  }
+
+  unsetCopied = () => {
+    setTimeout(() => this.setState({ copied: false }), 2000);
   }
 
   render() {
     const {
       loading,
+      copied,
     } = this.state;
 
     if (loading) {
@@ -62,11 +71,13 @@ class Onboarding extends Component {
         <h3>1. Install the embed</h3>
         <p>Click the snippet to copy it to your clipboard</p>
         <pre className="metrecord-snippet" onClick={this.copySnippet}>{getSnippet(clientId)}</pre>
-        <textarea className="metrecord-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
-        <h3>2. Configure your settings</h3>
-        <p>Head to <Link to="/settings">your settings</Link> to customize your widget</p>
+        <textarea readOnly={true} className="metrecord-snippet-textarea" ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
+        <div className={cx('metrecord-snippet-copied--text', { visible: copied })}>copied to clipboard!</div>
+        <h3>2. Capture an event</h3>
+        <p>Try recording how many page views you get!</p>
+        <pre>metrecord.track('page_view')</pre>
         <h3>3. View metrics</h3>
-        <p>Take a look at <Link to="/home">the dashboard view</Link> to see the page load speeds on your site</p>
+        <p>Take a look at <Link to="/home">the dashboard view</Link> to see your default dashboard</p>
       </div>
     );
   }

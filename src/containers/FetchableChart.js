@@ -31,12 +31,15 @@ const FetchableChart = ({
   },
   ...rest,
 }) => {
+  debugger
   if (chartNeverFetched) {
+    debugger
     fetchChart(id)
     return <LoadingChart />;
   }
 
   if (chartFetchLoading) {
+    debugger
     return <LoadingChart />;
   }
 

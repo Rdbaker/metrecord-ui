@@ -105,7 +105,7 @@ const EventNameTypeahead = ({
 
   return (
     <div className="event-typeahead--container">
-      <label htmlFor="event-name" className="event-typeahead--label">Search events by name</label>
+      <label autoComplete="off" htmlFor="event-name" className="event-typeahead--label">Search events by name</label>
       <input id="event-name" placeholder="Event name..." className="event-typeahead-input" value={name} onChange={updateName} />
       {loading && <div className="event-typeahead-loading">Loading<LoadingDots /></div>}
       {!!name && !loading &&

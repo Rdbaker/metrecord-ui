@@ -124,7 +124,7 @@ class Dashboard extends Component {
     } = this.state;
 
     return <div>
-      {isAddingChart && 
+      {isAddingChart &&
         <Fragment>
           <Select
             value={selectedChart}

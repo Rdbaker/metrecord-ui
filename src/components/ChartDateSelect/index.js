@@ -112,6 +112,7 @@ const ChartDateSelect = ({
 
   return (
     <div className={cx('chart-date-select--container', className)}>
+      <div className="chart-date-select--label">Select time span</div>
       <Select className={cx('chart-date-select--options', className)} options={SelectOptions} onChange={onSelectChange} />
       {showDatePicker && <ChartDatePicker {...{ onChange, start: moment(start), end: moment(end), className }}/>}
     </div>

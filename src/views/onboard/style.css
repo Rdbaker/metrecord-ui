@@ -5,3 +5,14 @@
 .metrecord-onboarding-container .metrecord-snippet-textarea {
   left: -40px;
 }
+
+.metrecord-snippet-copied--text.visible {
+  color: var(--color-blue-1);
+}
+
+.metrecord-snippet-copied--text {
+  color: transparent;
+  transition: all ease 0.3s;
+  text-transform: uppercase;
+  font-size: 10px;
+}
