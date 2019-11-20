@@ -4,14 +4,14 @@ import { checkStatus } from 'utils/http';
 
 
 export const DashboardsAPI = {
-  createDashboard(data) {
+  createDashboard(data, associations) {
     return fetch(`${API_URL}/api/dashboards`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${getToken()}`,
       },
-      body: JSON.stringify({ dashboard: data }),
+      body: JSON.stringify({ dashboard: data, associations }),
     })
     .then(checkStatus)
   },

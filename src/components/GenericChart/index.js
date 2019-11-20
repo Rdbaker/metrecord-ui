@@ -59,22 +59,16 @@ const createSeriesFromRawData = (rawData, type) => {
   }
 }
 
-const EmptyChart = ({
-  title,
-}) => (
+const EmptyChart = () => (
   <div className="generic-chart-empty-chart--container">
-    <h4>{title}</h4>
     <div className="generic-chart-empty-chart--text">
       You have no data to display here!
     </div>
   </div>
 )
 
-export const LoadingChart = ({
-  title,
-}) => (
+export const LoadingChart = () => (
   <div className="generic-chart-loading-chart--container">
-    <h4>{title}</h4>
     <div className="generic-chart-loading-chart--text">
       Loading your chart<LoadingDots />
     </div>
@@ -87,7 +81,7 @@ class GenericChart extends PureComponent {
 
     this.state = {
       isEditingTitle: false,
-      titleInput: this.props.title,
+      titleInput: this.props.name,
     };
   }
 
@@ -131,7 +125,7 @@ class GenericChart extends PureComponent {
   titleCancel = () => {
     this.setState({
       isEditingTitle: false,
-      titleInput: this.props.title,
+      titleInput: this.props.name,
     })
   }
 
@@ -142,7 +136,7 @@ class GenericChart extends PureComponent {
       neverFetched,
       size='medium',
       type,
-      title,
+      name,
       agg,
       event,
       yAxisLabel,
@@ -151,17 +145,17 @@ class GenericChart extends PureComponent {
     } = this.props;
 
     if (!loading && data && data.length === 0) {
-      return <EmptyChart title={title} />
+      return <EmptyChart title={name} />
     } else if (loading || neverFetched) {
-      return <LoadingChart title={title} />
+      return <LoadingChart title={name} />
     } else {
       switch(type) {
         case 'COUNT':
-          return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} title={title} size={size} event={event} />
+          return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} size={size} event={event} />
         case 'AREA':
-          return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={title} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+          return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
         default:
-          const options = createPlotOptions(createSeriesFromRawData(data, type), title);
+          const options = createPlotOptions(createSeriesFromRawData(data, type), name);
           return <HighchartsReact highcharts={Highcharts} options={options} />
       }
     }
@@ -169,7 +163,7 @@ class GenericChart extends PureComponent {
 
   render() {
     const {
-      title,
+      name,
       size,
       type,
     } = this.props;
@@ -181,8 +175,8 @@ class GenericChart extends PureComponent {
 
     return (
       <div className={cx("generic-chart--container", size, type)}>
-        {!isEditingTitle && <div className="generic-chart--title">{title} {!!this.props.onTitleChange && <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div>}</div>}
-        {isEditingTitle && <div><input ref={(title) => { this.$title = title }} value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
+        {!isEditingTitle && <div className="generic-chart--title">{name} {!!this.props.onTitleChange && <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div>}</div>}
+        {isEditingTitle && <div><input ref={(name) => { this.$title = name }} value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={(e) => this.setState({ titleInput: e.target.value })} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
         {this.renderChart()}
       </div>
     )

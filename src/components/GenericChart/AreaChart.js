@@ -76,7 +76,7 @@ const createSeriesFromRawData = (rawData, agg, event, interpolateMissing, interv
         [agg]: null,
       });
     }
-    earliestDate = new Date(earliestDate + gap);
+    earliestDate = earliestDate + gap;
   }
 
   return [{
@@ -100,7 +100,9 @@ const AreaChart = ({
   yAxisLabel,
   interpolateMissing,
   interval,
+  ...rest,
 }) => {
+  console.log('heres the rest', rest)
   const options = createPlotOptions(createSeriesFromRawData(data, agg, event, interpolateMissing, interval), undefined, yAxisLabel);
 
   return (

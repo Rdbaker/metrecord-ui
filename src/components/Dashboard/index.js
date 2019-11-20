@@ -91,6 +91,7 @@ class Dashboard extends Component {
         removeChartFromDashboard,
       },
       id,
+      associations,
     } = this.props;
 
     const {
@@ -106,6 +107,7 @@ class Dashboard extends Component {
           key={chartId}
           start={startDate}
           end={endDate}
+          {...associations.find(assoc => assoc.chart_id === chartId).config}
           interval={selectInterval(startDate, endDate)}
         />
       ))}
