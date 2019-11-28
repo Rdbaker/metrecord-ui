@@ -9,6 +9,8 @@ import LoadingDots from 'components/LoadingDots';
 
 import CountChart from './CountChart';
 import AreaChart from './AreaChart';
+import LineChart from './LineChart';
+import HistogramChart from './HistogramChart';
 import './style.css';
 
 
@@ -154,6 +156,10 @@ class GenericChart extends PureComponent {
           return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} size={size} event={event} />
         case 'AREA':
           return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+        case 'LINE':
+          return <LineChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+        case 'HISTOGRAM':
+          return <HistogramChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
         default:
           const options = createPlotOptions(createSeriesFromRawData(data, type), name);
           return <HighchartsReact highcharts={Highcharts} options={options} />

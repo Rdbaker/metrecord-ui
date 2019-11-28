@@ -6,7 +6,7 @@ import { AggregateValuesToLabels } from 'modules/charts/constants';
 
 const createPlotOptions = (series, title, yAxisLabel) => ({
   plotOptions: {
-    area: {
+    line: {
       stacking: 'normal',
       lineColor: '#666666',
       lineWidth: 1,
@@ -81,7 +81,7 @@ const createSeriesFromRawData = (rawData, agg, event, interpolateMissing, interv
 
   return [{
     name: `${event} - ${AggregateValuesToLabels[agg]}`,
-    type: 'area',
+    type: 'line',
     marker: {
       symbol: 'circle',
     },
@@ -93,7 +93,7 @@ const createSeriesFromRawData = (rawData, agg, event, interpolateMissing, interv
 }
 
 
-const AreaChart = ({
+const LineChart = ({
   data,
   agg,
   event,
@@ -110,4 +110,4 @@ const AreaChart = ({
   )
 };
 
-export default AreaChart;
+export default LineChart;

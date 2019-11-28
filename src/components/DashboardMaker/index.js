@@ -7,11 +7,11 @@ import Select from 'react-select';
 
 import { DashboardsAPI } from 'api/dashboards';
 import FetchableChart from 'containers/FetchableChart';
-import Button from 'components/shared/Button/index';
+import Button from 'components/shared/Button';
+import Modal from 'components/shared/Modal';
 import ChartDateSelect from 'components/ChartDateSelect/index';
 
 import './style.css';
-import Modal from 'components/Modal/index';
 
 const ChartSizes = [
   { label: 'Small', value: 'small'},

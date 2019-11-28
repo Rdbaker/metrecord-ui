@@ -4,12 +4,16 @@ import { ActionTypes } from './constants';
 
 
 const defaultState = {
-  data: null,
+  org: null,
+  properties: [],
+  subscription: null,
 };
 
 
 const fetchOrgSuccess = (newState, payload) => {
-  newState.data = payload.org;
+  newState.org = payload.org;
+  newState.properties = payload.properties;
+  newState.subscription = payload.subscription;
 
   return newState;
 };

@@ -1,0 +1,114 @@
+.payment-modal-form {
+  position: relative;
+  height: 160px;
+  padding: 0 16px;
+}
+
+.payment-modal-submit-button {
+  position: absolute;
+  bottom: 0;
+  right: 16px;
+}
+
+.plan-change-modal-buttons--container > * {
+  margin: 0 4px;
+}
+
+.plan-change-modal-buttons--container {
+  position: absolute;
+  bottom: 0;
+  right: 16px;
+}
+
+.payment-info-save-failed-message.hidden,
+.payment-info-save-success-message.hidden {
+  opacity: 0;
+}
+
+.payment-info-save-failed-message {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  font-size: 10px;
+  color: #852e2e;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.payment-info-save-success-message {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #7c7d8e;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.product-plan-card--container:hover {
+  box-shadow: 0 2px 4px 0 rgba(70, 82, 89, 0.12), 0 3px 6px 0 rgba(70, 82, 89, 0.15);
+}
+
+.product-plan-card--container.selected {
+  border-color: var(--color-green-3);
+}
+
+.product-plan-card--container {
+  padding: 8px 16px;
+  background: white;
+  cursor: pointer;
+  width: 250px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px 0 rgba(70, 82, 89, 0.24), 0 1px 3px 0 rgba(70, 82, 89, 0.12);
+  border: 2px solid transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.product-plan-card--title {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.product-plan-card-price--container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.product-plan-card-price--container > h2 {
+  margin-bottom: 0;
+}
+
+.product-plan-card-price--container > small {
+  font-size: 10px;
+  color: grey;
+}
+
+.product-plan-cards--container {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+}
+
+.product-plan-card-bad-feature {
+  font-size: 12px;
+  border-bottom: 1px solid var(--color-blue-1);
+  padding: 4px;
+}
+
+.product-plan-card-bad-feature:last-child,
+.product-plan-card-feature:last-child {
+  border-bottom: none;
+}
+
+.product-plan-card-feature {
+  font-size: 12px;
+  border-bottom: 1px solid var(--color-blue-1);
+  padding: 4px;
+}
+
+.product-plan-card-feature svg {
+  color: var(--color-green-5);
+}
+
+.product-plan-card-bad-feature svg {
+  color: var(--color-pink-4);
+}
