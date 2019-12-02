@@ -19,6 +19,7 @@ export const defaultDashboard = state => {
 const hydratedDashById = state => root(state).hydratedById;
 const hydratedRawDash = (state, id) => hydratedDashById(state)[id] || {};
 export const hydratedDashboard = (state, id) => hydratedRawDash(state, id).data;
+export const dashboardAssociations = (state, id) => (hydratedDashboard(state, id) || {}).relations;
 const hydratedDashStatus = (state, id) => hydratedRawDash(state, id).status;
 export const hydratedDashboardNeverFetched = (state, id) => !hydratedDashStatus(state, id);
 export const hydratedDashboardLoading = (state, id) => hydratedDashStatus(state, id) === ActionTypes.FETCH_HYDRATED_DASHBOARD_PENDING;

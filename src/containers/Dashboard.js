@@ -4,6 +4,7 @@ import Dashboard from 'components/Dashboard';
 import { addChartToDashboard, fetchHydratedDashboard, removeChartFromDashboard } from 'modules/dashboards/actions';
 import {
   dashboard,
+  dashboardAssociations,
   hydratedDashboardNeverFetched,
   hydratedDashboardLoading,
   hydratedDashboardChartIds,
@@ -13,6 +14,7 @@ import { allCharts } from 'modules/charts/selectors';
 const mapStateToProps = (state, props) => ({
   dashboard: dashboard(state, props.id),
   charts: allCharts(state),
+  associations: dashboardAssociations(state, props.id),
   neverFetched: hydratedDashboardNeverFetched(state, props.id),
   loading: hydratedDashboardLoading(state, props.id),
   chartIds: hydratedDashboardChartIds(state, props.id),

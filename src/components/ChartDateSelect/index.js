@@ -9,7 +9,7 @@ import './style.css';
 
 const isOutside = (day) => moment(day).isAfter(moment(), 'day')
 
-const SelectOptions = [
+export const SelectOptions = [
   {
     label: 'Last 15 minutes',
     value: 'LAST_15',
@@ -91,12 +91,25 @@ const ChartDateSelect = ({
     start,
     end,
     className,
+    defaultSelected=SelectOptions[0],
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(defaultSelected);
+  useEffect(() => {
+    if (!start && !end) {
+      const minutes = Number(selectedOption.value.split('_')[1]);
+      const now = new Date();
+      onChange({
+        start: new Date(+now - (minutes * 60 * 1000)),
+        end: now,
+      })
+    }
+  }, [start, end])
 
   const onSelectChange = (option) => {
     if (!option) return;
 
+    setSelectedOption(option)
     if (option.value === '__CUSTOM__') {
       setShowDatePicker(true);
       return;
@@ -113,7 +126,7 @@ const ChartDateSelect = ({
   return (
     <div className={cx('chart-date-select--container', className)}>
       <div className="chart-date-select--label">Select time span</div>
-      <Select className={cx('chart-date-select--options', className)} options={SelectOptions} onChange={onSelectChange} />
+      <Select className={cx('chart-date-select--options', className)} options={SelectOptions} onChange={onSelectChange} value={selectedOption} />
       {showDatePicker && <ChartDatePicker {...{ onChange, start: moment(start), end: moment(end), className }}/>}
     </div>
   )

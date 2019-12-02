@@ -7,11 +7,11 @@ import Select from 'react-select';
 
 import { DashboardsAPI } from 'api/dashboards';
 import FetchableChart from 'containers/FetchableChart';
-import Button from 'components/shared/Button/index';
+import Button from 'components/shared/Button';
+import Modal from 'components/shared/Modal';
 import ChartDateSelect from 'components/ChartDateSelect/index';
 
 import './style.css';
-import Modal from 'components/Modal/index';
 
 const ChartSizes = [
   { label: 'Small', value: 'small'},
@@ -28,7 +28,6 @@ const TEN_DAYS = ONE_MINUTE * 60 * 24 * 10; // less than this -> use 'hour'
 
 const selectInterval = (start, end) => {
   const diff = end - start;
-  debugger
   if (diff <= FIFTEEN_MINUTES) {
     return 'second';
   } else if (diff <= THREE_HOURS) {
@@ -71,9 +70,10 @@ class DashboardMaker extends Component {
     };
   }
 
-  saveChart = async () => {
+  saveDashboard = async () => {
     const {
-      dashboardTitle,
+      titleInput,
+      chartConfigs,
     } = this.state;
 
     const {
@@ -88,16 +88,17 @@ class DashboardMaker extends Component {
       saving: true,
     });
 
+    const associations = Object.entries(chartConfigs).map(([chartId, config]) => ({ chartId, config }))
+
     try {
       const data = await DashboardsAPI.createDashboard({
-        name: dashboardTitle,
-        config: {
-        },
+        name: titleInput,
+        config: {},
         meta: {
           createdBy: currentUser.id,
           updatedBy: currentUser.id,
         },
-      });
+      }, associations);
       this.setState({
         saving: false,
         saved: true,
@@ -110,6 +111,14 @@ class DashboardMaker extends Component {
         saveError: e,
       })
     }
+  }
+
+  cancel = () => {
+    const {
+      history,
+    } = this.props;
+
+    history.push('/');
   }
 
 
@@ -193,7 +202,7 @@ class DashboardMaker extends Component {
       <div>
         <ChartDateSelect onChange={this.handleDateChange} start={startDate} end={endDate} className="chart-maker--date-select"/>
         <div className="dashboard-maker-charts--container">
-          {chartIds.map(chartId => <RemovableChart key={chartId} onRemoveClick={() => this.removeChart(chartId)} id={chartId} size={chartConfigs[chartId].size} start={startDate} end={endDate} interval={selectInterval(startDate, endDate)} />)}
+          {chartIds.map(chartId => <RemovableChart key={chartId} onRemoveClick={() => this.removeChart(chartId)} id={chartId} {...chartConfigs[chartId]} start={startDate} end={endDate} interval={selectInterval(startDate, endDate)} />)}
         </div>
         <div>
           {!showChartSelect && <Button onClick={this.showChartSelect}>Add chart</Button>}
@@ -230,12 +239,20 @@ class DashboardMaker extends Component {
     const {
       isEditingTitle,
       titleInput,
+      saving,
     } = this.state;
 
     return (
       <div className={cx("generic-dashboard--container")}>
-        {!isEditingTitle && <div className="generic-dashboard--title">{titleInput} <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div></div>}
-        {isEditingTitle && <div><input value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={this.changeTitle} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
+        <div>
+          {!isEditingTitle && <div className="generic-dashboard--title">{titleInput} <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.setEditingTitle} icon={faPencil} size="xs" /></div></div>}
+          {isEditingTitle && <div><input value={titleInput} autoFocus={true} onKeyDown={this.maybeSubmit} onChange={this.changeTitle} /> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.submitTitle} icon={faCheck} size="xs" /></div> <div className="font-awesome-icon--container"><FontAwesomeIcon onClick={this.titleCancel} icon={faTimes} size="xs" /></div></div>}
+          <div>
+            <Button onClick={this.showChartSelect}>Add chart</Button>
+            <Button onClick={this.saveDashboard} loading={saving}>Save</Button>
+            <Button onClick={this.cancel}>Cancel</Button>
+          </div>
+        </div>
         {this.renderDashboardContents()}
       </div>
     );

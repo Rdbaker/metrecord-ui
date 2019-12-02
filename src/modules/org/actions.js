@@ -11,9 +11,9 @@ export const fetchOrgPending = () => ({
   payload: {},
 });
 
-export const fetchOrgSuccess = org => ({
+export const fetchOrgSuccess = ({ org, properties, subscription }) => ({
   type: ActionTypes.FETCH_ORG_SUCCESS,
-  payload: { org },
+  payload: { org, properties, subscription },
 });
 
 export const fetchOrgFailed = () => ({

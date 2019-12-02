@@ -35,5 +35,16 @@ export const OrgsAPI = {
         value: enabled,
       })
     })
-  }
+  },
+
+  updatePlan(plan) {
+    return fetch(`${API_URL}/api/orgs/update-plan`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({ plan }),
+    })
+  },
 }

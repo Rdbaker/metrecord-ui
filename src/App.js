@@ -16,6 +16,7 @@ import { receiveCharts } from 'modules/charts/actions';
 import { receiveDashboards } from 'modules/dashboards/actions';
 import { setHasAnyEvents } from 'modules/events/actions';
 import { fetchOrgSuccess } from 'modules/org/actions';
+import { receiveOrgUsers } from 'modules/user/actions';
 import { CurrentUser } from 'utils/contexts';
 import { checkStatus } from 'utils/http';
 import { EmailLogin, EmailSignup } from 'views/login';
@@ -26,6 +27,7 @@ import Account from './views/account';
 import NewChart from './views/newchart';
 import NewDashboard from './views/newdashboard';
 import './App.css';
+import { UsersAPI } from 'api/users';
 
 
 class App extends Component {
@@ -53,6 +55,7 @@ class App extends Component {
       this.fetchHasAnyEvents(),
       this.fetchAllDashboards(),
       this.fetchAllCharts(),
+      this.fetchAllOrgUsers(),
     ])
     .then(([
       fetchUserResponse,
@@ -60,12 +63,14 @@ class App extends Component {
       hasAnyEventsResponse,
       dashboardsResponse,
       chartsResponse,
+      allOrgUsersResponse,
     ]) => {
       this.getMeSuccess(fetchUserResponse);
       this.getOrgSuccess(fetchOrgResponse);
       this.getHasAnyEventsSuccess(hasAnyEventsResponse);
       this.getAllDashboardsSuccess(dashboardsResponse);
       this.getAllChartsSuccess(chartsResponse);
+      this.getAllOrgUsersSuccess(allOrgUsersResponse);
       this.setState({
         bootstrapDone: true,
       });
@@ -104,6 +109,10 @@ class App extends Component {
     return ChartsAPI.paginateCharts();
   }
 
+  fetchAllOrgUsers = async () => {
+    return UsersAPI.getAllOrgUsers();
+  }
+
   getMeSuccess = (res) => {
     const { data } = res;
     this.setState({
@@ -129,6 +138,11 @@ class App extends Component {
   getAllChartsSuccess = (res) => {
     const { page } = res;
     this.props.dispatcher.setCharts(page);
+  }
+
+  getAllOrgUsersSuccess = (res) => {
+    const { data } = res;
+    this.props.dispatcher.setOrgUsers(data);
   }
 
   mountDrift = () => {
@@ -243,6 +257,7 @@ const mapDispatchToProps = dispatch => ({
     setHasAnyEvents: (hasAny) => dispatch(setHasAnyEvents(hasAny)),
     setDashboards: (dashboards) => dispatch(receiveDashboards(dashboards)),
     setCharts: (charts) => dispatch(receiveCharts(charts)),
+    setOrgUsers: (users) => dispatch(receiveOrgUsers(users)),
   }
 });
 

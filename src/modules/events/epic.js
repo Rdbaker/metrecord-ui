@@ -22,18 +22,14 @@ const fetchNameTypeahead$ = action$ => action$.pipe(
 const fetchEventSeries$ = action$ => action$.pipe(
   ofType(ActionTypes.FETCH_EVENT_SERIES),
   pluck('payload'),
-  flatMap(({ name, start, end, interval }) => {
-    debugger
-    return from(EventsAPI.fetchSeries(name, start, end, interval))
+  flatMap(({ name, start, end, interval }) =>
+    from(EventsAPI.fetchSeries(name, start, end, interval))
       .pipe(
-        map(({ data }) => {
-          debugger
-          return EventActions.fetchEventSeriesSuccess(name, data, start, end)
-        }),
+        map(({ data }) => EventActions.fetchEventSeriesSuccess(name, data, start, end)),
         catchError(err => of(EventActions.fetchEventSeriesFailed(name, err, start, end))),
         startWith(EventActions.fetchEventSeriesPending(name, start, end, interval))
       )
-      })
+  )
 );
 
 

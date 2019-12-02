@@ -8,21 +8,11 @@ import { ChartTypeToSeriesInterval } from 'modules/charts/constants';
 
 const mapStateToProps = (state, { id }) => {
   const seriesChart = chart(state, id);
-  const eventName = seriesChart.config.event;
-  const chartType = seriesChart.config.chartType;
-  const chartSize = seriesChart.config.size;
-  const chartAgg = seriesChart.config.agg;
-  const yAxisLabel = seriesChart.config.yAxisLabel;
   return {
-    eventName,
-    chartType,
-    title: seriesChart.name,
-    chartSize,
-    seriesNeverFetched: seriesNeverFetched(state, eventName),
-    seriesLoading: seriesLoading(state, eventName),
-    series: series(state, eventName),
-    agg: chartAgg,
-    yAxisLabel,
+    seriesNeverFetched: seriesNeverFetched(state, seriesChart.config.event),
+    seriesLoading: seriesLoading(state, seriesChart.config.event),
+    series: series(state, seriesChart.config.event),
+    ...seriesChart,
   }
 };
 
@@ -49,32 +39,37 @@ class FetchedChart extends PureComponent {
 
   fetchData = () => {
     const {
-      eventName,
       dispatcher: {
         fetchEventSeries,
       },
       start,
       end,
-      chartType,
+      config: {
+        chartType,
+        event,
+      },
       interval,
     } = this.props;
 
     const now = new Date();
     const onehourago = new Date(now - (1000 * 60 * 60));
-    fetchEventSeries(eventName, start || onehourago, end || now, interval || ChartTypeToSeriesInterval[chartType](start, end));
+    fetchEventSeries(event, start || onehourago, end || now, interval || ChartTypeToSeriesInterval[chartType](start, end));
   }
 
   render() {
     const {
       seriesLoading,
       seriesNeverFetched,
-      eventName,
-      chartType,
+      config: {
+        event,
+        interpolateMissing,
+        yAxisLabel,
+        chartType,
+        agg,
+      },
+      name,
       size,
-      title,
       series,
-      agg,
-      yAxisLabel,
       interval,
     } = this.props;
 
@@ -85,15 +80,16 @@ class FetchedChart extends PureComponent {
     return (
       <GenericChart
         type={chartType}
-        event={eventName}
+        event={event}
         neverFetched={seriesNeverFetched}
         data={series}
         loading={seriesLoading}
-        title={title}
+        name={name}
         size={size}
         agg={agg}
         yAxisLabel={yAxisLabel}
         interval={interval}
+        interpolateMissing={interpolateMissing}
       />
     )
   }

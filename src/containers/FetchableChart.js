@@ -31,7 +31,6 @@ const FetchableChart = ({
   },
   ...rest,
 }) => {
-  debugger
   if (chartNeverFetched) {
     debugger
     fetchChart(id)

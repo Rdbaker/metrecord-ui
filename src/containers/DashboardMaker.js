@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import DashboardMaker from 'components/DashboardMaker';
-import { receiveDashboard } from 'modules/dashboards/actions';
+import { fetchHydratedDashboardSuccess } from 'modules/dashboards/actions';
 import { allCharts } from 'modules/charts/selectors';
 
 const mapStateToProps = state => ({
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
-    receiveDashboard: (dashboard) => dispatch(receiveDashboard(dashboard)),
+    receiveDashboard: (payload) => dispatch(fetchHydratedDashboardSuccess({ dashboardId: payload.dashboard.id, hydratedDashboard: payload })),
   }
 });
 

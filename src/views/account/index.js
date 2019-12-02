@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import RouteTabs from '../../components/RouteTabs';
 import AccountSettings from './settings';
 import AccountSnippet from './snippet';
+import BillingSettings from './payment';
 import Admin from './admin';
 
 class AccountHome extends Component {
@@ -21,6 +21,7 @@ class AccountHome extends Component {
   render() {
     var tabs = [
       { label: "Settings", route: "/settings" },
+      { label: "Billing", route: "/settings/billing" },
       { label: "Snippet", route: "/settings/snippet" }
     ];
 
@@ -50,15 +51,16 @@ class AccountHome extends Component {
                 <Admin />
               </div>
             )}/>
+            <Route exact={true} path='/settings/billing' render={() => (
+              <div>
+                <BillingSettings />
+              </div>
+            )}/>
           </div>
         </div>
       </div>
     );
   }
 }
-
-AccountHome.contextTypes = {
-  router: PropTypes.object,
-};
 
 export default AccountHome;

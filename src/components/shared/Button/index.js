@@ -12,13 +12,13 @@ const Button = ({
   loading=false,
   className,
   disabled=false,
-  type="primary",
+  buttonType="primary",
   ...rest,
 }) => {
   return (
-    <div className={cx('metrecord-btn', size, className, type, { disabled })} {...rest}>
+    <button className={cx('metrecord-btn', size, className, buttonType, { disabled })} {...rest}>
       {loading ? <LoadingDots /> : children}
-    </div>
+    </button>
   )
 }
 

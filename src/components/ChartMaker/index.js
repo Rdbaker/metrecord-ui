@@ -195,7 +195,7 @@ class ChartMaker extends Component {
             neverFetched={chartDataNeverFetched}
             data={chartData}
             loading={chartDataLoading}
-            title={chartTitle}
+            name={chartTitle}
             onTitleChange={this.changeTitle}
             size="full"
             agg={rollup.value}
