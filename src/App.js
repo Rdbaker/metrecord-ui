@@ -253,7 +253,7 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => ({
   dispatcher: {
     setMe: (payload) => dispatch(setMe(payload)),
-    setOrg: ({ org }) => dispatch(fetchOrgSuccess(org)),
+    setOrg: (org) => dispatch(fetchOrgSuccess(org)),
     setHasAnyEvents: (hasAny) => dispatch(setHasAnyEvents(hasAny)),
     setDashboards: (dashboards) => dispatch(receiveDashboards(dashboards)),
     setCharts: (charts) => dispatch(receiveCharts(charts)),

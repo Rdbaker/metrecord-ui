@@ -36,7 +36,7 @@ class AccountSnippet extends Component {
     const { data } = await response.json();
     this.setState({
       orgData: data,
-      clientId: data.org.client_id,
+      clientId: data.client_id,
     });
   }
 
