@@ -1,10 +1,12 @@
 export const checkStatus = async (res) => {
   if (!res.ok) {
+    let badRes;
     try {
-      throw await res.json();
+      badRes = await res.json();
     } catch (e) {
-      throw res;
+      badRes = res;
     }
+    throw badRes;
   }
 
   return await res.json();

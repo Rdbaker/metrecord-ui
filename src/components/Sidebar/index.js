@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faHomeAlt, faUsersCog } from '@fortawesome/pro-regular-svg-icons';
+import { faSignOut, faHomeAlt, faUsersCog, faIdCard } from '@fortawesome/pro-regular-svg-icons';
 import { expireToken } from 'utils/auth';
 
 import './style.css';
@@ -22,6 +22,9 @@ const Sidebar = ({
     <div className="metrecord-sidebar--container">
       <NavLink to="/home" activeClassName="active" className="metrecord-sidebar-link">
         <FontAwesomeIcon icon={faHomeAlt} className="metrecord-sidebar-button--icon" />
+      </NavLink>
+      <NavLink to="/users" activeClassName="active" className="metrecord-sidebar-link">
+        <FontAwesomeIcon icon={faIdCard} className="metrecord-sidebar-button--icon" />
       </NavLink>
       <NavLink to="/settings" activeClassName="active" className="metrecord-sidebar-link metrecord-sidebar-settings-button">
         <FontAwesomeIcon icon={faUsersCog} className="metrecord-sidebar-button--icon" />

@@ -5,25 +5,61 @@
   left: 0;
   bottom: 0;
   z-index: -1;
-  background-repeat: repeat;
-  background-size: 340px auto;
 }
 
 .metrecord-auth-form {
-  width: 40%;
-  min-width: 400px;
+  width: 400px;
   margin: 0 auto;
-  padding: 24px 56px;
-  border-radius: 8px;
-  background: var(--color-orange-4);
-  box-shadow: 1px 1px 2px 0px var(--color-blue-2);
+  padding: 24px 0 0;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 1px 2px 0 rgba(70, 82, 89, 0.24), 0 1px 3px 0 rgba(70, 82, 89, 0.12);
 }
 
-.metrecord-auth-form input:focus {
-  border-bottom-color: var(--color-green-4);
+
+.metrecord-auth-form > h1 {
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-blue-3);
 }
 
-.metrecord-auth-form input {
+.metrecord-auth-form label {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.metrecord-auth-form--actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.metrecord-auth-form--action.active {
+  border-color: var(--color-blue-3);
+  color: var(--color-blue-4);
+  cursor: initial;
+}
+
+.metrecord-auth-form--action {
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--color-blue-2);
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-blue-1);
+  flex-grow: 1;
+  text-align: center;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.auth-modal-form-input--container > label {
+  display: none;
+}
+
+.auth-modal-form-input--container > input {
+  flex-grow: 1;
   background: transparent;
   outline: none;
   border-top: none;
@@ -31,26 +67,68 @@
   border-right: none;
   display: block;
   font-size: 14px;
+  border-color: transparent;
+  margin-left: 8px;
 }
 
-.metrecord-auth-form button:hover {
-  background: var(--color-green-3);
+.auth-modal-form-input--container {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  margin: 16px 40px;
+  background: #e8eaea;
+  align-items: center;
+  color: var(--color-blue-2);
+  border-radius: 3px;
 }
 
-.metrecord-auth-form button {
+
+.auth-modal-form-submit-btn {
   margin-top: 32px;
   padding: 7px 5px;
-  width: 70px;
-  background: var(--color-green-4);
-  border-radius: 3px;
-  border: 1px solid var(--color-green-5);
-  color: var(--color-blue-8);
+  width: 100%;
+  background: var(--color-green-5);
+  border-radius: 0 0 5px 5px;
+  border: 1px solid var(--color-green-6);
+  color: white;
   transition: all 0.3s ease;
   cursor: pointer;
+  font-size: 16px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
 }
 
-.metrecord-auth-form label {
-  margin-top: 24px;
-  margin-bottom: 8px;
+.auth-modal-form-submit-btn:hover {
+  background: var(--color-green-4);
+}
+
+.tos-link {
+  font-size: 12px;
+  text-align: center;
+  background: var(--color-yellow-2);
+  color: var(--color-blue-3);
+  padding: 8px 0;
   display: block;
+  margin: 8px auto;
+  width: 80%;
+  border-radius: 3px;
+}
+
+.tos-link > a {
+  text-decoration: none;
+}
+
+.auth-modal-form-error {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 10px;
+  position: relative;
+  top: -16px;
+  color: var(--color-pink-7);
+  height: 0;
+}
+
+.auth-modal-form-hidden-submit-btn {
+  visibility: hidden;
 }

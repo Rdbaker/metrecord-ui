@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAt, faLockAlt } from '@fortawesome/pro-regular-svg-icons';
+import { withRouter } from 'react-router-dom';
 
 import { AuthAPI } from 'api/auth';
 import { setToken } from 'utils/auth';
 import * as AuthActions from 'modules/auth/actions';
-import authBackgroundSrc from 'images/auth background.png';
 
 import './style.css';
+import LoadingDots from 'components/LoadingDots/index';
 
-const goToHome = () => global.location = '/home';
+const goToHome = () => global.location = '/';
 
 
 class EmailLogin extends Component {
@@ -32,8 +34,7 @@ class EmailLogin extends Component {
     });
   }
 
-  onEmailLoginSuccess = async (res) => {
-    const { token } = await res.json();
+  onEmailLoginSuccess = async ({ token }) => {
     this.props.dispatcher.setToken(token);
     setToken(token);
     setTimeout(goToHome, 200);
@@ -62,49 +63,47 @@ class EmailLogin extends Component {
     e.preventDefault();
     this.setEmailLoginPending();
     AuthAPI.loginViaEmail(this.state.emailInput, this.state.passwordInput)
-      .then(res => {
-        if (res.status === 200) {
-          this.onEmailLoginSuccess(res);
-        } else {
-          this.setEmailLoginFailed();
-        }
-      })
-      .catch(this.setEmailSendFailed);
+      .then(this.onEmailLoginSuccess)
+      .catch(this.setEmailLoginFailed)
   }
 
   render() {
     const {
       emailInput,
       passwordInput,
-      emailSendFailed,
-      emailSendPending,
+      emailLoginFailed,
+      emailLoginPending,
     } = this.state;
+
+    const {
+      history
+    } = this.props;
 
     return (
       <div>
         <main id="main-content" className="with-header">
-          <div className="metrecord-auth-form--background" style={{ backgroundImage: `url(${authBackgroundSrc})` }}></div>
+          <div className="metrecord-auth-form--background"></div>
           <div className="metrecord-auth-form">
-            <h2>Login</h2>
+            <h1>Metrecord</h1>
+            <div className="metrecord-auth-form--actions">
+              <div className="metrecord-auth-form--action active">Log In</div>
+              <div className="metrecord-auth-form--action" onClick={() => history.push('/signup')}>Sign Up</div>
+            </div>
             <form onSubmit={this.onSubmitEmail}>
-              <div>
+              <div className="auth-modal-form-input--container">
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={emailInput} placeholder="email" onChange={this.onUpdateEmail} />
+                <FontAwesomeIcon icon={faAt} alt="email" />
+                <input type="email" id="email" value={emailInput} placeholder="yours@example.com" onChange={this.onUpdateEmail} />
               </div>
 
-              <div>
+              <div className="auth-modal-form-input--container">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" value={passwordInput} onChange={this.onUpdatePassword} />
+                <FontAwesomeIcon icon={faLockAlt} alt="password" />
+                <input type="password" id="password" placeholder="your password" value={passwordInput} onChange={this.onUpdatePassword} />
               </div>
-              <div>
-                <button type="submit" onClick={this.onSubmitEmail}>Go</button>
-              </div>
-              {emailSendPending && <div>Logging you in...</div>}
-              {emailSendFailed && <div>We could not send the email</div>}
+              {emailLoginFailed && <div className="auth-modal-form-error">Invalid email/password</div>}
             </form>
-            <div>
-              or <Link to="/signup">create a new account</Link>
-            </div>
+            <button className="auth-modal-form-submit-btn" onClick={this.onSubmitEmail}>{ emailLoginPending ? <LoadingDots /> : 'Go'}</button>
           </div>
         </main>
       </div>
@@ -122,4 +121,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EmailLogin));
