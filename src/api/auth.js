@@ -1,5 +1,6 @@
 import { API_URL } from 'constants/resources';
 import { getToken } from 'utils/auth';
+import { checkStatus } from 'utils/http';
 
 
 export const AuthAPI = {
@@ -11,6 +12,7 @@ export const AuthAPI = {
       },
       body: JSON.stringify({ user: { email, password }}),
     })
+    .then(checkStatus)
   },
 
   signupViaEmail(email, password) {
@@ -21,6 +23,7 @@ export const AuthAPI = {
       },
       body: JSON.stringify({ user: { email, password }}),
     })
+    .then(checkStatus)
   },
 
   getMe() {
