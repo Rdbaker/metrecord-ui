@@ -14,6 +14,7 @@ import dashboardReducer from 'modules/dashboards/reducer';
 import browserEventsReducer from 'modules/browserEvents/reducer';
 import eventsReducer from 'modules/events/reducer';
 import chartsReducer from 'modules/charts/reducer';
+import endUsersReducer from 'modules/endUsers/reducer';
 import orgEpic from 'modules/org/epic';
 import userEpic from 'modules/user/epic';
 import socketEpic from 'modules/socket/epic';
@@ -52,6 +53,7 @@ const store = createStore(
     events: eventsReducer,
     charts: chartsReducer,
     dashboards: dashboardReducer,
+    endUsers: endUsersReducer,
   }),
   compose(
     applyMiddleware(epicMiddleware),

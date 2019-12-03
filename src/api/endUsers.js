@@ -1,11 +1,11 @@
 import { API_URL } from 'constants/resources';
 import { getToken } from 'utils/auth';
-import { checkStatus } from 'utils/api';
+import { checkStatus } from 'utils/http';
 
 
 export const EndUsersAPI = {
-  bulkGet(ids) {
-    return fetch(`${API_URL}/api/end_users?${ids.map(id => `ids[]=${id}&`).join('')}`, {
+  paginateEndUsers() {
+    return fetch(`${API_URL}/api/end_users/fake_paginate`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -13,5 +13,5 @@ export const EndUsersAPI = {
       },
     })
     .then(checkStatus)
-  }
+  },
 }
