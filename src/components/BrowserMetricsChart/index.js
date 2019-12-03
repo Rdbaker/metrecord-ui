@@ -145,9 +145,6 @@ const BrowserMetricsChart = ({
   loading,
   data,
 }) => {
-  if (neverFetched) {
-    fetchBrowserSummary();
-  }
   let chart = () => <div></div>;
 
   if (!loading && data && data.length === 0) {
