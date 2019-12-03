@@ -6,8 +6,8 @@ if (ENVIRONMENT === 'production') {
     WWW_URL: 'https://www.metrecord.com',
     API_URL: 'https://api.metrecord.com',
     SHIM_URL: 'https://js.metrecord.com/widget/shim.js',
-    METRECORD_ON_METRECORD_CLIENT_ID: 'pF1hk8nYIfC1',
-    STRIPE_PUBLIC_KEY: '',
+    METRECORD_ON_METRECORD_CLIENT_ID: '4Gz7-2t5dH0k',
+    STRIPE_PUBLIC_KEY: 'pk_live_9A2J2gztN0g3NIIARbaAt5sC00dsD1AoNN',
   }
 } else {
   ResourcesConstants = {
