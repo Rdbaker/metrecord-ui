@@ -1,5 +1,6 @@
 import { API_URL } from 'constants/resources';
 import { getToken } from 'utils/auth';
+import { checkStatus } from 'utils/http';
 
 
 export const OrgsAPI = {
@@ -46,5 +47,17 @@ export const OrgsAPI = {
       },
       body: JSON.stringify({ plan }),
     })
+    .then(checkStatus)
+  },
+
+  getCurrentInvoice() {
+    return fetch(`${API_URL}/api/orgs/current-invoice`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
   },
 }

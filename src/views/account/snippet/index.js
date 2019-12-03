@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { OrgsAPI } from 'api/org';
-
+import { clientId } from 'modules/org/selectors';
 import './style.css';
+import LoadingDots from 'components/LoadingDots/index';
 
 export const getSnippet = (clientId) => (`
 (function(window, document) {
@@ -18,28 +19,6 @@ export const getSnippet = (clientId) => (`
 metrecord.init('${clientId}');`)
 
 class AccountSnippet extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      orgData: null,
-      clientId: null,
-    };
-  }
-
-  componentDidMount() {
-    this.doFetchMyOrg();
-  }
-
-  doFetchMyOrg = async () => {
-    const response = await OrgsAPI.getMyOrg();
-    const { data } = await response.json();
-    this.setState({
-      orgData: data,
-      clientId: data.client_id,
-    });
-  }
-
   copySnippet = () => {
     this.textArea.focus();
     this.textArea.select();
@@ -49,15 +28,15 @@ class AccountSnippet extends Component {
   render() {
     const {
       clientId,
-    } = this.state;
+    } = this.props;
 
     return (
-      <div>
+      <div className="metrecord-snippet-settings--container">
         <p>
             To add Metrecord to your app, copy the snippet of code below and paste it where you would like to have community chat.
         </p>
         {!clientId &&
-          <div>Loading your snippet</div>
+          <div>Loading your snippet <LoadingDots /></div>
         }
         {clientId &&
           <pre className="metrecord-snippet" type="multi" onClick={this.copySnippet}>
@@ -70,4 +49,8 @@ class AccountSnippet extends Component {
   }
 }
 
-export default AccountSnippet;
+const mapStateToProps = state => ({
+  clientId: clientId(state),
+})
+
+export default connect(mapStateToProps)(AccountSnippet);

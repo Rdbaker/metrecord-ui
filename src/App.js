@@ -28,6 +28,7 @@ import NewChart from './views/newchart';
 import NewDashboard from './views/newdashboard';
 import './App.css';
 import { UsersAPI } from 'api/users';
+import LoadingDots from 'components/LoadingDots/index';
 
 
 class App extends Component {
@@ -204,7 +205,7 @@ class App extends Component {
 
     return () => {
       if (!bootstrapDone) {
-        return <div>Loading...</div>;
+        return <div className="app-bootstrap-loading--container">Loading <LoadingDots /></div>;
       }
 
       if (!!currentUser) {

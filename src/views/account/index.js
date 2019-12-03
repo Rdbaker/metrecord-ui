@@ -7,6 +7,8 @@ import AccountSnippet from './snippet';
 import BillingSettings from './payment';
 import Admin from './admin';
 
+import './style.css';
+
 class AccountHome extends Component {
   currentUserIsAdmin = (currentUser) => {
     if (!currentUser) {
@@ -32,7 +34,7 @@ class AccountHome extends Component {
 
     return (
       <div>
-        <h2>Settings</h2>
+        <h2 className="metrecord-settings--header">Settings</h2>
         <RouteTabs tabs={tabs} />
         <div className="constrain-width">
           <div>

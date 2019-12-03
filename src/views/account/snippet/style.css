@@ -20,4 +20,11 @@
   left: -5px;
   z-index: -1;
   display: block;
+  resize: none;
+  opacity: 0;
+}
+
+
+.metrecord-snippet-settings--container {
+  margin: 0 24px;
 }

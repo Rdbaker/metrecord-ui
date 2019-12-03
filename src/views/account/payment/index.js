@@ -15,8 +15,11 @@ import Modal from 'components/shared/Modal/index';
 import { UsersAPI } from 'api/users';
 import { OrgsAPI } from 'api/org';
 import { subscriptionPlanId } from 'modules/org/selectors';
+import { fetchOrgSuccess } from 'modules/org/actions';
+import LoadingDots from 'components/LoadingDots/index';
 
 
+const formatter = new Intl.NumberFormat(window.navigator.language, { style: 'currency', currency: 'USD' });
 const Plans = {
   plan_GGOUZrL6sTHiXE: {
     name: 'Premium',
@@ -46,7 +49,14 @@ class PaymentSettings extends Component {
       savePaymentErr: null,
       showConfirmPlanChangeModal: false,
       confirmPlanId: null,
+      showCurrenInvoiceModal: false,
+      currentInvoiceData: null,
     };
+  }
+
+  componentDidMount() {
+    OrgsAPI.getCurrentInvoice()
+      .then(({ data }) => this.setState({ currentInvoiceData: data }));
   }
 
   onChangePlan = (planId) => {
@@ -133,6 +143,61 @@ class PaymentSettings extends Component {
     });
   }
 
+  openInvoiceModal = () => {
+    this.setState({
+      showCurrenInvoiceModal: true,
+    });
+  }
+
+  closeInvoiceModal = () => {
+    this.setState({
+      showCurrenInvoiceModal: false,
+    });
+  }
+
+  renderCurrentInvoiceModal() {
+    const {
+      currentInvoiceData,
+      showCurrenInvoiceModal,
+    } = this.state
+
+
+    if (!currentInvoiceData) {
+      return (
+        <Modal isOpen={showCurrenInvoiceModal} onClose={this.closeInvoiceModal} title="Your current invoice">
+          <div className="current-invoice-modal--loading">Loading your invoice<LoadingDots /></div>
+        </Modal>
+      )
+    }
+
+    const start = new Date(currentInvoiceData.period_start * 1000);
+    const end = new Date(currentInvoiceData.period_end * 1000);
+
+    return (
+      <Modal isOpen={showCurrenInvoiceModal} onClose={this.closeInvoiceModal} title="Your current invoice">
+        <div className="current-invoice-modal--container">
+          <table className="current-invoice-table">
+            <thead>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Unit price</th>
+              <th>Total</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Events tracked</td>
+                <td>{currentInvoiceData.events_used}</td>
+                <td>$1 per 100,000 events</td>
+                <td>{formatter.format(currentInvoiceData.amount_due / 100)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>Will bill to card on file under: <strong>{currentInvoiceData.customer_email}</strong></div>
+        </div>
+      </Modal>
+    )
+  }
+
 
   renderPaymentModal() {
     const {
@@ -146,6 +211,11 @@ class PaymentSettings extends Component {
       <Modal isOpen={showPaymentModal} onClose={() => this.setState({ showPaymentModal: false })} title="Add payment information">
         <form className="payment-modal-form" onSubmit={this.handlePaymentUpdateSubmit}>
           <CardElement />
+          <input className="payment-modal-name--input" type="text" placeholder="Name on card" />
+          <input className="payment-modal-address--input" type="text" placeholder="Address" />
+          <input className="payment-modal-address-2--input" type="text" placeholder="Address line 2" />
+          <input className="payment-modal-city--input" type="text" placeholder="City" />
+          <input className="payment-modal-country--input" type="text" placeholder="Country" />
           <Button type="submit" disabled={savingPaymentInfo} loading={savingPaymentInfo} className="payment-modal-submit-button">Save</Button>
           <div className={cx("payment-info-save-success-message", { hidden: !paymentInfoSaved })}>Payment info saved successfully!</div>
           <div className={cx("payment-info-save-failed-message", { hidden: !savePaymentFailed })}>Payment info could not be saved. Please try again or contact support</div>
@@ -243,11 +313,11 @@ class PaymentSettings extends Component {
 
     return (
       <div className="account-settings-form-container">
-        <h2>Billing</h2>
         <Button onClick={() => this.setState({ showPaymentModal: true })}>Update my payment info</Button>
         {this.renderPaymentModal()}
         {this.renderPlanChangeConfirmModal()}
-        <p>You're currently on the <strong>{pathOr('Free', [myPlanId, 'name'], Plans)}</strong> plan.</p>
+        {this.renderCurrentInvoiceModal()}
+        <div>You're currently on the <strong>{pathOr('Free', [myPlanId, 'name'], Plans)}</strong> plan. {!!myPlanId && <span><div className="noop-link" onClick={this.openInvoiceModal}>Click here</div> to view your current invoice</span>}</div>
         {this.renderPlans()}
         {!anyUserHasPaymentInfo && 'bro you need some payment info here'}
       </div>
@@ -260,7 +330,11 @@ const mapStateToProps = (state) => ({
   myPlanId: subscriptionPlanId(state),
 })
 
-const ConnectedBilling = connect(mapStateToProps)(injectStripe(PaymentSettings));
+const mapDispatchToProps = dispatch => ({
+  receiveOrg: (data) => dispatch(fetchOrgSuccess(data)),
+});
+
+const ConnectedBilling = connect(mapStateToProps, mapDispatchToProps)(injectStripe(PaymentSettings));
 
 const StripeWrappedPaymentSettings = (props) => (
   <StripeProvider apiKey={STRIPE_PUBLIC_KEY}>

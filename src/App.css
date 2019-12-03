@@ -25,3 +25,15 @@ body {
   margin-left: 60px;
   max-height: 100vh;
 }
+
+.app-bootstrap-loading--container {
+  text-transform: uppercase;
+  font-size: 12px;
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  align-items: baseline;
+  color: #7c7d8e;
+  font-weight: 600;
+  margin: 64px auto;
+}

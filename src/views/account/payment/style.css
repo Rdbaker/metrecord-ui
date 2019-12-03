@@ -112,3 +112,77 @@
 .product-plan-card-bad-feature svg {
   color: var(--color-pink-4);
 }
+
+.noop-link:hover {
+  color: darkblue;
+}
+
+.noop-link {
+  color: blue;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.current-invoice-modal--container {
+  padding: 0 16px;
+  color: var(--color-blue-5);
+}
+
+.payment-modal-name--input,
+.payment-modal-address--input,
+.payment-modal-address-2--input,
+.payment-modal-city--input,
+.payment-modal-country--input {
+  padding: 4px;
+  box-sizing: border-box;
+  border-bottom: 1px solid transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  transition: border-bottom 0.5s ease;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.payment-modal-name--input:focus,
+.payment-modal-address--input:focus,
+.payment-modal-address-2--input:focus,
+.payment-modal-city--input:focus,
+.payment-modal-country--input:focus {
+  border-bottom: 1px solid var(--color-blue-2);
+}
+
+.payment-modal-name--input {
+  width: 100%;
+}
+
+.payment-modal-address--input,
+.payment-modal-address-2--input,
+.payment-modal-city--input,
+.payment-modal-country--input {
+  width: 50%;
+}
+
+.current-invoice-modal--loading {
+  display: flex;
+  align-items: baseline;
+  margin-left: 24px;
+}
+
+.current-invoice-table {
+  margin-bottom: 40px;
+}
+.current-invoice-table th {
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #7c7d8e;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-blue-3);
+}
+
+.current-invoice-table td {
+  padding: 0 8px;
+  color: var(--color-blue-3);
+}
