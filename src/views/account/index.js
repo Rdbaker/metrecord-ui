@@ -23,8 +23,9 @@ class AccountHome extends Component {
   render() {
     var tabs = [
       { label: "Settings", route: "/settings" },
-      { label: "Billing", route: "/settings/billing" },
-      { label: "Snippet", route: "/settings/snippet" }
+      // TODO: add these back later
+      // { label: "Billing", route: "/settings/billing" },
+      // { label: "Snippet", route: "/settings/snippet" }
     ];
 
     const currentUser = this.props.currentUser;
@@ -40,7 +41,7 @@ class AccountHome extends Component {
           <div>
             <Route exact={true} path='/settings' render={() => (
               <div>
-                <AccountSettings />
+                <AccountSnippet />
               </div>
             )}/>
             <Route exact={true} path='/settings/snippet' render={() => (
