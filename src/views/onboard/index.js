@@ -85,7 +85,7 @@ class Onboarding extends Component {
 
 
 const mapStateToProps = (state) => ({
-  clientId: path(['org', 'data', 'client_id'], state),
+  clientId: path(['org', 'org', 'client_id'], state),
 });
 
 
