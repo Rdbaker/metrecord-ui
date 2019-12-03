@@ -87,7 +87,7 @@ const createSeriesFromCategory = (categoryName, categoryData, earliestDate, late
   // fill in all days that have no data with 0 values
   while (earliestDate + offset <= latestDate) {
     if (!dateToCountMap.hasOwnProperty(earliestDate + offset)) {
-      dateToCountMap[earliestDate + offset] = null
+      dateToCountMap[earliestDate + offset] = 0;
     }
     offset += interval;
   }
