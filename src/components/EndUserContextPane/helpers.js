@@ -16,7 +16,7 @@ export const getBrowserAndVersion = (userAgent) => {
   } else if (/Safari[\/\s](\d+\.\d+)/.test(userAgent)) {
     browser = 'Safari';
     /Version[\/\s](\d+\.\d+)/.test(userAgent);
-    browserVersion = new Number(RegExp.$1);
+    browserVersion = parseFloat(new Number(RegExp.$1));
   } else if (/Firefox[\/\s](\d+\.\d+)/.test(userAgent)) {
     browser = 'Firefox';
   }
