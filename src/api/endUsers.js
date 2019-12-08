@@ -14,4 +14,15 @@ export const EndUsersAPI = {
     })
     .then(checkStatus)
   },
+
+  fetchEndUserData(endUserId, before) {
+    return fetch(`${API_URL}/api/end_users/${endUserId}/events?before=${before}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 }

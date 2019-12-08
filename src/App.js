@@ -21,6 +21,7 @@ import { CurrentUser } from 'utils/contexts';
 import { checkStatus } from 'utils/http';
 import { EmailLogin, EmailSignup } from 'views/login';
 import { UsersView } from 'views/users';
+import { SingleUserView } from 'views/user';
 
 import Onboard from './views/onboard';
 import Home from './views/home';
@@ -243,7 +244,8 @@ class App extends Component {
             <Route path="/settings" render={this.makeLoginRequiredComponent(Account)} />
             <Route path="/new-chart" render={this.makeLoginRequiredComponent(NewChart)} />
             <Route path="/new-dashboard" render={this.makeLoginRequiredComponent(NewDashboard)} />
-            <Route path="/users" render={this.makeLoginRequiredComponent(UsersView)} />
+            <Route path="/users/:uuid" render={this.makeLoginRequiredComponent(SingleUserView)} />
+            <Route exact={true} path="/users" render={this.makeLoginRequiredComponent(UsersView)} />
           </CurrentUser.Provider>
         </div>
       </BrowserRouter>

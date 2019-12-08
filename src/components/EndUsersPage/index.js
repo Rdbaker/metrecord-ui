@@ -7,14 +7,23 @@ import { uuidToName } from 'utils/generateName';
 
 import './style.css';
 
+const formatDate = date => {
+  return date.toLocaleString(window.navigator.language, { month: 'short', day: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+}
+
+const formatNum = new Intl.NumberFormat(window.navigator.language)
+
 const pageToRow = page => {
   const name = uuidToName(page.end_user_id);
+  const lastSeen = new Date(page.last_seen);
   return (
-    <div className="end-user-table--row" key={page.end_user_id}>
-      <Link className="end-user-table--cell" to={`/users/${page.end_user_id}`}>{name}</Link>
-      <div className="end-user-table--cell">{page.event_count}</div>
-      <div className="end-user-table--cell">{page.last_seen}</div>
-    </div>
+    <tr className="end-user-table--row" key={page.end_user_id}>
+      <td>
+        <Link className="end-user-table--cell" to={`/users/${page.end_user_id}`}>{name}</Link>
+      </td>
+      <td className="end-user-table--cell">{formatNum.format(page.event_count)}</td>
+      <td className="end-user-table--cell">{formatDate(lastSeen)}</td>
+    </tr>
   );
 };
 
@@ -65,13 +74,20 @@ class EndUsersPage extends Component {
     const endUserRows = endUserPage.map(page => pageToRow(page));
 
     return (
-      <div className="typeahead-top-row--container">
-        <div className="typeahead-name--container">
-          <div className="typeahead-result-field--label">name</div>
-        </div>
-        <div>
-          {endUserRows}
-        </div>
+      <div className="end-users-page--container">
+        <h1>Your visitors</h1>
+        <table className="end-user--table">
+          <thead>
+            <tr>
+              <th>name</th>
+              <th># of events</th>
+              <th>last seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {endUserRows}
+          </tbody>
+        </table>
       </div>
     )
   }

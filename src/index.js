@@ -17,6 +17,7 @@ import chartsReducer from 'modules/charts/reducer';
 import endUsersReducer from 'modules/endUsers/reducer';
 import orgEpic from 'modules/org/epic';
 import userEpic from 'modules/user/epic';
+import endUserEpic from 'modules/endUsers/epic';
 import socketEpic from 'modules/socket/epic';
 import eventEpic from 'modules/events/epic';
 import browserEventsEpic from 'modules/browserEvents/epic';
@@ -70,6 +71,7 @@ epicMiddleware.run(
     eventEpic,
     chartsEpic,
     dashboardEpic,
+    endUserEpic,
   )
 )
 

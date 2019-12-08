@@ -1,5 +1,6 @@
 import React from 'react';
+import EndUsersPage from 'containers/EndUsersPage';
 
 export const UsersView = () => (
-  <h3>Coming soon!</h3>
+  <EndUsersPage />
 )
