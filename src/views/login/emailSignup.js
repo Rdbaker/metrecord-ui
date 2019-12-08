@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faLockAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faAt, faLockAlt } from '@fortawesome/pro-duotone-svg-icons';
 import { withRouter } from 'react-router-dom';
 import { path } from 'ramda';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrowser } from '@fortawesome/pro-regular-svg-icons';
+import { faBrowser } from '@fortawesome/pro-duotone-svg-icons';
 import { faSafari, faInternetExplorer, faChrome, faFirefox, faEdge } from '@fortawesome/free-brands-svg-icons';
 
 import { getBrowserAndVersion } from './helpers';

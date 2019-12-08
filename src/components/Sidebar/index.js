@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faHomeAlt, faUsersCog, faIdCard } from '@fortawesome/pro-regular-svg-icons';
+import { faSignOut, faHomeAlt, faUsersCog, faIdCard } from '@fortawesome/pro-duotone-svg-icons';
 import { expireToken } from 'utils/auth';
 
 import './style.css';
