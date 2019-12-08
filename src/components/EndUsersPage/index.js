@@ -68,7 +68,7 @@ class EndUsersPage extends Component {
     } = this.props;
 
     if (loading || neverLoaded) {
-      return <LoadingPulse />;
+      return <div className="loading-container--label">Loading your visitors <LoadingPulse /></div>;
     }
 
     const endUserRows = endUserPage.map(page => pageToRow(page));

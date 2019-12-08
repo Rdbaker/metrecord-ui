@@ -5,6 +5,31 @@
   left: 0;
   bottom: 0;
   z-index: -1;
+  animation-duration: 60s;
+  animation-name: bgrotate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bgrotate {
+  0% {
+    background: #adcde0;
+  }
+
+  30% {
+    background: var(--color-green-1);
+  }
+
+  60% {
+    background: var(--color-orange-1);
+  }
+
+  80% {
+    background: var(--color-green-1);
+  }
+
+  100% {
+    background: #adcde0;
+  }
 }
 
 .metrecord-auth-form {

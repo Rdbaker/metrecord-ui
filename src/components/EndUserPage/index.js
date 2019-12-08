@@ -16,9 +16,9 @@ const EndUserPage = ({
 }) => {
   if (neverLoaded) {
     fetchEndUserEvents(endUserId)
-    return <LoadingPulse />;
+    return <div className="loading-container--label">Loading visitor details <LoadingPulse /></div>;
   } else if (loading) {
-    return <LoadingPulse />;
+    return <div className="loading-container--label">Loading visitor details <LoadingPulse /></div>;
   }
 
   const name = uuidToName(endUserId);

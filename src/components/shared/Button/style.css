@@ -39,3 +39,14 @@
   background: #d9d9e1;
   cursor: not-allowed;
 }
+
+
+.loading-container--label {
+  padding: 8px 16px;
+  color: var(--color-blue-3);
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
