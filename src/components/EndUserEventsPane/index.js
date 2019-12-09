@@ -113,12 +113,13 @@ const EndUserEventsPane = ({
   eventGroups = [],
   endUserId,
   fetchEndUserEvents,
+  moreDataLoading,
 }) => {
   return (
     <div className="end-user-events-pane--container">
       <h3>Event Timeline</h3>
       {eventGroups.map(group => <EventGroup key={group[0].id} events={group} />)}
-      <Button buttonType="subtle" onClick={() => fetchEndUserEvents(endUserId, mostRecentEventTime(eventGroups))}>Load More</Button>
+      <Button loading={moreDataLoading} disabled={moreDataLoading} buttonType="subtle" onClick={() => fetchEndUserEvents(endUserId, mostRecentEventTime(eventGroups))}>Load More</Button>
     </div>
   );
 }

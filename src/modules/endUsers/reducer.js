@@ -14,16 +14,17 @@ const handleReceivePage = (state, { page }) => {
 };
 
 const fetchEndUserPending = (state, { endUserId }) => {
+  const isEmpty = !state.byId[endUserId];
   state.byId[endUserId] = {
     status: ActionTypes.FETCH_END_USER_EVENTS_PENDING,
-    data: [],
+    data: isEmpty ? [] : state.byId[endUserId].data,
   };
 };
 
 const fetchEndUserSuccess = (state, { data, before, endUserId }) => {
   state.byId[endUserId].status = ActionTypes.FETCH_END_USER_EVENTS_SUCCESS;
   state.byId[endUserId].lastLimit = before;
-  state.byId[endUserId].data = data;
+  state.byId[endUserId].data = state.byId[endUserId].data.concat(data);
 };
 
 

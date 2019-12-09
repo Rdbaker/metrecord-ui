@@ -29,6 +29,14 @@ const getBrowserIcon = (userAgent) => {
 const EndUserContextPane = ({
   contextEvent,
 }) => {
+  if (!contextEvent) {
+    return (
+      <div className="end-user-context-pane--container">
+        <h5>No browser context could be found</h5>
+      </div>
+    );
+  }
+
   return (
     <div className="end-user-context-pane--container">
       <div className="end-user-context-value--container">
