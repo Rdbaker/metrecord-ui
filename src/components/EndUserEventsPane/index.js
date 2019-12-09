@@ -36,7 +36,7 @@ const UserContextEvent = ({
     <div className="event-row--date">{formatTimeFromString(created_at)}</div>
     <div className="event-row--content">
       <div className="event-row-event-type orange">Page Load</div>
-      <div className="event-row-event--value">{document.title} <a target="_blank" href={location.href}>{location.href}</a></div>
+      <div className="event-row-event--value">{document.title} <a className="event-row-event-value--fixed-width" target="_blank" href={location.href}>{location.href}</a></div>
     </div>
   </div>
 );
@@ -63,7 +63,7 @@ const ErrorEvent = ({
     <div className="event-row--date">{formatTimeFromString(created_at)}</div>
     <div className="event-row--content">
       <div className="event-row-event-type red">Error</div>
-      <div className="event-row-event--value">{message}</div>
+      <div className="event-row-event--value event-row-event-value--fixed-width">{message}</div>
     </div>
   </div>
 )

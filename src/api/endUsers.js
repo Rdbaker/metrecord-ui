@@ -16,7 +16,7 @@ export const EndUsersAPI = {
   },
 
   fetchEndUserData(endUserId, before) {
-    return fetch(`${API_URL}/api/end_users/${endUserId}/events?before=${before}`, {
+    return fetch(`${API_URL}/api/end_users/${endUserId}/events?${before && `before=${before}`}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -3,6 +3,11 @@
   margin-bottom: 24px;
 }
 
+.end-user-events-pane--container > h3 {
+  margin: 0 0 12px;
+  text-align: center;
+}
+
 .event-group-header--date {
   font-size: 10px;
   text-transform: uppercase;
@@ -25,6 +30,7 @@
   background: white;
   border-radius: 3px;
   margin: 8px 0;
+  width: 632px;
 }
 
 .event-row--container {
@@ -38,7 +44,7 @@
   color: var(--color-blue-2);
   font-weight: 600;
   margin-right: 8px;
-  width: 64px;
+  width: 68px;
 }
 
 .event-row-event-type {
@@ -82,7 +88,7 @@
   align-items: center;
 }
 
-.event-row-event--value > a {
+.event-row-event-value--fixed-width {
   max-width: 400px;
   display: inline-block;
   white-space: nowrap;
