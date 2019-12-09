@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import EndUserDetailsPane from 'containers/EndUserDetailsPane';
+import EndUserEventsPane from 'containers/EndUserEventsPane';
 import LoadingPulse from 'components/LoadingPulse';
 import { uuidToName } from 'utils/generateName';
 
@@ -31,7 +32,10 @@ const EndUserPage = ({
         <div>{name}</div>
       </div>
       <h1>{name}</h1>
-      <EndUserDetailsPane endUserId={endUserId} />
+      <div className="end-user-event-details--container">
+        <EndUserDetailsPane endUserId={endUserId} />
+        <EndUserEventsPane endUserId={endUserId}/>
+      </div>
     </div>
   );
 }

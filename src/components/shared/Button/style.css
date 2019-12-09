@@ -26,8 +26,8 @@
 
 .metrecord-btn.subtle {
   background: #efefef;
-  border-color: var(--color-blue-2);
-  color: var(--color-blue-4);
+  border-color: var(--color-blue-1);
+  color: var(--color-blue-3);
 }
 
 .metrecord-btn.subtle:hover {
