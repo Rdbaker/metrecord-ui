@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrowser } from '@fortawesome/pro-duotone-svg-icons';
 import { faSafari, faInternetExplorer, faChrome, faFirefox, faEdge } from '@fortawesome/free-brands-svg-icons';
 
-import { getBrowserAndVersion } from './helpers';
+import { getBrowserAndVersion, getFlagForLocale } from './helpers';
 
 import './style.css';
 
@@ -41,7 +41,7 @@ const EndUserContextPane = ({
     <div className="end-user-context-pane--container">
       <div className="end-user-context-value--container">
         <div className="end-user-context--label">Language</div>
-        <div>{contextEvent.data.preferredLanguage}</div>
+        <div>{getFlagForLocale(contextEvent.data.preferredLanguage)} {contextEvent.data.preferredLanguage}</div>
       </div>
       <div className="end-user-context-value--container">
         <div className="end-user-context--label">Device</div>

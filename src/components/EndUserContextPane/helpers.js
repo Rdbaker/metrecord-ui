@@ -1,3 +1,5 @@
+import flags from 'utils/flags';
+
 export const getBrowserAndVersion = (userAgent) => {
 
   let browser = '';
@@ -26,6 +28,14 @@ export const getBrowserAndVersion = (userAgent) => {
 
   return {
     name: browser,
-    version: browserVersion, 
+    version: browserVersion,
   };
 };
+
+export const getFlagForLocale = locale => {
+  const countryCode = locale.split('-')[1];
+  const flag = flags.filter(flag => flag.code === countryCode)[0];
+  if (flag) {
+    return flag.emoji;
+  }
+}

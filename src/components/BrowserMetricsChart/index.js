@@ -4,6 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 import LoadingDots from 'components/LoadingDots';
 import ChartDateSelect from 'components/ChartDateSelect';
+import withTimer from 'utils/timer';
 
 import './style.css';
 
@@ -165,4 +166,4 @@ const BrowserMetricsChart = ({
   )
 }
 
-export default BrowserMetricsChart;
+export default withTimer('BrowserMetricsChart', BrowserMetricsChart);
