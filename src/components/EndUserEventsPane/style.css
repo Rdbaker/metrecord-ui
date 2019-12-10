@@ -58,23 +58,23 @@
 }
 
 .event-row-event-type.pink {
-  background: var(--color-pink-2);
-  color: var(--color-blue-8);
+  background: var(--color-pink-1);
+  color: var(--color-blue-4);
 }
 
 .event-row-event-type.red {
-  background: var(--color-pink-8);
-  color: white;
+  background: var(--color-pink-3);
+  color: var(--color-blue-4);
 }
 
 .event-row-event-type.green {
-  background: var(--color-green-2);
-  color: var(--color-blue-6);
+  background: var(--color-green-1);
+  color: var(--color-blue-4);
 }
 
 .event-row-event-type.orange {
-  background: var(--color-orange-5);
-  color: var(--color-blue-8);
+  background: var(--color-orange-2);
+  color: var(--color-blue-4);
 }
 
 .event-row--content {

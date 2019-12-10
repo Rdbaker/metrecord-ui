@@ -14,11 +14,12 @@ const EndUserPage = ({
   endUserId,
   fetchEndUserEvents,
   loading,
+  endUserData,
 }) => {
   if (neverLoaded) {
     fetchEndUserEvents(endUserId)
     return <div className="loading-container--label">Loading visitor details <LoadingPulse /></div>;
-  } else if (loading) {
+  } else if (loading && (!endUserData || !endUserData.length)) {
     return <div className="loading-container--label">Loading visitor details <LoadingPulse /></div>;
   }
 
