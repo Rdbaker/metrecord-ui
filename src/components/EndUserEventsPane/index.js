@@ -68,6 +68,19 @@ const ErrorEvent = ({
   </div>
 )
 
+const AjaxEvent = ({
+  name,
+  created_at,
+}) => (
+  <div className="event-row--container">
+    <div className="event-row--date">{formatTimeFromString(created_at)}</div>
+    <div className="event-row--content">
+      <div className="event-row-event-type red">Ajax</div>
+      <div className="event-row-event--value event-row-event-value--fixed-width">{name}</div>
+    </div>
+  </div>
+)
+
 const UnknownEvent = ({
   created_at,
 }) => (
@@ -90,6 +103,8 @@ const Event = ({
       return <TrackEvent {...event} {...event.data} />
     case 'error':
       return <ErrorEvent {...event} {...event.data} />
+    case 'ajax':
+      return <AjaxEvent {...event} {...event.data} />
     default:
       return <UnknownEvent {...event} />
   }

@@ -242,6 +242,19 @@ class ChartMaker extends Component {
           </div>
         </div>
       );
+    } else if (selectedChartType === 'LINE' || selectedChartType === 'HISTOGRAM') {
+      return (
+        <div>
+          <div className="chart-maker-agg-options--container">
+            <label>Aggregate type</label>
+            <Select
+              value={rollup}
+              onChange={this.handleRollupChange}
+              options={AggregateSelectOptions}
+            />
+          </div>
+        </div>
+      );
     } else {
       return null;
     }

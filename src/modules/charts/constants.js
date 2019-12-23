@@ -19,8 +19,8 @@ export const ChartTypes = {
 };
 
 export const ChartTypeToAPICall = {
-  HISTOGRAM: () => ([]),
-  LINE: () => ([]),
+  HISTOGRAM: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'minute'),
+  LINE: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'minute'),
   AREA: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'minute'),
   COUNT: (name, start, end) => EventsAPI.fetchSeries(name, start, end, 'year'),
 };

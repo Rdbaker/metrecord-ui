@@ -12,6 +12,22 @@ const defaultState = {
       error: null,
     }
   },
+  ajax: {
+    data: null,
+    meta: {
+      lastFetched: null,
+      status: null,
+      error: null,
+    }
+  },
+  ajaxPoints: {
+    data: null,
+    meta: {
+      lastFetched: null,
+      status: null,
+      error: null,
+    },
+  }
 };
 
 
@@ -22,12 +38,42 @@ const fetchBrowserSummarySuccess = (state, payload) => {
 };
 
 const fetchBrowserSummaryPending = state => {
-  state.status = ActionTypes.FETCH_BROWSER_SUMMARY_PENDING;
+  state.summary.meta.status = ActionTypes.FETCH_BROWSER_SUMMARY_PENDING;
 };
 
 const fetchBrowserSummaryFailed = (state, payload) => {
-  state.status = ActionTypes.FETCH_BROWSER_SUMMARY_FAILED;
-  state.error = payload.err;
+  state.summary.meta.status = ActionTypes.FETCH_BROWSER_SUMMARY_FAILED;
+  state.summary.meta.error = payload.err;
+};
+
+const fetchAjaxSummarySuccess = (state, payload) => {
+  state.ajax.data = payload.data;
+  state.ajax.meta.status = ActionTypes.FETCH_AJAX_SUMMARY_SUCCESS;
+  state.ajax.meta.lastFetched = new Date();
+};
+
+const fetchAjaxSummaryPending = state => {
+  state.ajax.meta.status = ActionTypes.FETCH_AJAX_SUMMARY_PENDING;
+};
+
+const fetchAjaxSummaryFailed = (state, payload) => {
+  state.ajax.meta.status = ActionTypes.FETCH_AJAX_SUMMARY_FAILED;
+  state.ajax.meta.error = payload.err;
+};
+
+const fetchAjaxPointsSuccess = (state, payload) => {
+  state.ajaxPoints.data = payload.data;
+  state.ajaxPoints.meta.status = ActionTypes.FETCH_AJAX_POINTS_SUCCESS;
+  state.ajaxPoints.meta.lastFetched = new Date();
+};
+
+const fetchAjaxPointsPending = state => {
+  state.ajaxPoints.meta.status = ActionTypes.FETCH_AJAX_POINTS_PENDING;
+};
+
+const fetchAjaxPointsFailed = (state, payload) => {
+  state.ajaxPoints.meta.status = ActionTypes.FETCH_AJAX_POINTS_FAILED;
+  state.ajaxPoints.meta.error = payload.err;
 };
 
 
@@ -39,6 +85,18 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchBrowserSummaryPending(draft));
     case ActionTypes.FETCH_BROWSER_SUMMARY_FAILED:
       return produce(state, draft => fetchBrowserSummaryFailed(draft, action.payload));
+    case ActionTypes.FETCH_AJAX_SUMMARY_SUCCESS:
+      return produce(state, draft => fetchAjaxSummarySuccess(draft, action.payload));
+    case ActionTypes.FETCH_AJAX_SUMMARY_PENDING:
+      return produce(state, draft => fetchAjaxSummaryPending(draft));
+    case ActionTypes.FETCH_AJAX_SUMMARY_FAILED:
+      return produce(state, draft => fetchAjaxSummaryFailed(draft, action.payload));
+    case ActionTypes.FETCH_AJAX_POINTS_FAILED:
+      return produce(state, draft => fetchAjaxPointsFailed(draft, action.payload));
+    case ActionTypes.FETCH_AJAX_POINTS_PENDING:
+      return produce(state, draft => fetchAjaxPointsPending(draft));
+    case ActionTypes.FETCH_AJAX_POINTS_SUCCESS:
+      return produce(state, draft => fetchAjaxPointsSuccess(draft, action.payload));
     default:
       return state;
   }

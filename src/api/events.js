@@ -69,4 +69,26 @@ export const EventsAPI = {
     })
     .then(checkStatus)
   },
+
+  fetchAjaxSeries(start, end, interval) {
+    return fetch(`${API_URL}/api/ajax/series?start_date=${start.toISOString()}&end_date=${end.toISOString()}&interval=${interval}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
+
+  fetchAjaxPoints(start, end, interval) {
+    return fetch(`${API_URL}/api/ajax/points?start_date=${start.toISOString()}&end_date=${end.toISOString()}&interval=${interval}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  },
 }

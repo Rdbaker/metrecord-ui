@@ -33,7 +33,7 @@ const TypeaheadResult = ({
     <div className="typeahead-top-row--container">
       <div className="typeahead-name--container">
         <div className="typeahead-result-field--label">name</div>
-        <div dangerouslySetInnerHTML={{ __html: highlightWords(htmlDecode(name), searchString) }} />
+        <div className="typeahead-result-name" dangerouslySetInnerHTML={{ __html: highlightWords(htmlDecode(name), searchString) }} />
       </div>
       <div className="typeahead-events-count-badge"><div className="typeahead-result-field--label">events</div><div className="typeahead-result-field--value">{numFmtr.format(count)}</div></div>
     </div>
