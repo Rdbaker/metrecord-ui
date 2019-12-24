@@ -3,6 +3,7 @@ import React from 'react';
 import Button from 'components/shared/Button';
 
 import './style.css';
+import { withRouter } from 'react-router-dom';
 
 
 const mostRecentEventTime = groups => {
@@ -75,7 +76,7 @@ const AjaxEvent = ({
   <div className="event-row--container">
     <div className="event-row--date">{formatTimeFromString(created_at)}</div>
     <div className="event-row--content">
-      <div className="event-row-event-type red">Ajax</div>
+      <div className="event-row-event-type dark-green">Ajax</div>
       <div className="event-row-event--value event-row-event-value--fixed-width">{name}</div>
     </div>
   </div>
@@ -94,24 +95,27 @@ const UnknownEvent = ({
 
 
 const Event = ({
-  event
+  event,
+  onClick,
 }) => {
   switch(event.event_type) {
     case 'user_context':
-      return <UserContextEvent {...event} {...event.data} />
+      return <div onClick={onClick}><UserContextEvent {...event} {...event.data} /></div>
     case 'track':
-      return <TrackEvent {...event} {...event.data} />
+      return <div onClick={onClick}><TrackEvent {...event} {...event.data} /></div>
     case 'error':
-      return <ErrorEvent {...event} {...event.data} />
+      return <div onClick={onClick}><ErrorEvent {...event} {...event.data} /></div>
     case 'ajax':
-      return <AjaxEvent {...event} {...event.data} />
+      return <div onClick={onClick}><AjaxEvent {...event} {...event.data} /></div>
     default:
-      return <UnknownEvent {...event} />
+      return <div onClick={onClick}><UnknownEvent {...event} /></div>
   }
 }
 
 const EventGroup = ({
   events,
+  pushHistory,
+  endUserId,
 }) => (
   <div>
     <div className="event-group--header">
@@ -119,7 +123,7 @@ const EventGroup = ({
       <div className="event-group-header--divider"/>
     </div>
     <div className="event-group-data--container">
-      {events.map(event => <Event key={event.id} event={event} />)}
+      {events.map(event => <Event key={event.id} event={event} onClick={() => pushHistory(`/users/${endUserId}/events/${event.id}`)} />)}
     </div>
   </div>
 )
@@ -129,15 +133,16 @@ const EndUserEventsPane = ({
   endUserId,
   fetchEndUserEvents,
   moreDataLoading,
+  history,
 }) => {
   return (
     <div className="end-user-events-pane--container">
       <h3>Event Timeline</h3>
-      {eventGroups.map(group => <EventGroup key={group[0].id} events={group} />)}
+      {eventGroups.map(group => <EventGroup key={group[0].id} events={group} pushHistory={history.push} endUserId={endUserId} />)}
       <Button loading={moreDataLoading} disabled={moreDataLoading} buttonType="subtle" onClick={() => fetchEndUserEvents(endUserId, mostRecentEventTime(eventGroups))}>Load More</Button>
     </div>
   );
 }
 
 
-export default EndUserEventsPane;
+export default withRouter(EndUserEventsPane);

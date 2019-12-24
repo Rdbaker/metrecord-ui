@@ -23,3 +23,7 @@ export const seriesStatus = (state, name) => byName(state, name).status;
 export const seriesNeverFetched = (state, name) => [null, undefined].includes(seriesStatus(state, name));
 export const seriesLoading = (state, name) => seriesStatus(state, name) === ActionTypes.FETCH_EVENT_SERIES_PENDING;
 export const seriesFetchFailed = (state, name) => seriesStatus(state, name) === ActionTypes.FETCH_EVENT_SERIES_FAILED;
+
+const allEventsRoot = state => root(state).allEvents
+const eventsById = state => allEventsRoot(state).byId
+export const eventData = (state, id) => eventsById(state)[id]

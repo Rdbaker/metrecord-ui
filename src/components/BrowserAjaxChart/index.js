@@ -1,9 +1,9 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { withRouter } from 'react-router-dom';
 
 import LoadingDots from 'components/LoadingDots';
-import ChartDateSelect from 'components/ChartDateSelect';
 import withTimer from 'utils/timer';
 import { uuidToName } from 'utils/generateName';
 
@@ -41,6 +41,18 @@ function tooltipFormatter() {
       <div class="ajax-point-tooltip--response">Got a ${status} in ${time}ms</div>
     </div>
   `
+}
+
+const makeClickPoint = (pushHistory) => {
+
+  const click = (endUserId, eventId) => {
+    pushHistory(`/users/${endUserId}/events/${eventId}`);
+  }
+
+  return function clickPoint(event) {
+    const rawPoint = event.point.rawPoint;
+    click(rawPoint.end_user_id, rawPoint.id);
+  }
 }
 
 const createPlotOptions = series => ({
@@ -113,12 +125,12 @@ const ONE_MINUTE = 1000 * 60;
 const ONE_HOUR = ONE_MINUTE * 60;
 const ONE_THOUSAND_MINUTE = ONE_MINUTE * 1000;
 
-const createSeriesFromPoints = rawPoints => {
+const createSeriesFromPoints = (rawPoints, pushHistory) => {
   if (!rawPoints) return []
   const points = rawPoints.map(rawPoint => {
     let color = 'blue';
     if (rawPoint.data.response.error === 'CLIENT') {
-      color = 'yellow';
+      color = 'orange';
     } else if (rawPoint.data.response.error === 'SERVER') {
       color = 'red';
     }
@@ -138,6 +150,9 @@ const createSeriesFromPoints = rawPoints => {
       symbol: 'circle',
       enabled: true,
       radius: 1.5
+    },
+    events: {
+      click: makeClickPoint(pushHistory),
     },
     data: points.sort((a, b) => a.x - b.x)
   };
@@ -207,13 +222,11 @@ const LoadingChart = () => (
 )
 
 const BrowserAjaxChart = ({
-  dispatcher: {
-    fetchAjaxSummary,
-  },
   neverFetched,
   loading,
   data,
   points,
+  history,
 }) => {
   let chart = () => <div></div>;
 
@@ -223,17 +236,16 @@ const BrowserAjaxChart = ({
     chart = <LoadingChart />
   } else {
     const options = createPlotOptions(createSeriesFromRawData(data));
-    options.series.push(createSeriesFromPoints(points));
+    options.series.push(createSeriesFromPoints(points, history.push));
     chart = <HighchartsReact highcharts={Highcharts} options={options} />
   }
 
 
   return (
     <div className="browser-metrics-chart--container">
-      <ChartDateSelect onChange={({ start, end }) => fetchAjaxSummary(start, end)}/>
       {chart}
     </div>
   )
 }
 
-export default withTimer('BrowserAjaxChart', BrowserAjaxChart);
+export default withTimer('BrowserAjaxChart', withRouter(BrowserAjaxChart));

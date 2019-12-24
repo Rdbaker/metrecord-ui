@@ -91,4 +91,15 @@ export const EventsAPI = {
     })
     .then(checkStatus)
   },
+
+  fetchEvent(id) {
+    return fetch(`${API_URL}/api/events/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+  }
 }

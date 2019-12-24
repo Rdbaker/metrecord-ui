@@ -3,6 +3,14 @@
   margin-bottom: 24px;
 }
 
+.event-row--container {
+  cursor: pointer;
+}
+
+.event-row--container:hover {
+  background: #eff4f9;
+}
+
 .end-user-events-pane--container > h3 {
   margin: 0 0 12px;
   text-align: center;
@@ -64,6 +72,11 @@
 
 .event-row-event-type.red {
   background: var(--color-pink-3);
+  color: var(--color-blue-4);
+}
+
+.event-row-event-type.dark-green {
+  background: var(--color-green-3);
   color: var(--color-blue-4);
 }
 

@@ -3,7 +3,6 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import LoadingDots from 'components/LoadingDots';
-import ChartDateSelect from 'components/ChartDateSelect';
 import withTimer from 'utils/timer';
 
 import './style.css';
@@ -139,9 +138,6 @@ const LoadingChart = () => (
 )
 
 const BrowserMetricsChart = ({
-  dispatcher: {
-    fetchBrowserSummary,
-  },
   neverFetched,
   loading,
   data,
@@ -160,7 +156,6 @@ const BrowserMetricsChart = ({
 
   return (
     <div className="browser-metrics-chart--container">
-      <ChartDateSelect onChange={({ start, end }) => fetchBrowserSummary(start, end)}/>
       {chart}
     </div>
   )

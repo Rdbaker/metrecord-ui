@@ -32,8 +32,21 @@ const fetchEventSeries$ = action$ => action$.pipe(
   )
 );
 
+const fetchEvent$ = action$ => action$.pipe(
+  ofType(ActionTypes.FETCH_EVENT),
+  pluck('payload'),
+  flatMap(({ id }) =>
+    from(EventsAPI.fetchEvent(id))
+      .pipe(
+        map((data) => EventActions.receiveEvent(id, data)),
+        catchError(() => of(EventActions.receiveEvent(id, 'NOT_FOUND')))
+      )
+  )
+)
+
 
 export default combineEpics(
   fetchNameTypeahead$,
   fetchEventSeries$,
+  fetchEvent$,
 )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 
 import EndUserDetailsPane from 'containers/EndUserDetailsPane';
 import EndUserEventsPane from 'containers/EndUserEventsPane';
@@ -7,6 +7,7 @@ import LoadingPulse from 'components/LoadingPulse';
 import { uuidToName } from 'utils/generateName';
 
 import './style.css';
+import EndUserEventPane from 'containers/EndUserEventPane';
 
 
 const EndUserPage = ({
@@ -35,7 +36,10 @@ const EndUserPage = ({
       <h1>{name}</h1>
       <div className="end-user-event-details--container">
         <EndUserDetailsPane endUserId={endUserId} />
-        <EndUserEventsPane endUserId={endUserId}/>
+        <Switch>
+          <Route path="/users/:uuid/" exact={true} component={EndUserEventsPane} />
+          <Route path="/users/:uuid/events/:eventId" exact={true} component={EndUserEventPane} />
+        </Switch>
       </div>
     </div>
   );

@@ -1,12 +1,18 @@
 import { produce } from 'immer';
+import { prop, sortBy, reverse } from 'ramda';
 
 import { ActionTypes } from './constants';
+import { ActionTypes as EndUserActionTypes} from 'modules/endUsers/constants';
 
 
 const defaultState = {
   nameTypeahead: {},
   series: {},
   hasAnyEvents: null,
+  allEvents: {
+    byId: {},
+    orderedByCreatedAt: [],
+  }
 };
 
 
@@ -60,6 +66,23 @@ const handleSetHasAnyEvents = (state, payload) => {
   state.hasAnyEvents = payload.hasAny;
 }
 
+const handleEventsFromEndUserFetch = (state, payload) => {
+  const events = payload.data;
+  events.forEach(event => {
+    state.allEvents.byId[event.id] = event;
+  });
+  const allEventList = Object.values(state.allEvents.byId).filter(event => typeof event === 'object');
+  const orderedEvents = reverse(sortBy(prop('created_at'), allEventList));
+  state.allEvents.orderedByCreatedAt = orderedEvents;
+}
+
+const handleReceiveEvent = (state, payload) => {
+  state.allEvents.byId[payload.id] = payload.data;
+  const allEventList = Object.values(state.allEvents.byId).filter(event => typeof event === 'object');
+  const orderedEvents = reverse(sortBy(prop('created_at'), allEventList));
+  state.allEvents.orderedByCreatedAt = orderedEvents;
+}
+
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case ActionTypes.FETCH_NAME_TYPEAHEAD_SUCCESS:
@@ -76,6 +99,10 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchEventSeriesFailed(draft, action.payload));
     case ActionTypes.SET_HAS_ANY_EVENTS:
       return produce(state, draft => handleSetHasAnyEvents(draft, action.payload));
+    case EndUserActionTypes.FETCH_END_USER_EVENTS_SUCCESS:
+      return produce(state, draft => handleEventsFromEndUserFetch(draft, action.payload));
+    case ActionTypes.RECEIVE_EVENT:
+      return produce(state, draft => handleReceiveEvent(draft, action.payload));
     default:
       return state;
   }

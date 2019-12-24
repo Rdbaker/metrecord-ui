@@ -1,12 +1,23 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import EndUserEventsPane from 'components/EndUserEventsPane';
 import { endUserGroupedEvents, endUserDataLoading } from 'modules/endUsers/selectors';
 import { fetchEndUserEvents } from 'modules/endUsers/actions';
 
-const mapStateToProps = (state, { endUserId }) => ({
+const mapStateToProps = (
+  state,
+  {
+    match: {
+      params: {
+        uuid: endUserId
+      }
+    }
+  }
+) => ({
   eventGroups: endUserGroupedEvents(state, endUserId),
   moreDataLoading: endUserDataLoading(state, endUserId),
+  endUserId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,4 +25,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndUserEventsPane);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EndUserEventsPane));
