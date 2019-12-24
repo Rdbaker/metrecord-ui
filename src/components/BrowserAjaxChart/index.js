@@ -18,10 +18,10 @@ const categoryNameToLabel = {
 }
 
 const categoryNameToColor = {
-  p99: 'red',
-  p95: 'orange',
-  p90: 'yellow',
-  p50: 'blue',
+  p99: 'var(--color-pink-6)',
+  p95: 'var(--color-orange-4)',
+  p90: 'var(--color-yellow-4)',
+  p50: 'var(--color-green-4)',
 }
 
 function tooltipFormatter() {
@@ -58,20 +58,10 @@ const makeClickPoint = (pushHistory) => {
 const createPlotOptions = series => ({
   plotOptions: {
     line: {
-      stacking: 'normal',
-      lineColor: '#666666',
       lineWidth: 1,
       marker: {
         enabled: false,
       },
-      states: {
-        hover: {
-          enabled: false,
-        },
-        active: {
-          enabled: false,
-        }
-      }
     }
   },
   xAxis: {
@@ -210,7 +200,8 @@ const createSeriesFromRawData = rawData => {
   const dates = rawData.map(datum => new Date(datum.time));
   const earliestDate = Math.min(...dates.map(x => Number(x)));
   const latestDate = Math.max(...dates.map(x => Number(x)));
-  return Object.entries(grouped).map(([categoryName, categoryData]) => createSeriesFromCategory(categoryName, categoryData, earliestDate, latestDate))
+  const series = Object.entries(grouped).map(([categoryName, categoryData]) => createSeriesFromCategory(categoryName, categoryData, earliestDate, latestDate))
+  return series
 }
 
 const EmptyChart = () => (
