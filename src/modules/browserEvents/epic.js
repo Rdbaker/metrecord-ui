@@ -60,10 +60,24 @@ const fetchPageLoadsSummary$ = action$ => action$.pipe(
   )
 );
 
+const fetchErrorRate$ = action$ => action$.pipe(
+  ofType(ActionTypes.FETCH_BROWSER_ERROR_RATE),
+  pluck('payload'),
+  flatMap(({ start, end }) =>
+    from(EventsAPI.fetchBrowserErrorRate(start, end,  end - start >= tenThousandMinutes ? 'hour' : 'minute'))
+      .pipe(
+        map((data) => BrowserEventActions.fetchErrorRateSuccess(data)),
+        catchError(err => of(BrowserEventActions.fetchErrorRateFailed(err))),
+        startWith(BrowserEventActions.fetchErrorRatePending())
+      )
+  )
+);
+
 
 export default combineEpics(
   fetchBrowserSummary$,
   fetchAjaxSummary$,
   fetchAjaxPoints$,
   fetchPageLoadsSummary$,
+  fetchErrorRate$,
 )

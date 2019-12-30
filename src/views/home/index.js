@@ -9,7 +9,8 @@ import BrowserAjaxChart from 'containers/BrowserAjaxChart';
 import BrowserPageLoadsChart from 'containers/BrowserPageLoadsChart';
 
 import './style.css';
-import { fetchAjaxSummary, fetchBrowserSummary, fetchPageLoadsSummary } from 'modules/browserEvents/actions';
+import { fetchAjaxSummary, fetchBrowserSummary, fetchPageLoadsSummary, fetchErrorRate } from 'modules/browserEvents/actions';
+import BrowserErrorChart from 'containers/BrowserErrorChart';
 
 class Home extends Component {
   changeDates = (start, end) => {
@@ -18,12 +19,14 @@ class Home extends Component {
         fetchAjaxSummary,
         fetchBrowserSummary,
         fetchPageLoadSummary,
+        fetchErrorRate,
       }
     } = this.props;
 
     fetchAjaxSummary(start, end);
     fetchBrowserSummary(start, end);
     fetchPageLoadSummary(start, end);
+    fetchErrorRate(start, end);
   }
 
   render() {
@@ -34,6 +37,7 @@ class Home extends Component {
         <BrowserMetricsChart />
         <BrowserAjaxChart />
         <BrowserPageLoadsChart />
+        <BrowserErrorChart />
         {/* <HomeComponent /> */}
       </div>
     );
@@ -45,6 +49,7 @@ const mapDispatchToProps = dispatch => ({
     fetchAjaxSummary: (start, end) => dispatch(fetchAjaxSummary(start, end)),
     fetchBrowserSummary: (start, end) => dispatch(fetchBrowserSummary(start, end)),
     fetchPageLoadSummary: (start, end) => dispatch(fetchPageLoadsSummary(start, end)),
+    fetchErrorRate: (start, end) => dispatch(fetchErrorRate(start, end))
   }
 })
 

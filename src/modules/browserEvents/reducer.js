@@ -36,6 +36,14 @@ const defaultState = {
       error: null,
     },
   },
+  errorRate: {
+    data: null,
+    meta: {
+      lastFetched: null,
+      status: null,
+      error: null,
+    },
+  },
 };
 
 
@@ -86,19 +94,33 @@ const fetchAjaxPointsFailed = (state, payload) => {
 
 const fetchPageLoadsSuccess = (state, payload) => {
   state.pageLoads.data = payload.data;
-  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_SUCCESS;
+  state.pageLoads.meta.status = ActionTypes.FETCH_PAGE_LOADS_SUMMARY_SUCCESS;
   state.pageLoads.meta.lastFetched = new Date();
 };
 
 const fetchPageLoadsPending = state => {
-  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_PENDING;
+  state.pageLoads.meta.status = ActionTypes.FETCH_PAGE_LOADS_SUMMARY_PENDING;
 };
 
 const fetchPageLoadsFailed = (state, payload) => {
-  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_FAILED;
+  state.pageLoads.meta.status = ActionTypes.FETCH_PAGE_LOADS_SUMMARY_FAILED;
   state.pageLoads.meta.error = payload.err;
 };
 
+const fetchErrorRateSuccess = (state, payload) => {
+  state.errorRate.data = payload.data;
+  state.errorRate.meta.status = ActionTypes.FETCH_BROWSER_ERROR_RATE_SUCCESS;
+  state.errorRate.meta.lastFetched = new Date();
+};
+
+const fetchErrorRatePending = state => {
+  state.errorRate.meta.status = ActionTypes.FETCH_BROWSER_ERROR_RATE_PENDING;
+};
+
+const fetchErrorRateFailed = (state, payload) => {
+  state.errorRate.meta.status = ActionTypes.FETCH_BROWSER_ERROR_RATE_FAILED;
+  state.errorRate.meta.error = payload.err;
+};
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
@@ -126,6 +148,12 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchPageLoadsSuccess(draft, action.payload));
     case ActionTypes.FETCH_PAGE_LOADS_SUMMARY_FAILED:
       return produce(state, draft => fetchPageLoadsFailed(draft, action.payload));
+    case ActionTypes.FETCH_BROWSER_ERROR_RATE_PENDING:
+      return produce(state, draft => fetchErrorRatePending(draft));
+    case ActionTypes.FETCH_BROWSER_ERROR_RATE_SUCCESS:
+      return produce(state, draft => fetchErrorRateSuccess(draft, action.payload));
+    case ActionTypes.FETCH_BROWSER_ERROR_RATE_FAILED:
+      return produce(state, draft => fetchErrorRateFailed(draft, action.payload));
     default:
       return state;
   }

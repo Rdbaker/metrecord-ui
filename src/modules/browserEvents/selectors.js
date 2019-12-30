@@ -22,3 +22,10 @@ const pageLoadsMeta = state => pageLoadsRoot(state).meta
 export const pageLoadsNeverFetched = state => pageLoadsMeta(state).status === null;
 export const pageLoadsLoading = state => pageLoadsMeta(state).status === ActionTypes.FETCH_PAGE_LOADS_SUMMARY_PENDING;
 export const pageLoadsData = state => pageLoadsRoot(state).data;
+
+const errorRateRoot = state => root(state).errorRate
+const errorRateMeta = state => errorRateRoot(state).meta
+export const errorRateNeverFetched = state => errorRateMeta(state).status === null;
+export const errorRateLoading = state => errorRateMeta(state).status === ActionTypes.FETCH_BROWSER_ERROR_RATE_PENDING;
+export const errorRateData = state => errorRateRoot(state).data || {};
+export const errorRateHistogram = state => errorRateData(state).histogram;

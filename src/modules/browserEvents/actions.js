@@ -52,7 +52,6 @@ export const fetchAjaxPointsSuccess = data => ({
   payload: { data },
 });
 
-
 export const fetchPageLoadsSummary = (start, end) => ({
   type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY,
   payload: { start, end },
@@ -69,5 +68,24 @@ export const fetchPageLoadsSummaryFailed = err => ({
 
 export const fetchPageLoadsSummarySuccess = data => ({
   type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY_SUCCESS,
+  payload: { data },
+});
+
+export const fetchErrorRate = (start, end) => ({
+  type: ActionTypes.FETCH_BROWSER_ERROR_RATE,
+  payload: { start, end },
+});
+
+export const fetchErrorRatePending = () => ({
+  type: ActionTypes.FETCH_BROWSER_ERROR_RATE_PENDING,
+});
+
+export const fetchErrorRateFailed = err => ({
+  type: ActionTypes.FETCH_BROWSER_ERROR_RATE_FAILED,
+  payload: { err },
+});
+
+export const fetchErrorRateSuccess = data => ({
+  type: ActionTypes.FETCH_BROWSER_ERROR_RATE_SUCCESS,
   payload: { data },
 });
