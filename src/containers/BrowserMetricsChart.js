@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import BrowserMetricsChart from 'components/BrowserMetricsChart';
+import BrowserMetricsChart from 'components/browserMetrics/BrowserMetricsChart';
 import { summaryLoading, summaryNeverFetched, summaryData } from 'modules/browserEvents/selectors';
 import { fetchBrowserSummary } from 'modules/browserEvents/actions';
 

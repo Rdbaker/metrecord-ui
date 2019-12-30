@@ -16,3 +16,9 @@ const ajaxMeta = state => ajaxRoot(state).meta
 export const ajaxNeverFetched = state => ajaxMeta(state).status === null;
 export const ajaxLoading = state => ajaxMeta(state).status === ActionTypes.FETCH_AJAX_SUMMARY_PENDING;
 export const ajaxData = state => ajaxRoot(state).data;
+
+const pageLoadsRoot = state => root(state).pageLoads
+const pageLoadsMeta = state => pageLoadsRoot(state).meta
+export const pageLoadsNeverFetched = state => pageLoadsMeta(state).status === null;
+export const pageLoadsLoading = state => pageLoadsMeta(state).status === ActionTypes.FETCH_PAGE_LOADS_SUMMARY_PENDING;
+export const pageLoadsData = state => pageLoadsRoot(state).data;

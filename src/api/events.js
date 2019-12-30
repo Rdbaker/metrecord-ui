@@ -101,5 +101,17 @@ export const EventsAPI = {
       },
     })
     .then(checkStatus)
+  },
+
+  fetchPageLoadsSummary(start, end) {
+    return fetch(`${API_URL}/api/events/pageLoads/summary?start_date=${start.toISOString()}&end_date=${end.toISOString()}&interval=year`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(checkStatus)
+
   }
 }

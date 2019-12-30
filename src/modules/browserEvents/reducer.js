@@ -27,7 +27,15 @@ const defaultState = {
       status: null,
       error: null,
     },
-  }
+  },
+  pageLoads: {
+    data: null,
+    meta: {
+      lastFetched: null,
+      status: null,
+      error: null,
+    },
+  },
 };
 
 
@@ -76,6 +84,21 @@ const fetchAjaxPointsFailed = (state, payload) => {
   state.ajaxPoints.meta.error = payload.err;
 };
 
+const fetchPageLoadsSuccess = (state, payload) => {
+  state.pageLoads.data = payload.data;
+  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_SUCCESS;
+  state.pageLoads.meta.lastFetched = new Date();
+};
+
+const fetchPageLoadsPending = state => {
+  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_PENDING;
+};
+
+const fetchPageLoadsFailed = (state, payload) => {
+  state.pageLoads.meta.status = ActionTypes.FETCH_AJAX_POINTS_FAILED;
+  state.pageLoads.meta.error = payload.err;
+};
+
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
@@ -97,6 +120,12 @@ const reducer = (state = defaultState, action) => {
       return produce(state, draft => fetchAjaxPointsPending(draft));
     case ActionTypes.FETCH_AJAX_POINTS_SUCCESS:
       return produce(state, draft => fetchAjaxPointsSuccess(draft, action.payload));
+    case ActionTypes.FETCH_PAGE_LOADS_SUMMARY_PENDING:
+      return produce(state, draft => fetchPageLoadsPending(draft));
+    case ActionTypes.FETCH_PAGE_LOADS_SUMMARY_SUCCESS:
+      return produce(state, draft => fetchPageLoadsSuccess(draft, action.payload));
+    case ActionTypes.FETCH_PAGE_LOADS_SUMMARY_FAILED:
+      return produce(state, draft => fetchPageLoadsFailed(draft, action.payload));
     default:
       return state;
   }

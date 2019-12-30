@@ -51,3 +51,23 @@ export const fetchAjaxPointsSuccess = data => ({
   type: ActionTypes.FETCH_AJAX_POINTS_SUCCESS,
   payload: { data },
 });
+
+
+export const fetchPageLoadsSummary = (start, end) => ({
+  type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY,
+  payload: { start, end },
+});
+
+export const fetchPageLoadsSummaryPending = () => ({
+  type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY_PENDING,
+});
+
+export const fetchPageLoadsSummaryFailed = err => ({
+  type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY_FAILED,
+  payload: { err },
+});
+
+export const fetchPageLoadsSummarySuccess = data => ({
+  type: ActionTypes.FETCH_PAGE_LOADS_SUMMARY_SUCCESS,
+  payload: { data },
+});

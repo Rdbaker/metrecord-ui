@@ -47,9 +47,23 @@ const fetchAjaxPoints$ = action$ => action$.pipe(
   )
 );
 
+const fetchPageLoadsSummary$ = action$ => action$.pipe(
+  ofType(ActionTypes.FETCH_PAGE_LOADS_SUMMARY),
+  pluck('payload'),
+  flatMap(({ start, end }) =>
+    from(EventsAPI.fetchPageLoadsSummary(start, end, 'year'))
+      .pipe(
+        map(({ summary }) => BrowserEventActions.fetchPageLoadsSummarySuccess(summary)),
+        catchError(err => of(BrowserEventActions.fetchPageLoadsSummaryFailed(err))),
+        startWith(BrowserEventActions.fetchPageLoadsSummaryPending())
+      )
+  )
+);
+
 
 export default combineEpics(
   fetchBrowserSummary$,
   fetchAjaxSummary$,
   fetchAjaxPoints$,
+  fetchPageLoadsSummary$,
 )

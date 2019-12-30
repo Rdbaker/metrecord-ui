@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import BrowserAjaxChart from 'components/BrowserAjaxChart';
+import BrowserAjaxChart from 'components/browserMetrics/BrowserAjaxChart';
 import { ajaxLoading, ajaxNeverFetched, ajaxData, ajaxPointsData } from 'modules/browserEvents/selectors';
 import { fetchAjaxSummary } from 'modules/browserEvents/actions';
 

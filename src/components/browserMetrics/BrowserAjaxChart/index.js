@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
 import { uuidToName } from 'utils/generateName';
+import comboChartSrc from 'images/combo_chart.png';
 
 import './style.css';
 
@@ -66,7 +67,7 @@ const createPlotOptions = series => ({
   },
   xAxis: {
     title: {
-      text: 'Time'
+      text: ''
     },
     type: 'datetime',
     minPadding: 0.05,
@@ -205,11 +206,18 @@ const createSeriesFromRawData = rawData => {
 }
 
 const EmptyChart = () => (
-  <div className="browser-metrics-empty-chart--container">You have no data to display here!</div>
+  <div className="browser-metrics-empty-chart--container">
+    <h4>Ajax Latency</h4>
+    <img src={comboChartSrc} alt="empty chart"/>
+    <div className="browser-metrics-empty-chart--text">You have no data for this time</div>
+  </div>
 )
 
 const LoadingChart = () => (
-  <div className="browser-metrics-loading-chart--container">Loading your chart<LoadingDots /></div>
+  <div className="browser-metrics-loading-chart--container">
+    <h4>Browser Load Speed</h4>
+    <div className="browser-metrics-loading-chart--text">Loading your chart<LoadingDots /></div>
+  </div>
 )
 
 const BrowserAjaxChart = ({
