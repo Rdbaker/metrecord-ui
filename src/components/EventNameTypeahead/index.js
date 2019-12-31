@@ -40,14 +40,14 @@ const TypeaheadResult = ({
     <div className="typeahead-bottom-row--container">
       <div>
         <div className="typeahead-result-field--label">first seen</div>
-        <div className="typeahead-result-field--value">{new Date(lastSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
+        <div className="typeahead-result-field--value">{new Date(firstSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
       </div>
       <div>
         <FontAwesomeIcon icon={faLongArrowRight} />
       </div>
       <div>
         <div className="typeahead-result-field--label">last seen</div>
-        <div className="typeahead-result-field--value">{new Date(firstSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
+        <div className="typeahead-result-field--value">{new Date(lastSeen).toLocaleDateString(navigator.languages, { dateStyle: 'medium' })}</div>
       </div>
     </div>
   </div>

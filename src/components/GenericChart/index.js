@@ -140,6 +140,7 @@ class GenericChart extends PureComponent {
       type,
       name,
       agg,
+      aggs,
       event,
       yAxisLabel,
       interpolateMissing,
@@ -155,11 +156,11 @@ class GenericChart extends PureComponent {
         case 'COUNT':
           return <CountChart count={agg === 'sum' ? data[0].sum : data[0].count} size={size} event={event} />
         case 'AREA':
-          return <AreaChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+          return <AreaChart interpolateMissing={interpolateMissing} aggs={aggs} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
         case 'LINE':
-          return <LineChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+          return <LineChart interpolateMissing={interpolateMissing} aggs={aggs} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
         case 'HISTOGRAM':
-          return <HistogramChart interpolateMissing={interpolateMissing} agg={agg} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
+          return <HistogramChart interpolateMissing={interpolateMissing} aggs={aggs} data={data} title={name} size={size} event={event} yAxisLabel={yAxisLabel} interval={interval} />
         default:
           const options = createPlotOptions(createSeriesFromRawData(data, type), name);
           return <HighchartsReact highcharts={Highcharts} options={options} />

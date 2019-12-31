@@ -66,6 +66,7 @@ class FetchedChart extends PureComponent {
         yAxisLabel,
         chartType,
         agg,
+        aggs,
       },
       name,
       size,
@@ -87,6 +88,7 @@ class FetchedChart extends PureComponent {
         name={name}
         size={size}
         agg={agg}
+        aggs={aggs}
         yAxisLabel={yAxisLabel}
         interval={interval}
         interpolateMissing={interpolateMissing}

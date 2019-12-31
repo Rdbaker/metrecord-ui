@@ -60,3 +60,12 @@
 .generic-chart--container.COUNT {
   max-height: 98px;
 }
+
+.generic-metrics-chart--container {
+  max-width: 93%;
+  height: 400px;
+  vertical-align: top;
+  margin: 0 16px;
+  text-align: center;
+  display: inline-block;
+}
