@@ -26,24 +26,27 @@ const categoryNameToColor = {
 }
 
 function tooltipFormatter() {
-  if (!this) return ''
-
-  const rawPoint = this.point.rawPoint;
-  const method = rawPoint.data.request.options.method;
-  const uri = rawPoint.data.request.uri;
-  const status = rawPoint.data.response.status;
-  const time = rawPoint.data.value;
-  const name = uuidToName(rawPoint.end_user_id);
-  const sentAt = new Date(rawPoint.created_at).toLocaleString();
-  return `
-    <div class="ajax-point-tooltip--container">
-      <div class="ajax-point-tooltip--method">${name} sent</div>
-      <div class="ajax-point-tooltip--method">${method}</div>
-      <div class="ajax-point-tooltip--uri">${uri}</div>
-      <div class="ajax-point-tooltip--time">at ${sentAt}</div>
-      <div class="ajax-point-tooltip--response">Got a ${status} in ${time}ms</div>
-    </div>
-  `
+  try {
+    const rawPoint = this.point.rawPoint;
+    const method = rawPoint.data.request.options.method;
+    const uri = rawPoint.data.request.uri;
+    const status = rawPoint.data.response.status;
+    const time = rawPoint.data.value;
+    const name = uuidToName(rawPoint.end_user_id);
+    const sentAt = new Date(rawPoint.created_at).toLocaleString();
+    return `
+      <div class="ajax-point-tooltip--container">
+        <div class="ajax-point-tooltip--method">${name} sent</div>
+        <div class="ajax-point-tooltip--method">${method}</div>
+        <div class="ajax-point-tooltip--uri">${uri}</div>
+        <div class="ajax-point-tooltip--time">at ${sentAt}</div>
+        <div class="ajax-point-tooltip--response">Got a ${status} in ${time}ms</div>
+      </div>
+    `
+  } catch (e) {
+    console.warn(e);
+    return '';
+  }
 }
 
 const makeClickPoint = (pushHistory) => {
