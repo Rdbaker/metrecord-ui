@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
 import { uuidToName } from 'utils/generateName';
+import { withErrorBoundary } from 'utils/errorComponent';
 import comboChartSrc from 'images/combo_chart.png';
 
 import './style.css';
@@ -26,27 +27,22 @@ const categoryNameToColor = {
 }
 
 function tooltipFormatter() {
-  try {
-    const rawPoint = this.point.rawPoint;
-    const method = rawPoint.data.request.options.method;
-    const uri = rawPoint.data.request.uri;
-    const status = rawPoint.data.response.status;
-    const time = rawPoint.data.value;
-    const name = uuidToName(rawPoint.end_user_id);
-    const sentAt = new Date(rawPoint.created_at).toLocaleString();
-    return `
-      <div class="ajax-point-tooltip--container">
-        <div class="ajax-point-tooltip--method">${name} sent</div>
-        <div class="ajax-point-tooltip--method">${method}</div>
-        <div class="ajax-point-tooltip--uri">${uri}</div>
-        <div class="ajax-point-tooltip--time">at ${sentAt}</div>
-        <div class="ajax-point-tooltip--response">Got a ${status} in ${time}ms</div>
-      </div>
-    `
-  } catch (e) {
-    console.warn(e);
-    return '';
-  }
+  const rawPoint = this.point.rawPoint;
+  const method = rawPoint.data.request.options.method;
+  const uri = rawPoint.data.request.uri;
+  const status = rawPoint.data.response.status;
+  const time = rawPoint.data.value;
+  const name = uuidToName(rawPoint.end_user_id);
+  const sentAt = new Date(rawPoint.created_at).toLocaleString();
+  return `
+    <div class="ajax-point-tooltip--container">
+      <div class="ajax-point-tooltip--method">${name} sent</div>
+      <div class="ajax-point-tooltip--method">${method}</div>
+      <div class="ajax-point-tooltip--uri">${uri}</div>
+      <div class="ajax-point-tooltip--time">at ${sentAt}</div>
+      <div class="ajax-point-tooltip--response">Got a ${status} in ${time}ms</div>
+    </div>
+  `
 }
 
 const makeClickPoint = (pushHistory) => {
@@ -252,4 +248,4 @@ const BrowserAjaxChart = ({
   )
 }
 
-export default withTimer('BrowserAjaxChart', withRouter(BrowserAjaxChart));
+export default withTimer('BrowserAjaxChart', withErrorBoundary(withRouter(BrowserAjaxChart)));

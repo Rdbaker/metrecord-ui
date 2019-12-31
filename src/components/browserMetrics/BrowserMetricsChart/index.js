@@ -4,6 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
+import { withErrorBoundary } from 'utils/errorComponent';
 import comboChartSrc from 'images/combo_chart.png';
 
 import './style.css';
@@ -169,4 +170,4 @@ const BrowserMetricsChart = ({
   )
 }
 
-export default withTimer('BrowserMetricsChart', BrowserMetricsChart);
+export default withTimer('BrowserMetricsChart', withErrorBoundary(BrowserMetricsChart));

@@ -2,6 +2,7 @@ import React from 'react';
 
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
+import { withErrorBoundary } from 'utils/errorComponent';
 import comboChartSrc from 'images/combo_chart.png';
 
 import './style.css';
@@ -58,4 +59,4 @@ const BrowserPageLoadsChart = ({
   )
 }
 
-export default withTimer('BrowserPageLoadsChart', BrowserPageLoadsChart);
+export default withTimer('BrowserPageLoadsChart', withErrorBoundary(BrowserPageLoadsChart));

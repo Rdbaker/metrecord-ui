@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
+import { withErrorBoundary } from 'utils/errorComponent';
 import comboChartSrc from 'images/combo_chart.png';
 
 
@@ -157,4 +158,4 @@ const BrowserErrorChart = ({
   )
 }
 
-export default withTimer('BrowserErrorChart', withRouter(BrowserErrorChart));
+export default withTimer('BrowserErrorChart', withErrorBoundary(withRouter(BrowserErrorChart)));
