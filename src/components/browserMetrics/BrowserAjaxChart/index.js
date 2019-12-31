@@ -26,6 +26,8 @@ const categoryNameToColor = {
 }
 
 function tooltipFormatter() {
+  if (!this) return ''
+
   const rawPoint = this.point.rawPoint;
   const method = rawPoint.data.request.options.method;
   const uri = rawPoint.data.request.uri;
