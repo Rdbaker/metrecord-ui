@@ -32,13 +32,11 @@ const FetchableChart = ({
   ...rest,
 }) => {
   if (chartNeverFetched) {
-    debugger
     fetchChart(id)
     return <LoadingChart />;
   }
 
   if (chartFetchLoading) {
-    debugger
     return <LoadingChart />;
   }
 

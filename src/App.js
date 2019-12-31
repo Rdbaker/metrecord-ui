@@ -28,6 +28,8 @@ import Home from './views/home';
 import Account from './views/account';
 import NewChart from './views/newchart';
 import NewDashboard from './views/newdashboard';
+import Charts from './views/charts';
+import Chart from './views/chart';
 import './App.css';
 import { UsersAPI } from 'api/users';
 import LoadingDots from 'components/LoadingDots/index';
@@ -242,6 +244,8 @@ class App extends Component {
             <Route path="/login" component={EmailLogin}/>
             <Route path="/signup" component={EmailSignup}/>
             <Route path="/settings" render={this.makeLoginRequiredComponent(Account)} />
+            <Route path="/charts" exact={true} render={this.makeLoginRequiredComponent(Charts)} />
+            <Route path="/charts/:uuid" render={this.makeLoginRequiredComponent(Chart)} />
             <Route path="/new-chart" render={this.makeLoginRequiredComponent(NewChart)} />
             <Route path="/new-dashboard" render={this.makeLoginRequiredComponent(NewDashboard)} />
             <Route path="/users/:uuid" render={this.makeLoginRequiredComponent(SingleUserView)} />
