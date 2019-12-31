@@ -1,5 +1,9 @@
 import React from 'react';
 
+const FALLBACK_COMPONENT = () => {
+  <h1>Something went wrong.</h1>
+}
+
 export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -19,15 +23,16 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <h1>Something went wrong.</h1>;
+      const Fallback = this.props.FallbackComponent
+      return Fallback ? <Fallback /> : <FALLBACK_COMPONENT />;
     }
 
     return this.props.children; 
   }
 }
 
-export const withErrorBoundary = Component => (props) => (
-  <ErrorBoundary>
+export const withErrorBoundary = (Component, FallbackComponent = FALLBACK_COMPONENT) => (props) => (
+  <ErrorBoundary FallbackComponent={FallbackComponent}>
     <Component {...props} />
   </ErrorBoundary>
 )

@@ -216,8 +216,15 @@ const EmptyChart = () => (
 
 const LoadingChart = () => (
   <div className="browser-metrics-loading-chart--container">
-    <h4>Browser Load Speed</h4>
+    <h4>Ajax Latency</h4>
     <div className="browser-metrics-loading-chart--text">Loading your chart<LoadingDots /></div>
+  </div>
+)
+
+const FailedChart = () => (
+  <div className="browser-metrics-loading-chart--container">
+    <h4>Ajax Latency</h4>
+    <div className="browser-metrics-loading-chart--text">unable to load chart</div>
   </div>
 )
 
@@ -248,4 +255,4 @@ const BrowserAjaxChart = ({
   )
 }
 
-export default withTimer('BrowserAjaxChart', withErrorBoundary(withRouter(BrowserAjaxChart)));
+export default withTimer('BrowserAjaxChart', withErrorBoundary(withRouter(BrowserAjaxChart), FailedChart));
