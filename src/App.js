@@ -30,6 +30,7 @@ import NewChart from './views/newchart';
 import NewDashboard from './views/newdashboard';
 import Charts from './views/charts';
 import Chart from './views/chart';
+import DashboardsView from './views/dashboards';
 import './App.css';
 import { UsersAPI } from 'api/users';
 import LoadingDots from 'components/LoadingDots/index';
@@ -249,6 +250,7 @@ class App extends Component {
             <Route path="/new-chart" render={this.makeLoginRequiredComponent(NewChart)} />
             <Route path="/new-dashboard" render={this.makeLoginRequiredComponent(NewDashboard)} />
             <Route path="/users/:uuid" render={this.makeLoginRequiredComponent(SingleUserView)} />
+            <Route path="/dashboards" render={this.makeLoginRequiredComponent(DashboardsView)} />
             <Route exact={true} path="/users" render={this.makeLoginRequiredComponent(UsersView)} />
           </CurrentUser.Provider>
         </div>

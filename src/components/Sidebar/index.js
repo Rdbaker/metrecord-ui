@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faHomeAlt, faUsersCog, faIdCard } from '@fortawesome/pro-duotone-svg-icons';
+import { faSignOut, faHomeAlt, faUsersCog, faIdCard, faAnalytics } from '@fortawesome/pro-duotone-svg-icons';
+import { hasCustomMetrics } from 'modules/org/selectors';
 import { expireToken } from 'utils/auth';
 
 import './style.css';
@@ -15,6 +16,7 @@ const signOut = () => {
 
 const Sidebar = ({
   isLoggedIn,
+  hasCustomMetrics,
 }) => {
   if (!isLoggedIn) return null;
 
@@ -23,6 +25,11 @@ const Sidebar = ({
       <NavLink to="/home" activeClassName="active" className="metrecord-sidebar-link">
         <FontAwesomeIcon icon={faHomeAlt} className="metrecord-sidebar-button--icon" />
       </NavLink>
+      {hasCustomMetrics &&
+        <NavLink to="/dashboards" activeClassName="active" className="metrecord-sidebar-link">
+          <FontAwesomeIcon icon={faAnalytics} className="metrecord-sidebar-button--icon" />
+        </NavLink>
+      }
       <NavLink to="/users" activeClassName="active" className="metrecord-sidebar-link">
         <FontAwesomeIcon icon={faIdCard} className="metrecord-sidebar-button--icon" />
       </NavLink>
@@ -38,6 +45,7 @@ const Sidebar = ({
 
 const mapStateToProps = state => ({
   isLoggedIn: !!state.auth.currentUser,
+  hasCustomMetrics: hasCustomMetrics(state),
 })
 
 
