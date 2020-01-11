@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
-import { clientId } from 'modules/org/selectors';
+import { clientId, clientSecret, orgId, orgCreatedAt } from 'modules/org/selectors';
 import './style.css';
 import LoadingDots from 'components/LoadingDots/index';
+
+const formatDate = dateString => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(window.navigator.language, { month: 'short', day: 'numeric', year: 'numeric' })
+}
 
 export const getSnippet = (clientId) => (`
 (function(window, document) {
@@ -46,6 +51,9 @@ class AccountSnippet extends Component {
   render() {
     const {
       clientId,
+      orgId,
+      clientSecret,
+      orgCreatedAt,
     } = this.props;
 
     const {
@@ -67,6 +75,15 @@ class AccountSnippet extends Component {
         }
         <div className={cx('metrecord-snippet-copied--text', { visible: copied })}>copied to clipboard!</div>
         <textarea className="metrecord-snippet-textarea" readOnly={true} ref={elt => this.textArea = elt} value={getSnippet(clientId)} />
+        <div>
+          <div>Extra info about your account</div>
+          <div className="org-settings-extra-info--container">
+            <div><strong>ID</strong> <small>{orgId}</small></div>
+            <div><strong>Created</strong> <small>{formatDate(orgCreatedAt)}</small></div>
+            <div><strong>Client ID</strong> <small>{clientId}</small></div>
+            <div><strong>Client secret</strong> <small>{clientSecret}</small></div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -74,6 +91,9 @@ class AccountSnippet extends Component {
 
 const mapStateToProps = state => ({
   clientId: clientId(state),
+  clientSecret: clientSecret(state),
+  orgId: orgId(state),
+  orgCreatedAt: orgCreatedAt(state),
 })
 
 export default connect(mapStateToProps)(AccountSnippet);

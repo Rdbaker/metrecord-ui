@@ -28,3 +28,8 @@
 .metrecord-snippet-settings--container {
   margin: 0 24px;
 }
+
+.org-settings-extra-info--container strong {
+  font-size: 12px;
+  margin-right: 4px;
+}
