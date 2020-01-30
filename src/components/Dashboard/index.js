@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import Select from 'react-select';
+import React, { Component } from 'react';
 
 import ChartDateSelect from 'components/ChartDateSelect';
 import FetchableChart from 'containers/FetchableChart';
@@ -10,16 +9,6 @@ const FIFTEEN_MINUTES = ONE_MINUTE * 15; // less than this -> use 'second'
 const THREE_HOURS = ONE_MINUTE * 60 * 3; // less than this -> use 'minute'
 const TEN_DAYS = ONE_MINUTE * 60 * 24 * 10; // less than this -> use 'hour'
 
-
-const RemovableChart = ({
-  onRemoveClick,
-  ...rest,
-}) => (
-  <div className="removable-chart--container">
-    <div onClick={onRemoveClick} className="removable-chart--remove">Remove</div>
-    <FetchableChart {...rest} />
-  </div>
-)
 
 const selectInterval = (start, end) => {
   const diff = end - start;
@@ -39,8 +28,6 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      isAddingChart: false,
-      selectedChart: null,
       startDate: undefined,
       endDate: undefined,
     };
@@ -53,25 +40,6 @@ class Dashboard extends Component {
   }
 
   handleDateChange = ({ start, end }) => this.setState({ startDate: start, endDate: end })
-  handleChartChoiceChange = option => option ? this.setState({ selectedChart: option }) : null
-  addChart = () => {
-    const {
-      dispatcher: {
-        addChartToDashboard,
-      },
-      id,
-    } = this.props;
-
-    const {
-      selectedChart,
-    } = this.state;
-
-    addChartToDashboard({ dashboardId: id, chartId: selectedChart.value });
-    this.setState({
-      selectedChart: null,
-      isAddingChart:false,
-    });
-  }
 
   renderDateSelect() {
     const {
@@ -87,10 +55,6 @@ class Dashboard extends Component {
   renderCharts() {
     const {
       chartIds=[],
-      dispatcher: {
-        removeChartFromDashboard,
-      },
-      id,
       associations,
     } = this.props;
 
@@ -101,8 +65,7 @@ class Dashboard extends Component {
 
     return (<div>
       {chartIds.map(chartId => (
-        <RemovableChart
-          onRemoveClick={() => removeChartFromDashboard({ dashboardId: id, chartId: chartId })}
+        <FetchableChart
           id={chartId}
           key={chartId}
           start={startDate}
@@ -114,38 +77,11 @@ class Dashboard extends Component {
     </div>);
   }
 
-  renderAddChart() {
-    const {
-      charts,
-      chartIds=[],
-    } = this.props;
-
-    const {
-      isAddingChart,
-      selectedChart,
-    } = this.state;
-
-    return <div>
-      {isAddingChart &&
-        <Fragment>
-          <Select
-            value={selectedChart}
-            onChange={this.handleChartChoiceChange}
-            options={charts.map(chart => ({ value: chart.id, label: chart.name })).filter(option => !chartIds.includes(option.value))}
-          />
-          <button onClick={this.addChart}>Add</button>
-        </Fragment>
-      }
-      {!isAddingChart && <div onClick={() => this.setState({ isAddingChart: true })}>Add another chart</div>}
-    </div>
-  }
-
   render() {
     return (
       <div>
         {this.renderDateSelect()}
         {this.renderCharts()}
-        {this.renderAddChart()}
       </div>
     )
   }

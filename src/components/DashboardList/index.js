@@ -33,7 +33,7 @@ const DashboardList = ({
   const dashboardRows = allDashboards.map(dash => dashboardToRow(dash, usersById));
   return (
     <div className="end-users-page--container">
-      <h1>Your visitors</h1>
+      <h1>Your dashboards</h1>
       <table className="end-user--table">
         <thead>
           <tr>
