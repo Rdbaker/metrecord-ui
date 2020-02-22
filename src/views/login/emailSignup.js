@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faLockAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faAt, faLockAlt, faAddressCard } from '@fortawesome/pro-duotone-svg-icons';
 import { withRouter } from 'react-router-dom';
 import { path } from 'ramda';
 
@@ -21,6 +21,7 @@ class EmailSignup extends Component {
     super(props);
 
     this.state = {
+      nameInput: '',
       emailInput: '',
       passwordInput: '',
       emailSignUpPending: false,
@@ -50,6 +51,12 @@ class EmailSignup extends Component {
     });
   }
 
+  onUpdateName = (e) => {
+    this.setState({
+      nameInput: e.target.value,
+    });
+  }
+
   onUpdateEmail = (e) => {
     this.setState({
       emailInput: e.target.value,
@@ -65,13 +72,14 @@ class EmailSignup extends Component {
   onSubmitEmail = (e) => {
     e.preventDefault();
     this.setEmailSignUpPending();
-    AuthAPI.signupViaEmail(this.state.emailInput, this.state.passwordInput)
+    AuthAPI.signupViaEmail(this.state.emailInput, this.state.passwordInput, this.state.nameInput)
       .then(this.onEmailSignUpSuccess)
       .catch(this.setEmailSignUpFailed);
   }
 
   render() {
     const {
+      nameInput,
       emailInput,
       passwordInput,
       emailSignUpPending,
@@ -93,6 +101,12 @@ class EmailSignup extends Component {
               <div className="metrecord-auth-form--action active">Sign Up</div>
             </div>
             <form onSubmit={this.onSubmitEmail}>
+              <div className="auth-modal-form-input--container">
+                <label htmlFor="name">Name</label>
+                <FontAwesomeIcon icon={faAddressCard} alt="name" />
+                <input type="text" id="name" value={nameInput} placeholder="Jane Doe" onChange={this.onUpdateName} />
+              </div>
+
               <div className="auth-modal-form-input--container">
                 <label htmlFor="email">Email</label>
                 <FontAwesomeIcon icon={faAt} alt="email" />

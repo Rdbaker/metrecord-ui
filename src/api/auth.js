@@ -15,13 +15,13 @@ export const AuthAPI = {
     .then(checkStatus)
   },
 
-  signupViaEmail(email, password) {
+  signupViaEmail(email, password, name) {
     return fetch(`${API_URL}/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user: { email, password }}),
+      body: JSON.stringify({ user: { email, password, name }}),
     })
     .then(checkStatus)
   },
@@ -36,4 +36,25 @@ export const AuthAPI = {
     })
   },
 
+  verifyUser(token) {
+    return fetch(`${API_URL}/api/users/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    })
+    .then(checkStatus)
+  },
+
+  reportFalseEmail(userId) {
+    return fetch(`${API_URL}/api/users/report-false-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
+    })
+    .then(checkStatus)
+  }
 }

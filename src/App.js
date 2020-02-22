@@ -10,7 +10,7 @@ import { DashboardsAPI } from 'api/dashboards';
 import { EventsAPI } from 'api/events';
 import { OrgsAPI } from 'api/org';
 import Sidebar from 'components/Sidebar';
-import { SHIM_URL, METRECORD_ON_METRECORD_CLIENT_ID, DEBUG } from 'constants/resources';
+import { SHIM_URL, METRECORD_ON_METRECORD_CLIENT_ID } from 'constants/resources';
 import { setMe } from 'modules/auth/actions';
 import { receiveCharts } from 'modules/charts/actions';
 import { receiveDashboards } from 'modules/dashboards/actions';
@@ -20,6 +20,8 @@ import { receiveOrgUsers } from 'modules/user/actions';
 import { CurrentUser } from 'utils/contexts';
 import { checkStatus } from 'utils/http';
 import { EmailLogin, EmailSignup } from 'views/login';
+import { VerifyEmail } from 'views/verify';
+import { FalseEmail } from 'views/false-email';
 import { UsersView } from 'views/users';
 import { SingleUserView } from 'views/user';
 
@@ -203,6 +205,8 @@ class App extends Component {
             <Route exact={true} path="/" render={this.makeLoginRequiredComponent(Onboard)} />
             <Route path="/home" render={this.makeLoginRequiredComponent(Home)} />
             <Route path="/login" component={EmailLogin}/>
+            <Route path="/verify" component={VerifyEmail}/>
+            <Route path="/false-email" component={FalseEmail}/>
             <Route path="/signup" component={EmailSignup}/>
             <Route path="/settings" render={this.makeLoginRequiredComponent(Account)} />
             <Route path="/charts" exact={true} render={this.makeLoginRequiredComponent(Charts)} />
