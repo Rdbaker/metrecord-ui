@@ -122,7 +122,7 @@ class EmailSignup extends Component {
               {emailSignUpError && <div className="auth-modal-form-error">{path(['errors', 'password'], emailSignUpError)}</div>}
               <button type="submit" className="auth-modal-form-hidden-submit-btn"></button>
             </form>
-            <p className="tos-link">By signing up you agree to <a href="https://www.metrecord.com/terms" target="_blank" rel="noopener noreferrer">the terms of service</a></p>
+            <p className="tos-link">By signing up you agree to <a href="https://www.metrecord.com/terms-of-service.html" target="_blank" rel="noopener noreferrer">the terms of service</a> and <a href="https://www.metrecord.com/privacy-policy.html" target="_blank" rel="noopener noreferrer">privacy policy</a></p>
             <button className="auth-modal-form-submit-btn" onClick={this.onSubmitEmail}>{ emailSignUpPending ? <LoadingDots /> : 'Go'}</button>
           </div>
         </main>
