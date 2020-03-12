@@ -4,6 +4,7 @@ import { ActionTypes } from './constants';
 const authRoot = state => state.auth || {};
 
 export const getToken = state => authRoot(state).token;
+export const getcurrentUser = state => authRoot(state).currentUser;
 
 const verificationRoot = state => authRoot(state).verification;
 const verificationStatus = state => verificationRoot(state).status;

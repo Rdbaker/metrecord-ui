@@ -8,6 +8,7 @@ import { path } from 'ramda';
 import { AuthAPI } from 'api/auth';
 import { setToken } from 'utils/auth';
 import * as AuthActions from 'modules/auth/actions';
+import { getcurrentUser } from 'modules/auth/selectors';
 
 import './style.css';
 import LoadingDots from 'components/LoadingDots/index';
@@ -28,6 +29,12 @@ class EmailSignup extends Component {
       emailSignUpFailed: false,
       emailSignUpError: null,
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.currentUser) {
+      this.props.history.push('/');
+    }
   }
 
   setEmailSignUpPending = () => {
@@ -132,7 +139,9 @@ class EmailSignup extends Component {
 }
 
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  currentUser: getcurrentUser(state)
+});
 
 const mapDispatchToProps = dispatch => ({
   dispatcher: {

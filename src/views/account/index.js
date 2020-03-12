@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import RouteTabs from '../../components/RouteTabs';
@@ -9,15 +10,18 @@ import Admin from './admin';
 
 import './style.css';
 
+const superAdminRoles = new Set([
+  'sadmin',
+  'uadmin'
+]);
+
 class AccountHome extends Component {
   currentUserIsAdmin = (currentUser) => {
     if (!currentUser) {
       return false;
     }
 
-    const property = currentUser.attributes.is_weasl_admin
-
-    return property && property.value === true && property.trusted === true
+    return superAdminRoles.has(currentUser.role);
   }
 
   render() {
@@ -30,7 +34,7 @@ class AccountHome extends Component {
 
     const currentUser = this.props.currentUser;
     if (this.currentUserIsAdmin(currentUser)) {
-      tabs.push({ label: 'Admin', route: '/account/admin' });
+      tabs.push({ label: 'Admin', route: '/settings/admin' });
     }
 
     return (
@@ -66,4 +70,8 @@ class AccountHome extends Component {
   }
 }
 
-export default AccountHome;
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser
+})
+
+export default connect(mapStateToProps)(AccountHome);
