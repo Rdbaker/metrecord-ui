@@ -26,14 +26,14 @@ export const OrgsAPI = {
   },
 
   patchGate(orgId, gateName, enabled) {
-    return fetch(`${API_URL}/orgs/${orgId}/gates/${gateName}`, {
+    return fetch(`${API_URL}/api/orgs/${orgId}/gates/${gateName}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
-        value: enabled,
+        value: String(enabled),
       })
     })
   },

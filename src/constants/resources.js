@@ -11,12 +11,12 @@ if (ENVIRONMENT === 'production') {
   }
 } else {
   ResourcesConstants = {
-    WS_URL: 'ws://localhost:4000',
-    API_URL: 'http://localhost:4000',
+    WS_URL: 'ws://localhost:4050',
+    API_URL: 'http://localhost:4050',
     SHIM_URL: 'http://localhost:9000/shim.js',
-    WWW_URL: 'https://localhost:4000',
-    APP_URL: 'http://localhost:3000',
-    METRECORD_ON_METRECORD_CLIENT_ID: '_EyUcGFcI31H',
+    WWW_URL: 'https://localhost:4050',
+    APP_URL: 'http://localhost:3200',
+    METRECORD_ON_METRECORD_CLIENT_ID: 'GZZPEPjPzQ8W',
     STRIPE_PUBLIC_KEY: 'pk_test_lFyMgHz3urgqHVwm1Y0bYNXT00Ku5dO3Vp',
   }
 }

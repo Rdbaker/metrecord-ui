@@ -29,9 +29,9 @@ class Admin extends Component {
     });
 
     const response = await OrgsAPI.patchGate(gateOrgId, editingGateName, gateValue);
-    const { data } = await response.json();
+    const { accepted } = await response.json();
 
-    if (data) {
+    if (accepted) {
       this.setState({
         gateEditSuccess: true,
       });
@@ -48,7 +48,7 @@ class Admin extends Component {
 
   onGateNameChange = e => this.setState({ editingGateName: e.target.value })
   onOrgIdChange = e => this.setState({ gateOrgId: Number(e.target.value) })
-  onToggleGateEnbled = e => this.setState({ gateValue: e.target.checked })
+  onToggleGateEnabled = e => this.setState({ gateValue: e.target.checked })
 
   render() {
     const {
@@ -68,7 +68,17 @@ class Admin extends Component {
         <form className="wsl-form" onSubmit={this.patchGate}>
           <label>
             Org ID
+            <input type="number" value={gateOrgId} onChange={this.onOrgIdChange} />
           </label>
+          <label>
+            Gate name
+            <input type="text" value={editingGateName} onChange={this.onGateNameChange} />
+          </label>
+          <label>
+            Enabled
+            <input type="checkbox" checked={gateValue} onChange={this.onToggleGateEnabled} />
+          </label>
+          <div />
           <button type="submit" onClick={this.patchGate}>Save</button>
         </form>
       </div>

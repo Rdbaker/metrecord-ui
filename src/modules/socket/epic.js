@@ -2,10 +2,9 @@ import { Socket } from 'phoenix';
 
 import { ActionTypes as OrgActionTypes } from 'modules/org/constants';
 import * as SocketActions from './actions';
-import { ActionTypes as MessageActionTypes } from 'modules/messages/constants';
 import { ActionTypes } from './constants';
 import { WS_URL } from 'constants/resources';
-import { pluck, filter, mergeMap, map } from 'rxjs/operators';
+import { pluck, filter, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { combineEpics, ofType } from 'redux-observable';
 
@@ -15,7 +14,10 @@ socket.connect();
 
 const fetchOrgToJoinChannel = action$ => action$.pipe(
   ofType(OrgActionTypes.FETCH_ORG_SUCCESS),
-  map(({ payload: { org: { client_secret } } }) => SocketActions.joinChannel({ channelName: `events:${client_secret}` }))
+  mergeMap(({ payload: { org: { client_secret } } }) => ([
+    SocketActions.joinChannel({ channelName: `events:${client_secret}` }),
+    SocketActions.joinChannel({ channelName: `orgs:${client_secret}` }),
+  ]))
 )
 
 
@@ -62,7 +64,7 @@ const joinChannel = action$ => action$.pipe(
 
 
 const eventTypesToActionTypes = {
-  new_message: MessageActionTypes.RECEIVE_MESSAGE,
+  update_gates: OrgActionTypes.RECEIVE_PROPERTIES,
 }
 
 const handleReceiveMessage = action$ => action$.pipe(
