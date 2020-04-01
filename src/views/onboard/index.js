@@ -7,7 +7,6 @@ import cx from 'classnames';
 import { getSnippet } from '../account/snippet';
 
 import './style.css';
-import { EventsAPI } from 'api/events';
 
 
 class Onboarding extends Component {
@@ -24,17 +23,9 @@ class Onboarding extends Component {
   }
 
   checkIfNeedsOnboarding = async () => {
-    try {
-      const { has_any_events: doesntNeedOnboarding } = await EventsAPI.hasAny();
-      if (doesntNeedOnboarding) {
-        this.props.history.push('/home');
-      } else {
-        this.setState({ loading: false });
-      }
-    } catch (e) {
-      console.warn(e)
-      this.setState({ loading: false });
-    }
+    this.setState({
+      loading: false
+    });
   }
 
   copySnippet = () => {

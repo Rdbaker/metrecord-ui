@@ -14,8 +14,7 @@ const formatDate = dateString => {
 export const getSnippet = (clientId) => (`
 (function(window, document) {
   if (window.metrecord) console.error('Metrecord embed already included');
-  window.metrecord = {}, m = ['init', 'snap', 'track', 'debug']; window.metrecord._c = [];
-  window.addEventListener('load', () => metrecord.snap());
+  window.metrecord = {}, m = ['init', 'open', 'submit', 'debug']; window.metrecord._c = [];
   m.forEach(me => window.metrecord[me] = function() {window.metrecord._c.push([me, arguments])});
   var elt = document.createElement('script');
   elt.type = "text/javascript"; elt.async = true;
@@ -63,7 +62,7 @@ class AccountSnippet extends Component {
     return (
       <div className="metrecord-snippet-settings--container">
         <p>
-            To add Metrecord to your app, copy the snippet of code below and paste it where you would like to record website metrics.
+            To add Metrecord to your app, copy the snippet of code below and paste it where you would like to get user feedback.
         </p>
         {!clientId &&
           <div>Loading your snippet <LoadingDots /></div>

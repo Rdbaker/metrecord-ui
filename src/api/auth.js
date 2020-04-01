@@ -15,13 +15,13 @@ export const AuthAPI = {
     .then(checkStatus)
   },
 
-  signupViaEmail(email, password, name) {
+  signupViaEmail(email, password, name, orgName) {
     return fetch(`${API_URL}/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user: { email, password, name }}),
+      body: JSON.stringify({ user: { email, password, name }, org: { name: orgName }}),
     })
     .then(checkStatus)
   },

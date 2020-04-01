@@ -10,20 +10,10 @@ import 'react-dates/initialize';
 import authReducer from 'modules/auth/reducer';
 import orgReducer from 'modules/org/reducer';
 import userReducer from 'modules/user/reducer';
-import dashboardReducer from 'modules/dashboards/reducer';
-import browserEventsReducer from 'modules/browserEvents/reducer';
-import eventsReducer from 'modules/events/reducer';
-import chartsReducer from 'modules/charts/reducer';
 import endUsersReducer from 'modules/endUsers/reducer';
 import authEpic from 'modules/auth/epic';
 import orgEpic from 'modules/org/epic';
-import userEpic from 'modules/user/epic';
-import endUserEpic from 'modules/endUsers/epic';
 import socketEpic from 'modules/socket/epic';
-import eventEpic from 'modules/events/epic';
-import browserEventsEpic from 'modules/browserEvents/epic';
-import chartsEpic from 'modules/charts/epic';
-import dashboardEpic from 'modules/dashboards/epic';
 import { DEBUG } from 'constants/resources';
 
 import './index.css';
@@ -51,10 +41,6 @@ const store = createStore(
     auth: authReducer,
     org: orgReducer,
     user: userReducer,
-    browserEvents: browserEventsReducer,
-    events: eventsReducer,
-    charts: chartsReducer,
-    dashboards: dashboardReducer,
     endUsers: endUsersReducer,
   }),
   compose(
@@ -67,12 +53,6 @@ epicMiddleware.run(
   combineEpics(
     orgEpic,
     socketEpic,
-    userEpic,
-    browserEventsEpic,
-    eventEpic,
-    chartsEpic,
-    dashboardEpic,
-    endUserEpic,
     authEpic,
   )
 )

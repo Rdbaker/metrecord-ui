@@ -5,22 +5,3 @@ export const receiveEndUserPage = (page) => ({
   payload: { page },
 });
 
-export const fetchEndUserEvents = (endUserId, before) => ({
-  type: ActionTypes.FETCH_END_USER_EVENTS,
-  payload: { before, endUserId },
-});
-
-export const fetchEndUserEventsPending = (endUserId, before) => ({
-  type: ActionTypes.FETCH_END_USER_EVENTS_PENDING,
-  payload: { before, endUserId },
-});
-
-export const fetchEndUserEventsSuccess = (endUserId, before, data) => ({
-  type: ActionTypes.FETCH_END_USER_EVENTS_SUCCESS,
-  payload: { before, endUserId, data },
-});
-
-export const fetchEndUserEventsFailed = (endUserId, before, err) => ({
-  type: ActionTypes.FETCH_END_USER_EVENTS_FAILED,
-  payload: { before, endUserId, err },
-});

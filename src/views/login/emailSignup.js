@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faLockAlt, faAddressCard } from '@fortawesome/pro-duotone-svg-icons';
+import { faAt, faLockAlt, faAddressCard, faBuilding } from '@fortawesome/pro-duotone-svg-icons';
 import { withRouter } from 'react-router-dom';
 import { path } from 'ramda';
 
@@ -24,6 +24,7 @@ class EmailSignup extends Component {
     this.state = {
       nameInput: '',
       emailInput: '',
+      orgNameInput: '',
       passwordInput: '',
       emailSignUpPending: false,
       emailSignUpFailed: false,
@@ -76,10 +77,16 @@ class EmailSignup extends Component {
     });
   }
 
+  onUpdateOrgName = (e) => {
+    this.setState({
+      orgNameInput: e.target.value,
+    })
+  }
+
   onSubmitEmail = (e) => {
     e.preventDefault();
     this.setEmailSignUpPending();
-    AuthAPI.signupViaEmail(this.state.emailInput, this.state.passwordInput, this.state.nameInput)
+    AuthAPI.signupViaEmail(this.state.emailInput, this.state.passwordInput, this.state.nameInput, this.state.orgNameInput)
       .then(this.onEmailSignUpSuccess)
       .catch(this.setEmailSignUpFailed);
   }
@@ -89,6 +96,7 @@ class EmailSignup extends Component {
       nameInput,
       emailInput,
       passwordInput,
+      orgNameInput,
       emailSignUpPending,
       emailSignUpError
     } = this.state;
@@ -112,6 +120,12 @@ class EmailSignup extends Component {
                 <label htmlFor="name">Name</label>
                 <FontAwesomeIcon icon={faAddressCard} alt="name" />
                 <input type="text" id="name" value={nameInput} placeholder="Jane Doe" onChange={this.onUpdateName} />
+              </div>
+
+              <div className="auth-modal-form-input--container">
+                <label htmlFor="company-name">Company name</label>
+                <FontAwesomeIcon icon={faBuilding} alt="company name" />
+                <input type="text" id="company-name" value={orgNameInput} placeholder="Acme, Inc." onChange={this.onUpdateOrgName} />
               </div>
 
               <div className="auth-modal-form-input--container">

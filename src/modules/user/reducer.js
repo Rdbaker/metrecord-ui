@@ -18,8 +18,6 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case ActionTypes.RECEIVE_ORG_USERS:
       return produce(state, draftState => receiveOrgUsers(draftState, action.payload));
-    case ActionTypes.BULK_GET_END_USERS_SUCESS:
-      return produce(state, draftState => receiveBulkUsers(draftState, action.payload));
     default:
       return state;
   }

@@ -64,7 +64,10 @@ const joinChannel = action$ => action$.pipe(
 
 
 const eventTypesToActionTypes = {
+<<<<<<< Updated upstream
   update_gates: OrgActionTypes.RECEIVE_PROPERTIES,
+=======
+>>>>>>> Stashed changes
 }
 
 const handleReceiveMessage = action$ => action$.pipe(
@@ -80,5 +83,5 @@ const handleReceiveMessage = action$ => action$.pipe(
 export default combineEpics(
   joinChannel,
   handleReceiveMessage,
-  fetchOrgToJoinChannel,
+  // fetchOrgToJoinChannel,
 )
