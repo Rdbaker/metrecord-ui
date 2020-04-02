@@ -6,13 +6,14 @@ const rawDashboard = (state, id) => byId(state)[id] || {};
 export const dashboard = (state, id) => rawDashboard(state, id).data;
 const allRawDashboards = state => Object.values(byId(state));
 export const allDashboards = state => allRawDashboards(state).map(dash => dash.data);
+export const hasAnyDashboards = state => allDashboards(state).length !== 0;
 export const defaultDashboard = state => {
   const allDashboards = Object.values(byId(state))
   const dashboard = allDashboards.find(({ data }) => data.meta.isDefault);
   if (!dashboard) {
     return allDashboards[0] ? allDashboards[0].data : undefined;
   } else {
-    return dashbaord.data;
+    return dashboard.data;
   }
 };
 

@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import LoadingDots from 'components/LoadingDots';
 import withTimer from 'utils/timer';
 import { withErrorBoundary } from 'utils/errorComponent';
-import comboChartSrc from 'images/combo_chart.png';
+import relaxingSrc from 'images/relaxing.svg';
 
 
 const createPlotOptions = series => ({
@@ -122,8 +122,8 @@ const createSeriesFromRawData = rawData => {
 const EmptyChart = () => (
   <div className="browser-metrics-empty-chart--container">
     <h4>Browser Error Rate</h4>
-    <img src={comboChartSrc} alt="empty chart"/>
-    <div className="browser-metrics-empty-chart--text">You have no errors for this time frame!</div>
+    <img src={relaxingSrc} className="empty-error-chart--image" alt="empty chart"/>
+    <div className="browser-metrics-empty-chart--text">Take a break! You have no errors for this time frame</div>
   </div>
 )
 

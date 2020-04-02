@@ -83,7 +83,6 @@ class App extends Component {
       });
     })
     .catch(errs => {
-      global.metrecord.track('bootstrap.errors.count', 1)
       console.warn(errs);
       this.setState({
         bootstrapDone: true,

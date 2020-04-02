@@ -20,3 +20,7 @@
   border-radius: 3px;
   box-shadow: 0 3px 6px 0 rgba(70, 82, 89, 0.1), 0 10px 20px 0 rgba(70, 82, 89, 0.15);
 }
+
+.empty-error-chart--image {
+  width: 220px;
+}

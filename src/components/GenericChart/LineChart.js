@@ -4,7 +4,14 @@ import HighchartsReact from 'highcharts-react-official';
 import { AggregateValuesToLabels } from 'modules/charts/constants';
 
 
-const createPlotOptions = (series, title, yAxisLabel) => ({
+const widths = {
+  'small': 250,
+  'medium': 500,
+  'large': 750,
+}
+
+
+const createPlotOptions = (series, title, yAxisLabel, size) => ({
   plotOptions: {
     line: {
       lineWidth: 1,
@@ -45,6 +52,7 @@ const createPlotOptions = (series, title, yAxisLabel) => ({
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     },
     backgroundColor: 'transparent',
+    width: widths[size] - 32,
   },
   credits: {
     enabled: false,
@@ -102,8 +110,9 @@ const LineChart = ({
   yAxisLabel,
   interpolateMissing,
   interval,
+  size,
 }) => {
-  const options = createPlotOptions(createSeriesFromRawData(data, aggs, event, interpolateMissing, interval), undefined, yAxisLabel);
+  const options = createPlotOptions(createSeriesFromRawData(data, aggs, event, interpolateMissing, interval), undefined, yAxisLabel, size);
 
   return (
     <div className="generic-metrics-chart--container">

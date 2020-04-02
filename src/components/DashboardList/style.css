@@ -1,0 +1,9 @@
+.dashboard-onboarding--container {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dashboard-onboarding--image {
+  width: 320px;
+}
