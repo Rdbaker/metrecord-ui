@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
+import cx from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut, faHomeAlt, faUsersCog, faIdCard, faAnalytics } from '@fortawesome/pro-duotone-svg-icons';
@@ -26,11 +27,9 @@ const Sidebar = ({
       <NavLink to="/home" activeClassName="active" data-tip="home" className="metrecord-sidebar-link">
         <FontAwesomeIcon icon={faHomeAlt} className="metrecord-sidebar-button--icon" />
       </NavLink>
-      {hasCustomMetrics &&
-        <NavLink to="/dashboards" activeClassName="active" data-tip="dashboards" className="metrecord-sidebar-link">
-          <FontAwesomeIcon icon={faAnalytics} className="metrecord-sidebar-button--icon" />
-        </NavLink>
-      }
+      <NavLink to="/dashboards" activeClassName="active" data-tip="dashboards" className={cx("metrecord-sidebar-link", { hidden: !hasCustomMetrics })}>
+        <FontAwesomeIcon icon={faAnalytics} className="metrecord-sidebar-button--icon" />
+      </NavLink>
       <NavLink to="/users" activeClassName="active" data-tip="users" className="metrecord-sidebar-link">
         <FontAwesomeIcon icon={faIdCard} className="metrecord-sidebar-button--icon" />
       </NavLink>

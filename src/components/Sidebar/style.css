@@ -46,3 +46,10 @@
   position: absolute;
   bottom: 0;
 }
+
+.metrecord-sidebar-link.hidden {
+  height: 0;
+  padding: 0;
+  display: none;
+  z-index: -1;
+}

@@ -1,9 +1,10 @@
 .end-user-context-pane--container {
   border-radius: 3px;
   box-shadow: 0 1px 2px 0 rgba(70, 82, 89, 0.24), 0 1px 3px 0 rgba(70, 82, 89, 0.12);
-  width: 320px;
+  min-width: 320px;
   background: white;
-  height: 91.5px;
+  height: 114px;
+  margin-right: 12px;
 }
 
 .end-user-context--label {

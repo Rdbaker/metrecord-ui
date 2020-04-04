@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrowser, faLaptop, faMobile } from '@fortawesome/pro-duotone-svg-icons';
 import { faSafari, faInternetExplorer, faChrome, faFirefox, faEdge, faApple } from '@fortawesome/free-brands-svg-icons';
@@ -25,18 +25,22 @@ const getBrowserIcon = (userAgent) => {
   }
 }
 
+const getPlatformIcon = (platform) => {
+  switch(platform.toLowerCase()) {
+    case 'macintel':
+    case 'iphone':
+      return <FontAwesomeIcon icon={faApple} />;
+    default:
+      return null;
+  }
+}
+
 const getDeviceIcon = (platform) => {
   switch(platform.toLowerCase()) {
     case 'macintel':
-      return <Fragment>
-        <FontAwesomeIcon icon={faLaptop} />
-        <FontAwesomeIcon icon={faApple} />
-        </Fragment>;
+      return <FontAwesomeIcon icon={faLaptop} />;
     case 'iphone':
-      return <Fragment>
-        <FontAwesomeIcon icon={faMobile} />
-        <FontAwesomeIcon icon={faApple} />
-        </Fragment>;
+      return <FontAwesomeIcon icon={faMobile} />;
     default:
       return null;
   }
@@ -62,7 +66,11 @@ const EndUserContextPane = ({
       </div>
       <div className="end-user-context-value--container">
         <div className="end-user-context--label">Device</div>
-        <div>{getDeviceIcon(contextEvent.data.platform)} {contextEvent.data.platform}</div>
+        <div>{getDeviceIcon(contextEvent.data.platform)}</div>
+      </div>
+      <div className="end-user-context-value--container">
+        <div className="end-user-context--label">System</div>
+        <div>{getPlatformIcon(contextEvent.data.platform)} {contextEvent.data.platform}</div>
       </div>
       <div className="end-user-context-value--container">
         <div className="end-user-context--label">Browser</div>
