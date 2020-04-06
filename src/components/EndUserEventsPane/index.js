@@ -1,15 +1,19 @@
 import React from 'react';
+import Select from 'react-select';
+import { withRouter } from 'react-router-dom';
 
 import Button from 'components/shared/Button';
+import { EventTypeOptions } from 'constants/events';
 
 import './style.css';
-import { withRouter } from 'react-router-dom';
 
 
 const mostRecentEventTime = groups => {
   const lastGroup = groups[groups.length - 1];
   const lastEvent = lastGroup[lastGroup.length - 1];
-  return lastEvent.created_at;
+  if (lastEvent) {
+    return lastEvent.created_at;
+  }
 }
 
 const formatNum = new Intl.NumberFormat(window.navigator.language)
@@ -134,11 +138,22 @@ const EndUserEventsPane = ({
   fetchEndUserEvents,
   moreDataLoading,
   history,
+  eventFilter,
+  setFilter,
 }) => {
+  console.log(eventGroups)
   return (
     <div className="end-user-events-pane--container">
-      <h3>Event Timeline</h3>
-      {eventGroups.map(group => <EventGroup key={group[0].id} events={group} pushHistory={history.push} endUserId={endUserId} />)}
+      <div className="end-user-events-pane--title">
+        <h3>Event Timeline</h3>
+        <Select placeholder="filter events" className="end-user-events--filter" clearable={true} options={EventTypeOptions} value={eventFilter} onChange={setFilter} />
+      </div>
+      {eventGroups.map(group => {
+        if (!group.length) {
+          return null;
+        }
+        return <EventGroup key={group[0].id} events={group} pushHistory={history.push} endUserId={endUserId} />;
+      })}
       <Button loading={moreDataLoading} disabled={moreDataLoading} buttonType="subtle" onClick={() => fetchEndUserEvents(endUserId, mostRecentEventTime(eventGroups))}>Load More</Button>
     </div>
   );

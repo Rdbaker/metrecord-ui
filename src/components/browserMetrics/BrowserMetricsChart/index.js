@@ -45,6 +45,7 @@ const createPlotOptions = series => ({
     },
     labels: {
       formatter: ({ value }) => new Date(value).toLocaleTimeString(window.navigator.language, {month: 'short', day: 'numeric', minute: '2-digit', hour: '2-digit'}),
+      rotation: 45,
     },
   },
   yAxis: {

@@ -20,14 +20,26 @@ export const endUserPageNeverLoaded = state => endUserPage(state) === null;
 
 export const endUserDataRoot = state => root(state).byId;
 export const endUserData = (state, id) => (endUserDataRoot(state)[id] || {}).data;
+export const endUserEventFilter = state => root(state).eventFilterOption;
 export const endUserGroupedEvents = (state, id) => {
   const events = endUserData(state, id) || [];
   const orderedEvents = reverse(sortBy(prop('created_at'), events));
+  const filter = (endUserEventFilter(state) || {}).value;
+
+  const shouldIncludeEvent = event => {
+    if (!filter) {
+      return true;
+    } else {
+      return event.event_type === filter;
+    }
+  }
 
   const groups = [];
   let currentGroup = [];
 
   orderedEvents.forEach(evt => {
+    if (!shouldIncludeEvent(evt)) return
+
     if (currentGroup.length === 0) {
       currentGroup.push(evt);
     } else if (shouldCreateNewGroup(currentGroup[currentGroup.length - 1], evt)) {

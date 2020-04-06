@@ -3,6 +3,12 @@
   margin-bottom: 24px;
 }
 
+.end-user-events-pane--title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .event-row--container {
   cursor: pointer;
 }
@@ -108,4 +114,8 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
   padding: 0 4px;
+}
+
+.end-user-events--filter {
+  width: 300px;
 }

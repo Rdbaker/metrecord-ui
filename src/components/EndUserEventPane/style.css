@@ -53,3 +53,11 @@
   justify-content: space-between;
   padding: 2px 4px;
 }
+
+.end-user-return-timeline--link {
+  text-decoration: none;
+  color: blue;
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+}

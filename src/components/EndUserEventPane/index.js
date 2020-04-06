@@ -5,6 +5,7 @@ import LoadingPulse from 'components/LoadingPulse/index';
 import { EventTypes } from 'constants/events';
 
 import ErrorEvent from './errorEvent';
+import AjaxEvent from './ajaxEvent';
 
 import './style.css';
 
@@ -36,13 +37,15 @@ const EndUserEventPane = ({
   let component = <div>{event.name}</div>
 
   if (event.event_type === EventTypes.ERROR) {
-    return <ErrorEvent {...event.data} />
+    component = <ErrorEvent {...event.data} />
+  } else if (event.event_type === EventTypes.AJAX) {
+    component = <AjaxEvent {...event.data} />
   }
 
   return (
     <div>
       <div>
-        <Link to={`/users/${event.end_user_id}/`}>&lt; back to timeline</Link>
+        <Link className="end-user-return-timeline--link" to={`/users/${event.end_user_id}/`}>&lt; back to timeline</Link>
         {component}
       </div>
     </div>

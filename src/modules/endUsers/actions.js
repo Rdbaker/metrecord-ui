@@ -24,3 +24,8 @@ export const fetchEndUserEventsFailed = (endUserId, before, err) => ({
   type: ActionTypes.FETCH_END_USER_EVENTS_FAILED,
   payload: { before, endUserId, err },
 });
+
+export const setEventFilter = (option) => ({
+  type: ActionTypes.HANDLE_SET_FILTER,
+  payload: { option },
+});

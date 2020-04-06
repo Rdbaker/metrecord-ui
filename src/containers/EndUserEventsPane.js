@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import EndUserEventsPane from 'components/EndUserEventsPane';
-import { endUserGroupedEvents, endUserDataLoading } from 'modules/endUsers/selectors';
-import { fetchEndUserEvents } from 'modules/endUsers/actions';
+import { endUserGroupedEvents, endUserDataLoading, endUserEventFilter } from 'modules/endUsers/selectors';
+import { fetchEndUserEvents, setEventFilter } from 'modules/endUsers/actions';
 
 const mapStateToProps = (
   state,
@@ -17,11 +17,13 @@ const mapStateToProps = (
 ) => ({
   eventGroups: endUserGroupedEvents(state, endUserId),
   moreDataLoading: endUserDataLoading(state, endUserId),
+  eventFilter: endUserEventFilter(state),
   endUserId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchEndUserEvents: (endUserId, before) => dispatch(fetchEndUserEvents(endUserId, before)),
+  setFilter: option => dispatch(setEventFilter(option))
 });
 
 

@@ -93,8 +93,12 @@ const ChartDateSelect = ({
     className,
     defaultSelected=SelectOptions[0],
 }) => {
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(defaultSelected);
+  const minutesDifference = (end - start) / (1000 * 60);
+  const matchingOption = SelectOptions.find(option => option.value === `LAST_${minutesDifference}`)
+  const useCustom = !isNaN(minutesDifference) && !matchingOption;
+  const selected = matchingOption || (useCustom ? SelectOptions[8] : defaultSelected);
+  const [showDatePicker, setShowDatePicker] = useState(useCustom);
+  const [selectedOption, setSelectedOption] = useState(selected);
   useEffect(() => {
     if (!start && !end) {
       const minutes = Number(selectedOption.value.split('_')[1]);
